@@ -1,13 +1,8 @@
 package com.isep.appli.models;
 
 import java.io.Serializable;
-import java.time.Instant;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,24 +10,35 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "player")
-public class Player implements Serializable {
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+
+	@Column(nullable = false)
 	private String firstName;
+
+	@Column(nullable = false)
 	private String lastName;
+
+	@Column(unique = true, nullable = false)
 	private String email;
+
+	@Column(nullable = false)
 	private String password;
-	private String role;
-	private Instant createdAt;
-	private Instant updatedAt;
+
+	@Column(columnDefinition="tinyint(1) default 0")
+	private boolean enabled;
+
+	@Column(columnDefinition="tinyint(1) default 0")
+	private boolean isAdmin;
 	
 	@Override
 	public String toString() {
 		return "Player [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", role=" + role + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
+				+ ", password=" + password + ", isAdmin=" + isAdmin + ", enabled=" + enabled
 				+ "]";
 	}
 	
