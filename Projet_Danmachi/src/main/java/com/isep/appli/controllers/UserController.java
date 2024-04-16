@@ -3,27 +3,23 @@ package com.isep.appli.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.isep.appli.models.Player;
-import com.isep.appli.services.PlayerService;
+import com.isep.appli.models.User;
+import com.isep.appli.services.UserService;
 
 import jakarta.validation.Valid;
 
 @Controller
-public class PlayerController {
+public class UserController {
 	
 	@Autowired
-	private PlayerService playerService;
+	private UserService userService;
 	
 
 
@@ -34,7 +30,7 @@ public class PlayerController {
 	@GetMapping("/home")
 	public ModelAndView home() {
 		ModelAndView modelAndView = new ModelAndView("index");
-		modelAndView.addObject("users", playerService.getAll());
+		modelAndView.addObject("users", userService.getAll());
 		return modelAndView;
 	}
 	
@@ -50,38 +46,37 @@ public class PlayerController {
 	
 	@GetMapping("/subscription") 
 	public String subscriptionPage(Model model) {
-		model.addAttribute("player", new Player());
+		model.addAttribute("user", new User());
 		return "subscription";
 	}
 	
 	@PostMapping("/subscription") 
-		public String checkSubscription(@Valid Player player, BindingResult result, Model model) {
+		public String checkSubscription(@Valid User user, BindingResult result, Model model) {
 		// Check if the mail is available
-		String email = player.getEmail();
-		List<Player> p = playerService.findByEmail(email);
+		String email = user.getEmail();
+		User u = userService.findByEmail(email);
 		// If not then error
-		if (!p.isEmpty()) {
+		if (u != null) {
 			System.out.println("Mail already taken");
 			return "redirect:/subscription";
 		}
 		// Else create the player
-		player.setRole("Player");
-		playerService.save(player);
+		userService.save(user);
 		return "redirect:/login";
 	}
 	
 	@GetMapping("/login") 
 	public String loginPage(Model model) {
-		model.addAttribute("player", new Player());
+		model.addAttribute("user", new User());
 		return "login";
 	}
 	
 	@PostMapping("/login") 
-	public String checkLogin(@Valid Player player, BindingResult result, Model model) {
+	public String checkLogin(@Valid User user, BindingResult result, Model model) {
 		
-		String email = player.getEmail();
-		List<Player> p = playerService.findByEmail(email);
-		if (p.isEmpty()) {
+		String email = user.getEmail();
+		User u = userService.findByEmail(email);
+		if (u != null) {
 			System.out.println("Mail inexistant");
 			return "redirect:/login";
 		}
