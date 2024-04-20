@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "player")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -30,10 +29,10 @@ public class User implements Serializable {
 	private String password;
 
 	@Column(columnDefinition="tinyint(1) default 0")
-	private boolean enabled;
+	private Boolean enabled;
 
 	@Column(columnDefinition="tinyint(1) default 0")
-	private boolean isAdmin;
+	private Boolean isAdmin;
 	
 	@Override
 	public String toString() {

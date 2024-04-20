@@ -1,13 +1,14 @@
 package com.isep.appli.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.isep.appli.services.EmailService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.isep.appli.models.User;
@@ -18,11 +19,14 @@ import jakarta.validation.Valid;
 @Controller
 public class UserController {
 	
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
 	
+	private final EmailService emailService;
 
-
+	UserController(UserService userService, EmailService emailService) {
+		this.userService = userService;
+		this.emailService = emailService;
+	}
 	
 	/*******************************************************************************/
 	/******************************** ALL ******************************************/
@@ -30,7 +34,6 @@ public class UserController {
 	@GetMapping("/home")
 	public ModelAndView home() {
 		ModelAndView modelAndView = new ModelAndView("index");
-		modelAndView.addObject("users", userService.getAll());
 		return modelAndView;
 	}
 	
@@ -51,18 +54,26 @@ public class UserController {
 	}
 	
 	@PostMapping("/subscription") 
-		public String checkSubscription(@Valid User user, BindingResult result, Model model) {
-		// Check if the mail is available
-		String email = user.getEmail();
-		User u = userService.findByEmail(email);
-		// If not then error
-		if (u != null) {
-			System.out.println("Mail already taken");
-			return "redirect:/subscription";
-		}
-		// Else create the player
-		userService.save(user);
+		public String subscription(@Valid User user, BindingResult result, Model model) {
+		userService.signup(user);
+
+		String confirmationUrl = "http://localhost:8080/confirm?id=" + user.getId();
+		String emailContent = "Please click the following link to confirm your email address: " + confirmationUrl;
+
+		emailService.sendEmail(user.getEmail(), emailContent, "Confirmer adresse mail");
+
 		return "redirect:/login";
+	}
+
+	@GetMapping("/confirm")
+	public String confirmEmail(@RequestParam("id") long id) {
+		userService.confirmEmail(id);
+		return "redirect:/login";
+	}
+
+	@PostMapping("/checkUnique")
+	public ResponseEntity<Boolean> checkUnique(@RequestBody String email) {
+		return ResponseEntity.ok(userService.checkUnique(email));
 	}
 	
 	@GetMapping("/login") 
@@ -73,13 +84,13 @@ public class UserController {
 	
 	@PostMapping("/login") 
 	public String checkLogin(@Valid User user, BindingResult result, Model model) {
-		
-		String email = user.getEmail();
-		User u = userService.findByEmail(email);
-		if (u != null) {
-			System.out.println("Mail inexistant");
-			return "redirect:/login";
+		User userSignedIn = userService.login(user.getEmail(), user.getPassword());
+
+		if (userSignedIn == null) {
+			model.addAttribute("loginError", true);
+			return "/login";
 		}
+
 		return "redirect:/homePlayer";
 	}
 	
