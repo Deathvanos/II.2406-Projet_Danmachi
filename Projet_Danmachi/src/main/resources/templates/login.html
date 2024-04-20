@@ -20,7 +20,10 @@
 					<form action="#" th:action="@{/login}" th:object="${user}" method="POST">
 						<div class="form-group">
 							<input class="form-control mt-3" type="text" th:field="*{email}" id="email" placeholder="test@yahoo.fr">
-							<input class="form-control mt-3 input-short" type="password" th:field="*{password}" id="password" placeholder="root">   
+							<input class="form-control mt-3 input-short" type="password" th:field="*{password}" id="password" placeholder="root">
+							<div th:if="${loginError}">
+								<p class="text-danger">Email ou mot de passe incorrect</p>
+							</div>
 							<button type="submit" class="btn btn-light btn-outline-success mt-3">Sign In</button>
 							<p><a class="btn mt-3" href="#">Récuperer votre mot de passe</a></p>
 						</div>
