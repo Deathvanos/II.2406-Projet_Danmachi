@@ -1,6 +1,6 @@
 package com.isep.appli.services;
 
-import com.isep.appli.models.Persona;
+import com.isep.appli.models.Personnage;
 import com.isep.appli.models.User;
 import com.isep.appli.repositories.PersonaRepository;
 import org.springframework.stereotype.Service;
@@ -21,27 +21,27 @@ public class PersonaService {
         this.personaRepository = personaRepository;
     }
 
-    public List<Persona> getPersonasByUser(User user) {
+    public List<Personnage> getPersonasByUser(User user) {
         return personaRepository.findPersonasByUser(user);
     }
 
-    public boolean savePersona(MultipartFile file, User user, Persona persona) {
+    public boolean savePersona(MultipartFile file, User user, Personnage personnage) {
 
-        persona.setUser(user);
-        persona.setLevel(baseLevel);
-        persona.setMoney(baseMoney);
+        personnage.setUser(user);
+        personnage.setLevel(baseLevel);
+        personnage.setMoney(baseMoney);
 
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         if(fileName.contains("..")) {
             return false;
         }
         try {
-            persona.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+            personnage.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        personaRepository.save(persona);
+        personaRepository.save(personnage);
         return true;
     }
 }

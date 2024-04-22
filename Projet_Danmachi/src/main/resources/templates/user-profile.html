@@ -23,21 +23,21 @@
 				</div>
 
 				<div class="card-deck mt-3 ml-2">
-					<div th:each="persona : ${personas}" class="col-md-6">
+					<div th:each="personnage : ${personnages}" class="col-md-6">
 						<div class="card" style="width: 240px; height: 250px;">
 							<button onclick="showDiv('player-information')">
-								<img th:src="'data:image/png;base64,' + ${persona.getImage()}" class="card-img-top" alt="Player Image">
+								<img th:src="'data:image/png;base64,' + ${personnage.getImage()}" class="card-img-top" alt="Player Image">
 							</button>
 							<div class="card-body">
-								<h5 class="card-title" th:text="${persona.getFirstName()} + ' ' + ${persona.getLastName()}"></h5>
-								<p class="card-text" th:text="${persona.getRace().getDisplayName()} + ' (lvl ' + ${persona.getLevel()} + ')'"></p>
+								<h5 class="card-title" th:text="${personnage.getFirstName()} + ' ' + ${personnage.getLastName()}"></h5>
+								<p class="card-text" th:text="${personnage.getRace().getDisplayName()} + ' (lvl ' + ${personnage.getLevel()} + ')'"></p>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="card" style="width: 240px; height: 250px;">
 							<div class="card-body d-flex align-items-center justify-content-center">
-								<button class="btn btn-grey" onclick="showDiv('create-player')" th:disabled="${personas.size() >= 4}"><i class="bi bi-plus" style="font-size: 100px;"></i></button> <!-- Increase the size of the "+" icon -->
+								<button class="btn btn-grey" onclick="showDiv('create-player')" th:disabled="${personnages.size() >= 4}"><i class="bi bi-plus" style="font-size: 100px;"></i></button> <!-- Increase the size of the "+" icon -->
 							</div>
 						</div>
 					</div>
@@ -70,7 +70,7 @@
 
 				<div class="div-info py-3" id="create-player" style="display:none;">
 					<h1 class="text-white mb-5">Créer nouveau personnage :</h1>
-					<form class="form-group" method="post" th:action="@{/save-persona}" th:object="${persona}" enctype="multipart/form-data">
+					<form class="form-group" method="post" th:action="@{/save-personnage}" th:object="${personnage}" enctype="multipart/form-data">
 						<input class="form-control mb-3" type="text" placeholder="Prénom" th:field="*{firstName}">
 						<input class="form-control mb-3" type="text" placeholder="Nom" th:field="*{lastName}">
 

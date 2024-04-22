@@ -9,9 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
-@Table(name = "personnage")
-public class Persona implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Personnage implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

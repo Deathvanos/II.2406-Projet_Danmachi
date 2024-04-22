@@ -1,7 +1,7 @@
 package com.isep.appli.controllers;
 
 import com.isep.appli.models.Message;
-import com.isep.appli.models.Persona;
+import com.isep.appli.models.Personnage;
 import com.isep.appli.services.PersonaService;
 import com.isep.appli.services.EmailService;
 import jakarta.servlet.http.HttpSession;
@@ -65,10 +65,7 @@ public class UserController {
 		public String subscription(@Valid User user, BindingResult result, Model model) {
 		userService.signup(user);
 
-		String confirmationUrl = "http://localhost:8080/confirm?id=" + user.getId();
-		String emailContent = "Please click the following link to confirm your email address: " + confirmationUrl;
-
-		emailService.sendEmail(user.getEmail(), emailContent, "Confirmer adresse mail");
+		emailService.sendConfirmationEmail(user);
 
 		return "redirect:/login";
 	}
@@ -112,22 +109,22 @@ public class UserController {
 	public String checkLogin(Model model, HttpSession session) {
 
 		User user = (User) session.getAttribute("user");
-		List<Persona> personas = personaService.getPersonasByUser(user);
+		List<Personnage> personnages = personaService.getPersonasByUser(user);
 
 		model.addAttribute("user", user);
-		model.addAttribute("personas", personas);
-		model.addAttribute("persona", new Persona());
+		model.addAttribute("personas", personnages);
+		model.addAttribute("persona", new Personnage());
 		return "user-profile";
 	}
 
 	@PostMapping("/save-persona")
-	public String savePersonaToUser(@Valid Persona persona,
+	public String savePersonaToUser(@Valid Personnage personnage,
 									@RequestParam("file") MultipartFile file,
 									HttpSession session,
 									Model model) {
 		User user = (User) session.getAttribute("user");
 
-		if (personaService.savePersona(file, user, persona)) {
+		if (personaService.savePersona(file, user, personnage)) {
 			return "redirect:/user-profile";
 		}
 
