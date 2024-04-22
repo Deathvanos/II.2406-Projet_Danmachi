@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
+@Table(name = "personnage")
 public class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -31,6 +32,9 @@ public class Persona implements Serializable {
 
     @Column(nullable = false)
     private Race race;
+
+    @Column(nullable = false)
+    private int money;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
