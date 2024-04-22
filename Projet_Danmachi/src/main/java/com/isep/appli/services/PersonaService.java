@@ -14,6 +14,8 @@ import java.util.List;
 @Service
 public class PersonaService {
     private final PersonaRepository personaRepository;
+    private final int baseLevel = 1;
+    private final int baseMoney = 15000;
 
     PersonaService(PersonaRepository personaRepository) {
         this.personaRepository = personaRepository;
@@ -24,8 +26,10 @@ public class PersonaService {
     }
 
     public boolean savePersona(MultipartFile file, User user, Persona persona) {
+
         persona.setUser(user);
-        persona.setLevel(0);
+        persona.setLevel(baseLevel);
+        persona.setMoney(baseMoney);
 
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         if(fileName.contains("..")) {
