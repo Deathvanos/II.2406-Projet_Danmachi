@@ -22,7 +22,7 @@
 					</div>
 				</div>
 
-				<div class="card-deck mt-3 ml-5">
+				<div class="card-deck mt-3 ml-2">
 					<div th:each="persona : ${personas}" class="col-md-6">
 						<div class="card" style="width: 240px; height: 250px;">
 							<button onclick="showDiv('player-information')">
@@ -30,7 +30,7 @@
 							</button>
 							<div class="card-body">
 								<h5 class="card-title" th:text="${persona.getFirstName()} + ' ' + ${persona.getLastName()}"></h5>
-								<p class="card-text" th:text="${persona.getRace().getDisplayName()} + '(lvl ' + ${persona.getLevel()} + ')'"></p>
+								<p class="card-text" th:text="${persona.getRace().getDisplayName()} + ' (lvl ' + ${persona.getLevel()} + ')'"></p>
 							</div>
 						</div>
 					</div>
