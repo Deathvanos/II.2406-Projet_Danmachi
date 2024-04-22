@@ -60,7 +60,7 @@ document.getElementById("signup-form").addEventListener("submit", function(event
         url: "/checkUnique",
         type: "POST",
         contentType: "application/json",
-        data: JSON.stringify(email),
+        data: email,
         success: function(response) {
             if (response) {
                 emailError.textContent = "Email is already registered";
