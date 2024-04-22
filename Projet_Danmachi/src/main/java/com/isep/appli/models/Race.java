@@ -8,10 +8,8 @@ public enum Race {
     DWARF("Nain"),
     ELF("Elfe"),
     GOD("Dieu"),
-    HUMEBUNNY("Lapin hume"),
     PALLUM("Pallum"),
-    SPIRIT("Esprit"),
-    XENOS("Xenos");
+    SPIRIT("Esprit");
 
     private final String displayName;
 
