@@ -1,0 +1,19 @@
+.masthead {
+    height: 20vh;
+    min-height: 200px;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.navbar {
+    padding: .2rem 1rem;
+    #background-color: #67819A!important;
+}
+
+.borderImage {
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}

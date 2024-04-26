@@ -5,22 +5,58 @@
 		<meta http-equiv="X-UA-Compatible" content="IE-edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+		<link rel="stylesheet" href="/css/common.css"/>
 	</head>
 	<body>
 		
 		<header th:insert="common/header :: header"></header>
 	
-		</br></br>
+
+
+
 		<div class="container-fluid">
-			<h1>Wiki Danmachi RP</h1>
-			Résumé : La mise en place de ce google site est un outil utile pour tout les joueurs, vous y trouverez tout plein de fonctionnalité ainsi que d'information afin de pouvoir rôle play sur le serveur.
-			
+			<div class="row">
+				<div class="col-sm-2 borderImage" style="background-image: url(/images/border.jpg)"></div>
+
+				<div class="col-sm-8" style="background-color:#D5E4D9;">
+					<h1 class="display-5">Présentation du jeu Danmachi RP</h1>
+					<p class="text-justify">
+						DanmachiRP.fr est un jeu en ligne gratuit dans lequel le joueur incarne un héro afin d’aider sa guilde à prosperer.
+						L'objectif premier est de devenir le meilleur Hero. Pour cela divers moyens existent comme améliorer ses caractéristiques, acheter les meilleurs équipements, atteindre les plus hait sommets du donjon, ...
+						Mais le joueur peut choisir d'autres objectifs selon ses envies : son objectif peut être de collectionner le plus d’items rare possible, de devenir le plus riche héro ou être le meilleur chasseur de monstres du pays.
+					</p>
+					<h1 class="display-6">Aperçu du jeu Danmachi RP</h1>
+					<p class="text-justify">
+						...
+					</p>
+					<h1 class="display-6">Participez à l'aventure !</h1>
+					<a href="/subscription">Inscrivez-vous maintenant sur DanmachiRP.fr.</a>
+					<p class="text-justify">Pour rejoindre un village et entrer dans l’aventure</p>
+					<h1 class="display-6">Classement des Falna</h1>
+					<a href="#">Hebdomadaire</a> / <a href="#">Mensuel</a> / <a href="#">Annuel</a>
+					<p class="text-justify">
+						...
+					</p>
+					<h1 class="display-6">Classement des Équipes</h1>
+					<a href="#">Hebdomadaire</a> / <a href="#">Annuel</a> / <a href="#">Éternel</a>
+					<p class="text-justify">
+						...
+					</p>
+
+				</div>
+				<div class="col-sm-2 borderImage" style="background-image: url(/images/border.jpg)"></div>
+			</div>
 		</div>
+
 		</br></br>
-		
-		
+
 		<div th:insert="common/footer :: footer"></div>
-		
-		<script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
+
+		<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+		<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+
+
+
+
 	</body>
 </html>
