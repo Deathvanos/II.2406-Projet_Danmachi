@@ -15,8 +15,8 @@
 
 
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-2 borderImage" style="background-image: url(/images/border.jpg)"></div>
+			<div class="row bodySize">
+				<div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
 
 				<div class="col-sm-8" style="background-color:#D5E4D9;">
 					<h1 class="display-5">Présentation du jeu Danmachi RP</h1>
@@ -26,35 +26,71 @@
 						Mais le joueur peut choisir d'autres objectifs selon ses envies : son objectif peut être de collectionner le plus d’items rare possible, de devenir le plus riche héro ou être le meilleur chasseur de monstres du pays.
 					</p>
 					<h1 class="display-6">Aperçu du jeu Danmachi RP</h1>
-					<p class="text-justify">
-						...
-					</p>
+
+					<div class="container p-3">
+						<div class="row">
+							<div class="col">
+								<img th:src="@{/images/1.png}" width="100%" alt="">
+							</div>
+							<div class="col">
+								<p class="text-justify">
+									Les Dieux et Déesses ont commencé à descendre dans le monde inférieur depuis le Ciel il y a 1 an.
+									Les Dieux ont donné la falna aux aventuriers pour faire naître des héros.
+									Falna est la grâce, parfois appelée bénédiction, donnée par les dieux et les déesses aux membres de leur familia.
+									Ceux qui ont une falna acquièrent des prouesses physiques surhumaines lorsqu'ils en sont dotés et peuvent rassembler des excelia pour élever leur statut et devenir encore plus forts.
+								</p>
+							</div>
+							<div class="w-100"></div>
+							<div class="col">
+								<p class="text-justify">
+									Chaque jours, des familias apparaisent et forment de nouvelles recrues. Réalisez des missions pour votre familias, partez explorer le donjon, vendez vos tresors afin d'achetez de nouveaux équipements pour être le meilleur !
+								</p>
+							</div>
+							<div class="col">
+								<img th:src="@{/images/2.png}" width="100%" alt="">
+							</div>
+							<div class="w-100"></div>
+							<div class="col">
+								<img th:src="@{/images/3.png}" width="100%" alt="">
+							</div>
+							<div class="col">
+								<p class="text-justify">
+									Du combat au corps à corps aux techniques Ninpo, de l'acquisition de l'arme la plus puissante à celle de l'armure la plus résistante.
+									Même si tous les moyens sont bons pour vaincre ses ennemis, chaque aventuriers suit une voie qui lui est propre.
+									Allez-vous être prêt pour le combat final ?
+								</p>
+							</div>
+						</div>
+					</div>
+
 					<h1 class="display-6">Participez à l'aventure !</h1>
 					<a href="/subscription">Inscrivez-vous maintenant sur DanmachiRP.fr.</a>
 					<p class="text-justify">Pour rejoindre un village et entrer dans l’aventure</p>
+					<p class="text-center">
+						<img th:src="@{/images/c0.png}" width="25%" alt="">
+					</p>
+
 					<h1 class="display-6">Classement des Falna</h1>
 					<a href="#">Hebdomadaire</a> / <a href="#">Mensuel</a> / <a href="#">Annuel</a>
-					<p class="text-justify">
-						...
+					<p class="text-center">
+						<img th:src="@{/images/c1.png}" width="75%" alt="">
 					</p>
 					<h1 class="display-6">Classement des Équipes</h1>
 					<a href="#">Hebdomadaire</a> / <a href="#">Annuel</a> / <a href="#">Éternel</a>
-					<p class="text-justify">
-						...
+					<p class="text-center">
+						<img th:src="@{/images/c2.png}" width="75%" alt="">
 					</p>
 
 				</div>
-				<div class="col-sm-2 borderImage" style="background-image: url(/images/border.jpg)"></div>
+				<div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
 			</div>
 		</div>
 
-		</br></br>
 
 		<div th:insert="common/footer :: footer"></div>
 
 		<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
 		<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
-
 
 
 
