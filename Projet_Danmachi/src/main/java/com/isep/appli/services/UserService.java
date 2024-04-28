@@ -32,8 +32,15 @@ public class UserService {
 		return "signup";
 	}
 
-	public boolean checkUnique(String email) {
-		return userRepository.findUserByEmail(email) != null;
+	public Map<String, Boolean> checkUnique(Map<String, String> userInfo) {
+		Boolean existingEmail = userRepository.findUserByEmail(userInfo.get("email")) != null;
+		Boolean existingUsername = userRepository.findUserByUsername(userInfo.get("username")) != null;
+
+		Map<String, Boolean> uniqueMap = new HashMap<>();
+		uniqueMap.put("existingEmail", existingEmail);
+		uniqueMap.put("existingUsername", existingUsername);
+
+		return uniqueMap;
 	}
 
 	public boolean confirmEmail(long userId) {

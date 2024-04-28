@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
+
 @Controller
 public class LoginController {
 
@@ -46,8 +48,8 @@ public class LoginController {
     }
 
     @PostMapping("/checkUnique")
-    public ResponseEntity<Boolean> checkUnique(@RequestBody String email) {
-        return ResponseEntity.ok(userService.checkUnique(email));
+    public ResponseEntity<Map<String, Boolean>> checkUnique(@RequestBody Map<String, String> userInfo) {
+        return ResponseEntity.ok(userService.checkUnique(userInfo));
     }
 
     @GetMapping("/login")

@@ -7,6 +7,7 @@
 		<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 		<link rel="stylesheet" href="/css/user-profile.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div class="row">
@@ -24,8 +25,8 @@
 
 				<div class="card-deck mt-3 ml-2">
 					<div th:each="personnage : ${personnages}" class="col-md-6">
-						<div class="card" style="width: 240px; height: 250px;">
-							<button onclick="showDiv('player-information')">
+						<div class="card">
+							<button onclick="showDiv('player-information', this)" th:id="${personnage.getId()}">
 								<img th:src="'data:image/png;base64,' + ${personnage.getImage()}" class="card-img-top" alt="Player Image">
 							</button>
 							<div class="card-body">
@@ -34,10 +35,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6" th:if="${personnages.size() < 4}">
 						<div class="card" style="width: 240px; height: 250px;">
 							<div class="card-body d-flex align-items-center justify-content-center">
-								<button class="btn btn-grey" onclick="showDiv('create-player')" th:disabled="${personnages.size() >= 4}"><i class="bi bi-plus" style="font-size: 100px;"></i></button> <!-- Increase the size of the "+" icon -->
+								<button class="btn btn-grey" onclick="showDiv('create-player')"><i class="bi bi-plus" style="font-size: 100px;"></i></button> <!-- Increase the size of the "+" icon -->
 							</div>
 						</div>
 					</div>
@@ -56,6 +57,9 @@
 						<br>
 						<label class="px-2">Prénom :</label>
 						<span th:text="${user.getFirstName()}"></span>
+						<br>
+						<label class="px-2">Username :</label>
+						<span th:text="${user.getUsername()}"></span>
 					</div>
 
 					<div class="my-5 bg-container">
@@ -70,7 +74,7 @@
 
 				<div class="div-info py-3" id="create-player" style="display:none;">
 					<h1 class="text-white mb-5">Créer nouveau personnage :</h1>
-					<form class="form-group" method="post" th:action="@{/save-personnage}" th:object="${personnage}" enctype="multipart/form-data">
+					<form class="form-group" method="post" th:action="@{/save-personnage}" th:object="${newPersonnage}" enctype="multipart/form-data">
 						<input class="form-control mb-3" type="text" placeholder="Prénom" th:field="*{firstName}">
 						<input class="form-control mb-3" type="text" placeholder="Nom" th:field="*{lastName}">
 
@@ -92,22 +96,54 @@
 				</div>
 
 				<div class="div-info py-3" id="player-information" style="display:none;">
-					<h1>Information Personnage :</h1>
-					<div class="bg-container">
-						<label>Nom :</label>
-						<span>nom personnage</span>
-						<br>
+					<h1 class="text-white my-3">Information Personnage :</h1>
+					<div class="container bg-container py-3">
 						<label>Prénom :</label>
-						<span>prénom personnage</span>
+						<span id="info-prenom"></span>
+						<br>
+						<label>Nom :</label>
+						<span id="info-nom"></span>
 						<br>
 						<label>Race :</label>
-						<span>race personnage</span>
+						<span id="info-race"></span>
 					</div>
+					<div class="bg-container my-4 py-3 row">
+						<div class="col-6">
+							<label>Argent:</label>
+							<span id="info-money"></span>
+							<br>
+							<label>Niveau:</label>
+							<span id="info-level"></span>
+						</div>
+						<div class="col-6">
+							<button class="btn btn-light btn-outline-success btn-lg btn-block">Inventaire</button>
+						</div>
+					</div>
+
+					<div class="row mb-4">
+						<div class="col-6 mb-2">
+							<button class="btn btn-light btn-outline-success btn-lg btn-block">Fiche race</button>
+						</div>
+						<div class="col-6 mb-2">
+							<button class="btn btn-light btn-outline-success btn-lg btn-block">La Guild</button>
+						</div>
+						<div class="col-6">
+							<button class="btn btn-light btn-outline-success btn-lg btn-block">Mini jeu</button>
+						</div>
+						<div class="col-6">
+							<button class="btn btn-light btn-outline-success btn-lg btn-block">Entrer en combat</button>
+						</div>
+					</div>
+
+
+					<button class="btn btn-light btn-outline-danger d-block mx-auto" onclick="deletePersonnage(this)" id="deletePersonnage">Suprimer personnage</button>
+
 				</div>
 
 			</div>
 		</div>
 
+		<div id="alertContainer"></div>
 
 		<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
 		<script src="/js/user-profile.js"></script>

@@ -4,19 +4,18 @@ document.getElementById("signup-form").addEventListener("submit", function(event
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
     const passwordError = document.getElementById("passwordError");
-    console.log(password);
 
     const email = document.getElementById("email").value;
     const emailError = document.getElementById("emailError");
-    console.log(email)
 
     const firstName = document.getElementById('firstName').value;
     const firstNameError = document.getElementById("firstNameError");
-    console.log(firstName)
 
     const lastName = document.getElementById('lastName').value;
     const lastNameError = document.getElementById("lastNameError");
-    console.log(lastName)
+
+    const username = document.getElementById('username').value;
+    const usernameError = document.getElementById('usernameError');
 
     let validationError = false;
 
@@ -25,6 +24,7 @@ document.getElementById("signup-form").addEventListener("submit", function(event
     emailError.textContent = "";
     firstNameError.textContent = "";
     lastNameError.textContent = "";
+    usernameError.textContent = "";
 
     if (password === null || password === "") {
         passwordError.textContent = "Le mot de passe ne peut pas être null";
@@ -44,6 +44,11 @@ document.getElementById("signup-form").addEventListener("submit", function(event
         validationError = true;
     }
 
+    if (username === null || username === "") {
+        usernameError.textContent = "Le pseudonym ne peut pas être null";
+        validationError = true;
+    }
+
     if (email === null || email === "") {
         emailError.textContent = "L'email ne peut pas être null";
         validationError = true;
@@ -60,13 +65,23 @@ document.getElementById("signup-form").addEventListener("submit", function(event
         url: "/checkUnique",
         type: "POST",
         contentType: "application/json",
-        data: email,
+        data: JSON.stringify({"email": email, "username": username}),
         success: function(response) {
-            if (response) {
-                emailError.textContent = "Email is already registered";
-                return;
+            let uniqueError = false;
+            if (response.existingEmail) {
+                emailError.textContent = "Cette adresse mail est déjà utilisée";
+                uniqueError = true;
             }
+
+            if (response.existingUsername) {
+                usernameError.textContent = "Ce pseudonym est déjà utilisé";
+                uniqueError = true;
+            }
+
+            if (uniqueError) {return;}
+
             // If all validations pass, submit the form
+            showBootstrapAlert("success", "Veuillez confirmer votre email en suivant les instructions envoyer.");
             document.getElementById("signup-form").submit();
         },
         error: function(xhr, status, error) {
@@ -81,3 +96,13 @@ function validateEmail(email) {
     var re = /\S+@\S+\.\S+/;
     return re.test(email);
 }
+
+function showBootstrapAlert(type, message) {
+    const alertElement = $('<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
+        message +
+        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+        '</div>');
+
+    $('#alertContainer').append(alertElement);
+}
+

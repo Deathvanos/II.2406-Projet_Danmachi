@@ -1,23 +1,19 @@
 package com.isep.appli.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "persona")
 public class Personnage implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -33,6 +29,7 @@ public class Personnage implements Serializable {
     @Column(nullable = false)
     private int level;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Race race;
 
