@@ -1,14 +1,19 @@
 package com.isep.appli.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 @Getter
 @Setter
 @Entity
+@Table(name = "persona")
 public class Personnage implements Serializable {
 
     @Id
@@ -36,5 +41,6 @@ public class Personnage implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 }

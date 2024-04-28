@@ -2,7 +2,7 @@ package com.isep.appli.services;
 
 import com.isep.appli.models.Personnage;
 import com.isep.appli.models.User;
-import com.isep.appli.repositories.PersonaRepository;
+import com.isep.appli.repositories.PersonnageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,17 +12,19 @@ import java.util.Base64;
 import java.util.List;
 
 @Service
-public class PersonaService {
-    private final PersonaRepository personaRepository;
+public class PersonnageService {
+    private final ImageService imageService;
+    private final PersonnageRepository personnageRepository;
     private final int baseLevel = 1;
     private final int baseMoney = 15000;
 
-    PersonaService(PersonaRepository personaRepository) {
-        this.personaRepository = personaRepository;
+    PersonnageService(PersonnageRepository personnageRepository, ImageService imageService) {
+        this.personnageRepository = personnageRepository;
+        this.imageService = imageService;
     }
 
     public List<Personnage> getPersonasByUser(User user) {
-        return personaRepository.findPersonasByUser(user);
+        return personnageRepository.findPersonasByUser(user);
     }
 
     public boolean savePersona(MultipartFile file, User user, Personnage personnage) {
@@ -36,12 +38,23 @@ public class PersonaService {
             return false;
         }
         try {
-            personnage.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+            byte[] compressedFile = imageService.compressImage(file);
+            personnage.setImage(Base64.getEncoder().encodeToString(compressedFile));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        personaRepository.save(personnage);
+        personnageRepository.save(personnage);
         return true;
+    }
+
+    public Personnage getPersonnageById(long id) {
+        return personnageRepository.findPersonnageById(id);
+    }
+
+    public void deletePersonnageById(long id) {
+        Personnage personnage = personnageRepository.findPersonnageById(id);
+
+        personnageRepository.delete(personnage);
     }
 }
