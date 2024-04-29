@@ -1,5 +1,6 @@
 package com.isep.appli.controllers;
 
+import com.isep.appli.models.Message;
 import com.isep.appli.services.EmailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -102,5 +103,14 @@ public class UserController {
 	@GetMapping("/homePlayer") 
 	public String checkLogin() {
 		return "homePlayer";
+	}
+
+	@GetMapping("/chatPage")
+	public String sendMessage(@Valid Message message) {
+
+/*
+		messageRepository.save(message);
+*/
+		return "chatPage";
 	}
 }

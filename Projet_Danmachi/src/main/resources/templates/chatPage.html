@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+</head>
+<body>
+
+
+
+<div class="container">
+  <h1>Messagerie</h1>
+
+
+  <div>
+    <span></span>
+    <span>
+      <form id="chat-form" th:action="@{/chatPage}" th:object="${message}" method="POST">
+
+          <div class="form-group">
+              <input class="form-control" type="text"  id="content" placeholder="Ecrivez un message ...">
+              <button type="submit" class="btn btn-outline-success"></i>Envoyer</button>
+          </div>
+      </form>
+
+    </span>
+  </div>
+
+
+</div>
+
+
+
+
+<script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
+</body>
+</html>
