@@ -9,6 +9,7 @@
 <body>
 
 
+<header th:insert="~{common/header :: header}"></header>
 
 <div class="container">
   <h1>Messagerie</h1>
@@ -17,7 +18,7 @@
   <div>
     <span></span>
     <span>
-      <form id="chat-form" th:action="@{/chatPage}" th:object="${message}" method="POST">
+      <form id="chat-form" th:action="@{/sendMessage}" th:object="${message}" method="POST">
 
           <div class="form-group">
               <input class="form-control" type="text"  id="content" placeholder="Ecrivez un message ...">
@@ -32,6 +33,7 @@
 </div>
 
 
+<footer th:insert="~{common/footer :: footer}"></footer>
 
 
 <script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
