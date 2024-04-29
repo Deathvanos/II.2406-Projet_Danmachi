@@ -1,0 +1,25 @@
+Index: Projet_Danmachi/src/main/java/com/isep/appli/controllers/PlayerController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.isep.appli.controllers;\r\n\r\nimport java.util.List;\r\n\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.context.annotation.Bean;\r\nimport org.springframework.stereotype.Controller;\r\nimport org.springframework.ui.Model;\r\nimport org.springframework.validation.BindingResult;\r\nimport org.springframework.web.bind.annotation.GetMapping;\r\nimport org.springframework.web.bind.annotation.PathVariable;\r\nimport org.springframework.web.bind.annotation.PostMapping;\r\nimport org.springframework.web.servlet.ModelAndView;\r\nimport org.springframework.web.servlet.ViewResolver;\r\nimport org.springframework.web.servlet.view.InternalResourceViewResolver;\r\n\r\nimport com.isep.appli.models.Player;\r\nimport com.isep.appli.services.PlayerService;\r\n\r\nimport jakarta.validation.Valid;\r\n\r\n@Controller\r\npublic class PlayerController {\r\n\t\r\n\t@Autowired\r\n\tprivate PlayerService playerService;\r\n\t\r\n\r\n\r\n\t\r\n\t/*******************************************************************************/\r\n\t/******************************** ALL ******************************************/\r\n\t/*******************************************************************************/\r\n\t@GetMapping(\"/home\")\r\n\tpublic ModelAndView home() {\r\n\t\tModelAndView modelAndView = new ModelAndView(\"index\");\r\n\t\tmodelAndView.addObject(\"users\", playerService.getAll());\r\n\t\treturn modelAndView;\r\n\t}\r\n\t\r\n\t@GetMapping(\"/\")\r\n\tpublic String index() {\r\n\t\treturn \"redirect:/home\";\r\n\t}\r\n\r\n\t/*******************************************************************************/\r\n\t/******************************** GUEST ****************************************/\r\n\t/*******************************************************************************/\r\n\t\r\n\t\r\n\t@GetMapping(\"/subscription\") \r\n\tpublic String subscriptionPage(Model model) {\r\n\t\tmodel.addAttribute(\"player\", new Player());\r\n\t\treturn \"subscription\";\r\n\t}\r\n\t\r\n\t@PostMapping(\"/subscription\") \r\n\t\tpublic String checkSubscription(@Valid Player player, BindingResult result, Model model) {\r\n\t\t// Check if the mail is available\r\n\t\tString email = player.getEmail();\r\n\t\tList<Player> p = playerService.findByEmail(email);\r\n\t\t// If not then error\r\n\t\tif (!p.isEmpty()) {\r\n\t\t\tSystem.out.println(\"Mail already taken\");\r\n\t\t\treturn \"redirect:/subscription\";\r\n\t\t}\r\n\t\t// Else create the player\r\n\t\tplayer.setRole(\"Player\");\r\n\t\tplayerService.save(player);\r\n\t\treturn \"redirect:/login\";\r\n\t}\r\n\t\r\n\t@GetMapping(\"/login\") \r\n\tpublic String loginPage(Model model) {\r\n\t\tmodel.addAttribute(\"player\", new Player());\r\n\t\treturn \"login\";\r\n\t}\r\n\t\r\n\t@PostMapping(\"/login\") \r\n\tpublic String checkLogin(@Valid Player player, BindingResult result, Model model) {\r\n\t\t\r\n\t\tString email = player.getEmail();\r\n\t\tList<Player> p = playerService.findByEmail(email);\r\n\t\tif (p.isEmpty()) {\r\n\t\t\tSystem.out.println(\"Mail inexistant\");\r\n\t\t\treturn \"redirect:/login\";\r\n\t\t}\r\n\t\treturn \"redirect:/homePlayer\";\r\n\t}\r\n\t\r\n\t\r\n\t/*******************************************************************************/\r\n\t/******************************** PLAYER ***************************************/\r\n\t/*******************************************************************************/\r\n\r\n\t@GetMapping(\"/homePlayer\") \r\n\tpublic String checkLogin() {\r\n\t\treturn \"homePlayer\";\r\n\t}\r\n}\r\n
+===================================================================
+diff --git a/Projet_Danmachi/src/main/java/com/isep/appli/controllers/PlayerController.java b/Projet_Danmachi/src/main/java/com/isep/appli/controllers/PlayerController.java
+--- a/Projet_Danmachi/src/main/java/com/isep/appli/controllers/PlayerController.java	
++++ b/Projet_Danmachi/src/main/java/com/isep/appli/controllers/PlayerController.java	
+@@ -3,16 +3,12 @@
+ import java.util.List;
+ 
+ import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.context.annotation.Bean;
+ import org.springframework.stereotype.Controller;
+ import org.springframework.ui.Model;
+ import org.springframework.validation.BindingResult;
+ import org.springframework.web.bind.annotation.GetMapping;
+-import org.springframework.web.bind.annotation.PathVariable;
+ import org.springframework.web.bind.annotation.PostMapping;
+ import org.springframework.web.servlet.ModelAndView;
+-import org.springframework.web.servlet.ViewResolver;
+-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+ 
+ import com.isep.appli.models.Player;
+ import com.isep.appli.services.PlayerService;

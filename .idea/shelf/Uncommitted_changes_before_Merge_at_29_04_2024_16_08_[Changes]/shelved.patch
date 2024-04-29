@@ -1,0 +1,209 @@
+Index: Projet_Danmachi/target/classes/templates/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE HTML>\r\n<html xmlns:th=\"http://www.thymeleaf.org\">\r\n\t<head>\r\n\t\t<meta charset=\"utf-8\">\r\n\t\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE-edge\">\r\n\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n\t\t<link th:rel=\"stylesheet\" th:href=\"@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}\"/>\r\n\t</head>\r\n\t<body>\r\n\t\t\r\n\t\t<header th:insert=\"common/header :: header\"></header>\r\n\t\r\n\t\t</br></br>\r\n\t\t<div class=\"container-fluid\">\r\n\t\t\t<h1>Wiki Danmachi RP</h1>\r\n\t\t\tRésumé : La mise en place de ce google site est un outil utile pour tout les joueurs, vous y trouverez tout plein de fonctionnalité ainsi que d'information afin de pouvoir rôle play sur le serveur.\r\n\t\t\t\r\n\t\t</div>\r\n\t\t</br></br>\r\n\t\t\r\n\t\t\r\n\t\t<div th:insert=\"common/footer :: footer\"></div>\r\n\t\t\r\n\t\t<script> th:src=\"@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}\"</script>\r\n\t</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Projet_Danmachi/target/classes/templates/index.html b/Projet_Danmachi/target/classes/templates/index.html
+--- a/Projet_Danmachi/target/classes/templates/index.html	(revision 69e7527411dd12d1bf23847cbb70431b8cdacacc)
++++ b/Projet_Danmachi/target/classes/templates/index.html	(date 1714399720461)
+@@ -5,22 +5,103 @@
+ 		<meta http-equiv="X-UA-Compatible" content="IE-edge">
+ 		<meta name="viewport" content="width=device-width, initial-scale=1">
+ 		<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
++		<link rel="stylesheet" href="/css/common.css"/>
+ 	</head>
+ 	<body>
+-		
+-		<header th:insert="common/header :: header"></header>
+-	
+-		</br></br>
++
++		<header th:insert="~{common/header :: header}"></header>
++
++
++		<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
++			<div class="container h-100">
++				<div class="row h-100 align-items-center">
++					<div class="col-12 text-center">
++						<h1 class="display-2 fw-light">Accueil</h1>
++					</div>
++				</div>
++			</div>
++		</div>
++
++
+ 		<div class="container-fluid">
+-			<h1>Wiki Danmachi RP</h1>
+-			Résumé : La mise en place de ce google site est un outil utile pour tout les joueurs, vous y trouverez tout plein de fonctionnalité ainsi que d'information afin de pouvoir rôle play sur le serveur.
+-			
+-		</div>
+-		</br></br>
+-		
+-		
+-		<div th:insert="common/footer :: footer"></div>
+-		
+-		<script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
++			<div class="row bodySize">
++				<div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
++
++				<div class="col-sm-8" style="background-color:#D5E4D9;">
++					<h1 class="display-5">Présentation du jeu Danmachi RP</h1>
++					<p class="text-justify">
++						DanmachiRP.fr est un jeu en ligne gratuit dans lequel le joueur incarne un héro afin d’aider sa guilde à prosperer.
++						L'objectif premier est de devenir le meilleur Hero. Pour cela divers moyens existent comme améliorer ses caractéristiques, acheter les meilleurs équipements, atteindre les plus hait sommets du donjon, ...
++						Mais le joueur peut choisir d'autres objectifs selon ses envies : son objectif peut être de collectionner le plus d’items rare possible, de devenir le plus riche héro ou être le meilleur chasseur de monstres du pays.
++					</p>
++					<h1 class="display-6">Aperçu du jeu Danmachi RP</h1>
++
++					<div class="container p-3">
++						<div class="row">
++							<div class="col">
++								<img th:src="@{/images/1.png}" width="100%" alt="">
++							</div>
++							<div class="col">
++								<p class="text-justify">
++									Les Dieux et Déesses ont commencé à descendre dans le monde inférieur depuis le Ciel il y a 1 an.
++									Les Dieux ont donné la falna aux aventuriers pour faire naître des héros.
++									Falna est la grâce, parfois appelée bénédiction, donnée par les dieux et les déesses aux membres de leur familia.
++									Ceux qui ont une falna acquièrent des prouesses physiques surhumaines lorsqu'ils en sont dotés et peuvent rassembler des excelia pour élever leur statut et devenir encore plus forts.
++								</p>
++							</div>
++							<div class="w-100"></div>
++							<div class="col">
++								<p class="text-justify">
++									Chaque jours, des familias apparaisent et forment de nouvelles recrues. Réalisez des missions pour votre familias, partez explorer le donjon, vendez vos tresors afin d'achetez de nouveaux équipements pour être le meilleur !
++								</p>
++							</div>
++							<div class="col">
++								<img th:src="@{/images/2.png}" width="100%" alt="">
++							</div>
++							<div class="w-100"></div>
++							<div class="col">
++								<img th:src="@{/images/3.png}" width="100%" alt="">
++							</div>
++							<div class="col">
++								<p class="text-justify">
++									Du combat au corps à corps aux techniques Ninpo, de l'acquisition de l'arme la plus puissante à celle de l'armure la plus résistante.
++									Même si tous les moyens sont bons pour vaincre ses ennemis, chaque aventuriers suit une voie qui lui est propre.
++									Allez-vous être prêt pour le combat final ?
++								</p>
++							</div>
++						</div>
++					</div>
++
++					<h1 class="display-6">Participez à l'aventure !</h1>
++					<a href="/subscription">Inscrivez-vous maintenant sur DanmachiRP.fr.</a>
++					<p class="text-justify">Pour rejoindre un village et entrer dans l’aventure</p>
++					<p class="text-center">
++						<img th:src="@{/images/c0.png}" width="25%" alt="">
++					</p>
++
++					<h1 class="display-6">Classement des Falna</h1>
++					<a href="#">Hebdomadaire</a> / <a href="#">Mensuel</a> / <a href="#">Annuel</a>
++					<p class="text-center">
++						<img th:src="@{/images/c1.png}" width="75%" alt="">
++					</p>
++					<h1 class="display-6">Classement des Équipes</h1>
++					<a href="#">Hebdomadaire</a> / <a href="#">Annuel</a> / <a href="#">Éternel</a>
++					<p class="text-center">
++						<img th:src="@{/images/c2.png}" width="75%" alt="">
++					</p>
++
++				</div>
++				<div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
++			</div>
++		</div>
++
++
++		<footer th:insert="~{common/footer :: footer}"></footer>
++
++		<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
++		<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
++
++
++
+ 	</body>
+ </html>
+\ No newline at end of file
+Index: Projet_Danmachi/target/classes/templates/common/header.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><header th:fragment=\"header\">    \r\n\r\n\t<a href=\"home\"><img th:src=\"@{/images/logo.jpeg}\" alt=\"Description de l'image\" width=\"75px\"></a>\r\n\r\n    <a class=\"btn btn btn-light btn-outline-success\" href=\"/login\">login</a>\r\n    <a class=\"btn btn btn-light btn-outline-success\" href=\"subscription\">subscription</a>\r\n</header>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Projet_Danmachi/target/classes/templates/common/header.html b/Projet_Danmachi/target/classes/templates/common/header.html
+--- a/Projet_Danmachi/target/classes/templates/common/header.html	(revision 69e7527411dd12d1bf23847cbb70431b8cdacacc)
++++ b/Projet_Danmachi/target/classes/templates/common/header.html	(date 1714399720460)
+@@ -1,7 +1,64 @@
+-<header th:fragment="header">    
++<header th:fragment="header">
+ 
+-	<a href="home"><img th:src="@{/images/logo.jpeg}" alt="Description de l'image" width="75px"></a>
++
++
++    <!-- https://getbootstrap.com/docs/4.1/components/navbar/? -->
++    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
++        <a class="navbar-brand" href="/home">
++            <img th:src="@{/images/logo.png}" width="30" height="30" class="d-inline-block align-top" alt="">
++            Danmachi RP
++        </a>
++        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
++            <span class="navbar-toggler-icon"></span>
++        </button>
++
++        <div class="collapse navbar-collapse" id="navbarSupportedContent">
++            <ul class="navbar-nav mr-auto">
++                <li class="nav-item active">
++                    <a class="nav-link" href="/home">Accueil</a>
++                </li>
++                <li class="nav-item dropdown">
++                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
++                        Guide
++                    </a>
++                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
++                        <a class="dropdown-item disabled" href="#">Aventurier</a>
++                        <a class="dropdown-item disabled" href="#">Divinité</a>
++                        <div class="dropdown-divider"></div>
++                        <a class="dropdown-item disabled" href="#">Race</a>
++                        <a class="dropdown-item disabled" href="#">Métier</a>
++                        <div class="dropdown-divider"></div>
++                        <a class="dropdown-item disabled" href="#">Familias</a>
++                        <a class="dropdown-item disabled" href="#">Guilde</a>
++                        <div class="dropdown-divider"></div>
++                        <a class="dropdown-item disabled" href="#">Santé</a>
++                        <a class="dropdown-item disabled" href="#">Excelia</a>
++                        <a class="dropdown-item disabled" href="#">Réputation</a>
++                        <div class="dropdown-divider"></div>
++                        <a class="dropdown-item disabled" href="#">Comment se battre</a>
++                        <a class="dropdown-item disabled" href="#">Donjon</a>
++                        <a class="dropdown-item disabled" href="#">Maître du Jeu</a>
++                        <a class="dropdown-item disabled" href="#">Bestiaire</a>
++                    </div>
++                </li>
++                <li class="nav-item active">
++                    <a class="nav-link" href="/chatPage">Messagerie</a>
++                </li>
++            </ul>
++            <!--<form class="form-inline my-2 my-lg-0">
++                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
++                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
++            </form>-->
++            <ul class="navbar-nav">
++                <li class="nav-item">
++                    <a class="nav-link" href="/login">Connexion</a>
++                </li>
++                <li class="nav-item">
++                    <a class="nav-link" href="/subscription">Inscription</a>
++                </li>
++            </ul>
++        </div>
++    </nav>
+ 
+-    <a class="btn btn btn-light btn-outline-success" href="/login">login</a>
+-    <a class="btn btn btn-light btn-outline-success" href="subscription">subscription</a>
++
+ </header>
+\ No newline at end of file
