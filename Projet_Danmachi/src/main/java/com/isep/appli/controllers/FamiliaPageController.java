@@ -27,4 +27,9 @@ public class FamiliaPageController {
 
         return "familiaPage";
     }
+
+    @GetMapping("/new_familia")
+    public String familiaPage() {
+       return "newFamilia";
+    }
 }
