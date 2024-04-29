@@ -1,0 +1,49 @@
+# Spring Boot
+/target/
+!**/target/*.jar
+!**/target/*.war
+
+# Maven
+mvnw
+mvnw.cmd
+.mvn/
+*.log
+
+# Gradle
+.gradle/
+build/
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Spring Boot application properties
+application.properties
+application.yml
+
+# Logs
+logs/
+
+# Dependency directories
+/bin/
+/lib/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Compiled Java classes
+*.class
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# NetBeans
+nbproject/
+
+
