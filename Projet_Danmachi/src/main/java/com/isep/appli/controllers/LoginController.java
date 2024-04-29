@@ -66,7 +66,12 @@ public class LoginController {
             model.addAttribute("loginError", true);
             return "/login";
         }
+
         session.setAttribute("user", userSignedIn);
+
+        if (userSignedIn.getIsAdmin()) {
+            return "redirect:/admin";
+        }
 
         return "redirect:/user-profile";
     }
