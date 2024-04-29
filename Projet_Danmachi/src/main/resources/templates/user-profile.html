@@ -10,6 +10,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	</head>
 	<body>
+		<header th:insert="~{common/header :: header}"></header>
+
 		<div class="row">
 			<div class="container bg-container mt-5 ml-5 py-3 col-md-6">
 				<div class="row">
@@ -144,6 +146,8 @@
 		</div>
 
 		<div id="alertContainer"></div>
+
+		<footer th:insert="~{common/footer :: footer}"></footer>
 
 		<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
 		<script src="/js/user-profile.js"></script>
