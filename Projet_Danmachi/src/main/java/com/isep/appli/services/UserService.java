@@ -21,14 +21,6 @@ public class UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	public Iterable<User> getAll() {
-		return userRepository.findAll();
-	}
-	
-	public User findByEmail(String email) {
-		return this.userRepository.findByEmail(email);
-	}
 
 	public String signup(User user) {
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -41,7 +33,7 @@ public class UserService {
 	}
 
 	public boolean checkUnique(String email) {
-		return userRepository.findByEmail(email) != null;
+		return userRepository.findUserByEmail(email) != null;
 	}
 
 	public boolean confirmEmail(long userId) {
@@ -56,7 +48,7 @@ public class UserService {
 	}
 
 	public User login(String email, String password) {
-		User user = userRepository.findByEmail(email);
+		User user = userRepository.findUserByEmail(email);
 		if (user != null && user.getEnabled() == true) {
 			String hashedPassword = user.getPassword();
 			if (passwordEncoder.matches(password, hashedPassword)) {
