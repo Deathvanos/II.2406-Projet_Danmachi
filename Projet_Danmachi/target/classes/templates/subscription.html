@@ -25,6 +25,10 @@
 					<label for="lastName">lastName</label>
 					<input class="form-control" type="text" th:field="*{lastName}"  id="lastName" placeholder="Nom">
 					<p id="lastNameError" class="text-danger"></p>
+
+					<label for="username">Pseudonym</label>
+					<input class="form-control" type="text" th:field="*{username}"  id="username" placeholder="Pseudonym">
+					<p id="usernameError" class="text-danger"></p>
 					
 					<label for="email">mail</label>
 					<input class="form-control" type="text" th:field="*{email}"  id="email" placeholder="Adresse mail">
@@ -46,8 +50,7 @@
 
 		</div>
 
-
-
+		<div id="alertContainer"></div>
 
 		<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
 		<script src="/js/subscription.js"></script>
