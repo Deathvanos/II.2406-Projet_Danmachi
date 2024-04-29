@@ -7,7 +7,7 @@
 		<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
 	</head>
 	<body>
-		
+	<header th:insert="~{common/header :: header}"></header>
 
 	
 		<div class="container-fluid text-center">
@@ -39,8 +39,9 @@
 
 
 		</div>
-		
-		
+
+
+	<footer th:insert="~{common/footer :: footer}"></footer>
 
 		
 		<script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>

@@ -8,6 +8,7 @@
     <title th:text=" ${familia.leaderId}"></title>
 </head>
 <body>
+<header th:insert="~{common/header :: header}"></header>
     <h1 th:text="'Familia de ' + ${familia.leaderId}"></h1>
 
     <p>Description:</p>
@@ -20,6 +21,8 @@
     <img th:src="${familia.emblemeImage}" style="max-width: 200px;" />
 
     <h2>Membres</h2> <!--Chercher parmi les persos ceux qui sont dans la guilde-->
+
+<footer th:insert="~{common/footer :: footer}"></footer>
 
 <script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
 </body>
