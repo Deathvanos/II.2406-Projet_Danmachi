@@ -29,7 +29,6 @@ public class Personnage implements Serializable {
     @Column(nullable = false)
     private int level;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Race race;
 

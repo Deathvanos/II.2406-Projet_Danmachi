@@ -20,3 +20,7 @@ body {
     bottom: -2rem;
     min-height: 75vh;
 }
+
+label {
+    font-weight: bold;
+}
