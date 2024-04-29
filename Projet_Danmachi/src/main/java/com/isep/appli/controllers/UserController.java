@@ -1,5 +1,6 @@
 package com.isep.appli.controllers;
 
+import com.isep.appli.models.Message;
 import com.isep.appli.models.Persona;
 import com.isep.appli.services.PersonaService;
 import com.isep.appli.services.EmailService;
@@ -132,5 +133,16 @@ public class UserController {
 
 		model.addAttribute("createPersonaError", true);
 		return "user-profile";
+	}
+
+	@GetMapping("/chatPage")
+	public String chatPage() {
+		return "chatPage";
+	}
+
+	@GetMapping("/sendMessage")
+	public String sendMessage(@Valid Message message) {
+
+		return "chatPage";
 	}
 }

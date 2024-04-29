@@ -1,0 +1,22 @@
+html, body {
+    background-color: #D5E4D9;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.bg-container {
+    background: #F6F6F6;
+}
+
+.bg-information {
+    background: #67819A;
+}
+
+.over-div {
+    margin-top: 10rem;
+    left: -3rem;
+    bottom: -2rem;
+    min-height: 75vh;
+}
