@@ -137,15 +137,11 @@ public class UserController {
 
 	@GetMapping("/chatPage")
 	public String chatPage() {
-
 		return "chatPage";
 	}
 
 	@GetMapping("/sendMessage")
 	public String sendMessage(@Valid Message message) {
-
-
-		//messageRepository.save(message);
 
 		return "chatPage";
 	}
