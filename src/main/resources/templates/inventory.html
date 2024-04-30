@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <title>Danmachi - Inventory</title>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+    <div class="container-fluid text-center">
+        <div class="row vh-100">
+            <div class="col-sm-4 d-flex flex-column" style="background-color:#67819A; font-family: Inter;">
+                <h2 class="text-white text-left font-weight-bold">
+                    Inventaire de Rosa Van Nymphela
+                </h2>
+                <form action="#" th:action="@{/inventory}" th:object="${item}" method="POST">
+                    <div class="form-group d-flex flex-column align-content-start justify-content-start">
+                        <input class="form-control mt-3" type="text" th:field="*{name}" id="name" placeholder="Recherche ...">
+                        <div class="form-check">
+                            <label class="form-check-label text-white text-left font-weight-bold">
+                                <input type="radio" class="form-check-input" name="category">Equipement
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label text-white text-left font-weight-bold">
+                                <input type="radio" class="form-check-input" name="category">Consomable
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label text-white text-left font-weight-bold">
+                                <input type="radio" class="form-check-input" name="category">Ressource
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label text-white text-left font-weight-bold">
+                                <input type="radio" class="form-check-input" name="category">Artefact
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-light btn-outline-success mt-3">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-8 d-flex flex-column h-100" style="background-color:#D5E4D9;">
+                <div class="container text-center d-flex flex-row flex-wrap p-10 h-100" >
+                    <th:block th:unless="${playerInventory.isEmpty()}" th:each="item : ${playerInventory.keySet()}">
+                        <div class="card my-3 w-25 h-25" >
+                            <div class="card-body" style="background-color:#D9D9D9;">
+                                <img th:unless="${item.getUrlImage().equals('Null')}" src="${item.urlImage}" class="mx-auto d-block">
+                            </div>
+                            <div class="card-footer text-left" th:text="${playerInventory.get(item) + ' x ' + item.getName()}" style="background-color:#FFFFFF; font-family: Inter;"></div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </th:block>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+    <script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
+</body>
+</html>
