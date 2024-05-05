@@ -1,6 +1,7 @@
-package com.isep.appli.models;
+package com.isep.appli.dbModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.isep.appli.models.enums.Race;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

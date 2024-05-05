@@ -1,5 +1,8 @@
 package com.isep.appli.controllers;
 
+import com.isep.appli.dbModels.Message;
+import com.isep.appli.dbModels.Personnage;
+import com.isep.appli.dbModels.User;
 import com.isep.appli.models.*;
 import com.isep.appli.services.EmailService;
 import com.isep.appli.services.PersonnageService;
@@ -12,8 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,13 +56,17 @@ public class UserController {
 
 	@PostMapping("/save-personnage")
 	public String savePersonaToUser(@Valid Personnage personnage,
-									@RequestParam("file") MultipartFile file,
+									@RequestParam("croppedImageData") String croppedImageData,
 									HttpSession session,
-									Model model)
-	{
+									Model model) {
 		User user = (User) session.getAttribute("user");
 
-		if (personnageService.savePersona(file, user, personnage)) {
+		String base64Image = croppedImageData.split(",")[1]; // Extract Base64 portion
+		byte[] decodedImageData = Base64.getDecoder().decode(base64Image.getBytes());
+
+		ByteArrayInputStream bis = new ByteArrayInputStream(decodedImageData);
+
+		if (personnageService.savePersona(bis, user, personnage)) {
 			return "redirect:/user-profile";
 		}
 
@@ -66,9 +74,12 @@ public class UserController {
 		return "user-profile";
 	}
 
+
 	@GetMapping("/personnage/{id}")
-	public ResponseEntity<PersonnageDto> getPersonnageById(@PathVariable long id) {
+	public ResponseEntity<PersonnageDto> getPersonnageById(@PathVariable long id, HttpSession session) {
 		Personnage currentPersonnage = personnageService.getPersonnageById(id);
+
+		session.setAttribute("personnage", currentPersonnage);
 
 		PersonnageDto personnageDto = new PersonnageDto(currentPersonnage, currentPersonnage.getRace().getDisplayName());
 		return ResponseEntity.ok(personnageDto);

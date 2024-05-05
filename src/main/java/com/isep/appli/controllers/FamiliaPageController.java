@@ -1,6 +1,6 @@
 package com.isep.appli.controllers;
 
-import com.isep.appli.models.Familia;
+import com.isep.appli.dbModels.Familia;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Controller;

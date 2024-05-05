@@ -1,5 +1,6 @@
 package com.isep.appli.models;
 
+import com.isep.appli.dbModels.Personnage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

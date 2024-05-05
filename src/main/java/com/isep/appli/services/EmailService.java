@@ -1,6 +1,6 @@
 package com.isep.appli.services;
 
-import com.isep.appli.models.User;
+import com.isep.appli.dbModels.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

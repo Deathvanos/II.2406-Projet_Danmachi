@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.isep.appli.models.User;
+import com.isep.appli.dbModels.User;
 import com.isep.appli.repositories.UserRepository;
 
 
