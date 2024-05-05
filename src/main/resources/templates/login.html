@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 	<head>
+		<title>Login</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE-edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +16,7 @@
 			<div class="row vh-100">
 				<div class="col d-flex flex-column justify-content-center" style="background-color:#D5E4D9;">
 					
-					<a href="home"><img th:src="@{/images/logo.png}" alt="Description de l'image" width="75px"></a>
+					<a href="/home"><img th:src="@{/images/logo.png}" alt="Description de l'image" width="75px"></a>
 					<h1>Login</h1>
 					<form action="#" th:action="@{/login}" th:object="${user}" method="POST">
 						<div class="form-group">
@@ -44,6 +45,7 @@
 	<footer th:insert="~{common/footer :: footer}"></footer>
 
 		
-		<script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
+		<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+
 	</body>
 </html>

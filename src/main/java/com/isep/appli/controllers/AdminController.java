@@ -5,8 +5,6 @@ import com.isep.appli.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,14 +54,14 @@ public class AdminController {
         if (!checkUser.equals("200")){return checkUser;}
 
         // limit the maw size
-        if (size>50) {return "redirect:/admin/users-management?page="+page+"&size=50";}
+        if (size>50) {return String.format("redirect:/admin/users-management?page=%d&size=50", page);}
         // Recover UserList
         Page<User> userPage = userService.getAllUsers(PageRequest.of(page, size));
         model.addAttribute("usersPages", userPage);
 
         // Add information for pagination
         int totalPages = userPage.getTotalPages();
-        if (page > totalPages) {return "redirect:/admin/users-management?page="+(userPage.getTotalPages()-1)+"&size="+size;}
+        if (page > totalPages) {return String.format("redirect:/admin/users-management?page=%d&size=%d", userPage.getTotalPages() - 1, size);}
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                     .boxed()
@@ -92,6 +90,7 @@ public class AdminController {
     /*
     table pas claire entre PersonnaService et Personnage Service et create player ne fonctionne plus
     model : separer en deux model pour bdd et enumeration ?
+    library, ne rien prendre sur le web, tout installer en local (subscription page)
 
 
 
