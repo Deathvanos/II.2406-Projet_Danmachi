@@ -23,6 +23,12 @@ public class UserController {
 		this.personnageService = personnageService;
 	}
 
+	static public String checkIsUser(User user, Model model) {
+		if (user==null) {return "errors/error-401";}
+		model.addAttribute("user", user);
+		return "200";
+	}
+
 	@GetMapping("/user-profile")
 	public String checkLogin(Model model, HttpSession session) {
 

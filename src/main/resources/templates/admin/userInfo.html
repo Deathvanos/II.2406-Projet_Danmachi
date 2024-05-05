@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>User Info</title>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">User Info - NOT WORKING</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-1 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-10 borderImage">
+
+            id: <p th:text="${userInfo.id}"></p>
+            enabled: <p th:text="${userInfo.enabled}"></p>
+            username: <p th:text="${userInfo.username}"></p>
+            firstName: <input type="text" th:value="${userInfo.firstName}" th:placeholder="${userInfo.firstName}" required><br>
+            lastName: <input type="text" th:value="${userInfo.lastName}" th:placeholder="${userInfo.lastName}" required><br>
+            email: <input type="email" th:value="${userInfo.email}" th:placeholder="${userInfo.email}" required><br>
+            isOnline: <p>No</p>
+
+
+            <p th:if="${userInfo.isAdmin}" th:text="'Admin'"></p>
+            <p th:unless="${userInfo.isAdmin}">
+                <a th:href="'#user' + ${userInfo.id} + '-player1'">NamePlayer_1</a>
+                <a class="btn btn-danger" th:href="'#user' + ${userInfo.id} + '-player1'"><i class="bi bi-trash-fill"></i>Delete Player 1</a>
+                <br><a th:href="'#user' + ${userInfo.id} + '-player2'">NamePlayer_2</a>
+                <a class="btn btn-danger" th:href="'#user' + ${userInfo.id} + '-player2'"><i class="bi bi-trash-fill"></i>Delete Player 2</a>
+                <br><a th:href="'#user' + ${userInfo.id} + '-player3'">NamePlayer_3</a>
+                <a class="btn btn-danger" th:href="'#user' + ${userInfo.id} + '-player3'"><i class="bi bi-trash-fill"></i>Delete Player 3</a>
+                <br><a th:href="'#user' + ${userInfo.id} + '-player4'">NamePlayer_4</a>
+                <a class="btn btn-danger" th:href="'#user' + ${userInfo.id} + '-player4'"><i class="bi bi-trash-fill"></i>Delete Player 4</a>
+            </p>
+            Create At: <p>???</p>
+            Last login: <p>???</p>
+            messages file: <a th:href="'#userMessages' + ${userInfo.id}">All user message</a><br><br>
+
+            <a class="btn btn-danger" th:href="'#reactor-user-' + ${userInfo.id}"><i class="bi bi-trash-fill"></i>Delete User</a>
+            <a class="btn btn-warning" th:href="'#delete-user-' + ${userInfo.id}"><i class="bi bi-trash-fill"></i>Modifier</a>
+            <a class="btn btn-info" href="/admin/users-management"><i class="bi bi-trash-fill"></i>Retour</a>
+
+        </div>
+
+        <div class="col-sm-1 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

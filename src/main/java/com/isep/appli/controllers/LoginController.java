@@ -64,15 +64,21 @@ public class LoginController {
 
         if (userSignedIn == null) {
             model.addAttribute("loginError", true);
-            return "/login";
+            return "login";
         }
 
         session.setAttribute("user", userSignedIn);
 
         if (userSignedIn.getIsAdmin()) {
-            return "redirect:/admin";
+            return "redirect:/admin/home";
         }
 
         return "redirect:/user-profile";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/home";
     }
 }
