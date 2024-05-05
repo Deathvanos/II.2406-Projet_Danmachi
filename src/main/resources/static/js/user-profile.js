@@ -1,3 +1,5 @@
+let playerId;
+
 function showDiv(divId, button) {
     const divsToHide = document.querySelectorAll('.div-info');
     Array.prototype.forEach.call(divsToHide, function(div) {
@@ -8,20 +10,17 @@ function showDiv(divId, button) {
     divToShow.style.display = 'block';
 
     if (divId === 'player-information') {
-        const personnageId = button.id;
+        playerId = button.id;
 
         $.ajax({
             type: 'GET',
-            url: '/personnage/' + personnageId,
+            url: '/personnage/' + playerId,
             success: function(response) {
                 $('#info-nom').text(response.lastName);
                 $('#info-prenom').text(response.firstName);
                 $('#info-race').text(response.race);
                 $('#info-money').text(response.money);
                 $('#info-level').text(response.level);
-
-                const deleteButton = document.getElementById('deletePersonnage');
-                deleteButton.id = button.id;
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
@@ -35,9 +34,7 @@ function clearSelection() {
     document.getElementById('race-select').selectedIndex = 0;
 }
 
-function deletePersonnage(button) {
-    const playerId = button.id;
-
+function deletePersonnage() {
     $.ajax({
         type: 'DELETE',
         url: '/personnage/' + playerId,

@@ -14,13 +14,6 @@ body {
     background: #67819A;
 }
 
-.over-div {
-    margin-top: 10rem;
-    left: -3rem;
-    bottom: -2rem;
-    min-height: 75vh;
-}
-
 label {
     font-weight: bold;
 }
