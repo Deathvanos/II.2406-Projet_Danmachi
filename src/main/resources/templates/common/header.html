@@ -46,6 +46,18 @@
                     <a class="nav-link" href="/admin/home">Admin</a>
                 </li>
 
+                <!-- Ajouter lien vers page de liste des familles -->
+                <!--Ajoutaer bouton créer familia si le perso n'est pas dans une familia-->
+                <!--
+                <li th:if="${user != null && personnage != null && personnage.getFamilia() == null}" class="nav-item active">
+                    <a class="nav-link" href="/newFamilia">Créer une familia</a>
+                </li>
+                -->
+                <li th:if="${user != null }" class="nav-item active">
+                    <a class="nav-link" href="/new_familia">Créer une familia</a>
+                </li>
+
+
 
 
 

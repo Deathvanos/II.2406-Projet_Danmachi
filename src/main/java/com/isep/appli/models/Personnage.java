@@ -40,4 +40,9 @@ public class Personnage implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "familia_id")
+    @JsonIgnore
+    private Familia familia;
 }

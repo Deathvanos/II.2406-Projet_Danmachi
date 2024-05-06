@@ -5,22 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
-    <title th:text=" ${familia.leaderId}"></title>
+    <title th:text=" ${leaderFirstName}"></title>
+    <link rel="stylesheet" href="/css/common.css"/>
 </head>
 <body>
 <header th:insert="~{common/header :: header}"></header>
-    <h1 th:text="'Familia de ' + ${familia.leaderId}"></h1>
+<h1 th:text="'Familia de ' + ${leaderFirstName} + ${leaderLastName}"></h1>
+<!--Voir comment séparer le prénom et le nom-->
 
-    <p>Description:</p>
-    <p th:text="${familia.description}"></p>
+<p>Description:</p>
+<p th:text="${familia.description}"></p>
 
-    <p>Leader:</p> <!--Leader = Dieu-->
-    <p th:text="${familia.leaderId}"></p> <!--+ ajouter image-->
+<p>Leader:</p> <!--Leader = Dieu-->
+<p th:text="${leaderFirstName} + ${leaderLastName}"></p> <!--+ ajouter image-->
+<!--Voir comment séparer le prénom et le nom-->
 
-    <p>Emblème:</p>
-    <img th:src="${familia.emblemeImage}" style="max-width: 200px;" />
+<p>Emblème:</p>
+<img th:src="'data:image/png;base64,' + ${familia.embleme_image}" style="max-width: 200px;" alt="Embleme de la familia">
 
-    <h2>Membres</h2> <!--Chercher parmi les persos ceux qui sont dans la guilde-->
+<h2>Membres</h2> <!--Chercher parmi les persos ceux qui sont dans la guilde-->
 
 <footer th:insert="~{common/footer :: footer}"></footer>
 
