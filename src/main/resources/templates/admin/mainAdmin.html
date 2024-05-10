@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <title>Admin</title>
     <meta charset="utf-8">
@@ -16,15 +16,20 @@
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12 text-center">
-                    <h1 class="display-2 fw-light">Admin Acceuil</h1>
+                    <h1 class="display-2 fw-light">Admin Accueil</h1>
                 </div>
             </div>
         </div>
     </div>
 
+    <p th:text="'Bonjour '+${user.getFirstName()+' !'}">Bonjour Prénom</p>
+
     <ul>
-        <li><a href="#">Users management</a></li>
+        <li><a href="/admin/users-management">Users management</a></li>
+        <li><a href="#">Player management</a></li>
+        <li><a href="#">Famillia management</a></li>
         <li><a href="#">Items management</a></li>
+        <br></br>
         <li><a href="#">Monsters management</a></li>
         <li><a href="#">Donjon management</a></li>
         <li><a href="#">Game Forgeron management</a></li>

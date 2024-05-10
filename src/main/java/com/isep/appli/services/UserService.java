@@ -1,11 +1,11 @@
 package com.isep.appli.services;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,4 +64,15 @@ public class UserService {
 		}
 		return null;
 	}
+
+
+	public Page<User> getAllUsers(Pageable pageable) {
+		return this.userRepository.findAll(pageable);
+	}
+
+	public User getUserById(long userId) {
+		return userRepository.findById(userId).orElse(null);
+	}
+
+
 }
