@@ -18,7 +18,10 @@ public class Item implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String name;
+	@Lob
+	@Column(columnDefinition = "MEDIUMBLOB")
 	private String urlImage;
+	private String category;
 	private boolean canUse;
 	private String description;
 	private String useDescription;
