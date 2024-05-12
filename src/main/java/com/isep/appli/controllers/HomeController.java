@@ -1,6 +1,6 @@
 package com.isep.appli.controllers;
 
-import com.isep.appli.models.User;
+import com.isep.appli.dbModels.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

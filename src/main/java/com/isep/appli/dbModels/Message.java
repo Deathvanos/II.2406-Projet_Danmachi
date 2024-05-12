@@ -1,4 +1,4 @@
-package com.isep.appli.models;
+package com.isep.appli.dbModels;
 
 import java.io.Serializable;
 import java.util.Date;
