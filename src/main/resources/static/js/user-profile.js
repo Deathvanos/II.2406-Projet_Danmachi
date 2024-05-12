@@ -1,41 +1,25 @@
-let playerId;
-
 $(document).ready(function () {
     let cropper;
 
-    // Initialize Cropper.js when modal is shown
     $('#imageModal').on('shown.bs.modal', function () {
-        var image = document.getElementById('image');
+        let image = document.getElementById('image');
         cropper = new Cropper(image, {
-            aspectRatio: 3 / 4,
-            crop: function (e) {
-                // Output the crop coordinates if needed
-                console.log(e.detail.x);
-                console.log(e.detail.y);
-                console.log(e.detail.width);
-                console.log(e.detail.height);
-            },
+            aspectRatio: 3 / 4
         });
     });
 
-    // Crop image when crop button is clicked
     $('#cropButton').click(function () {
-        // Get cropped image data
-        var croppedImageData = cropper.getCroppedCanvas().toDataURL('image/jpeg');
-        // Set cropped image data to hidden input field
+        let croppedImageData = cropper.getCroppedCanvas().toDataURL('image/jpeg');
         $('#croppedImageData').val(croppedImageData);
-        // Close modal
         $('#imageModal').modal('hide');
     });
 
-    // Open modal when file input changes
     $('#image-input').change(function (event) {
-        var files = event.target.files;
-        var reader = new FileReader();
+        let files = event.target.files;
+        let reader = new FileReader();
 
         reader.onload = function (event) {
             $('#image').attr('src', event.target.result);
-            // Show modal
             $('#imageModal').modal('show');
         };
 
@@ -54,17 +38,18 @@ function showDiv(divId, button) {
     divToShow.style.display = 'block';
 
     if (divId === 'player-information') {
-        playerId = button.id;
+        let playerId = button.id;
+        sessionStorage.setItem("personnageId", playerId);
 
         $.ajax({
             type: 'GET',
             url: '/personnage/' + playerId,
             success: function(response) {
-                $('#info-nom').text(response.personnage.lastName);
-                $('#info-prenom').text(response.personnage.firstName);
+                $('#info-nom').text(response.lastName);
+                $('#info-prenom').text(response.firstName);
                 $('#info-race').text(response.raceString);
-                $('#info-money').text(response.personnage.money);
-                $('#info-level').text(response.personnage.level);
+                $('#info-money').text(response.money);
+                $('#info-level').text(response.level);
                 $('#button-race').text('Fiche '+response.raceString);
             },
             error: function(xhr, status, error) {
@@ -74,27 +59,32 @@ function showDiv(divId, button) {
     }
 }
 
-
 function clearSelection() {
     document.getElementById('race-select').selectedIndex = 0;
 }
 
-function deletePersonnage() {
-    $.ajax({
-        type: 'DELETE',
-        url: '/personnage/' + playerId,
-        success: function(response) {
-            location.reload();
-            showBootstrapAlert("success", response);
-        },
-        error: function(xhr, status) {
-            showBootstrapAlert("danger", "Erreur "+ status +": Veuillez réessayer plus tard.")
-        }
+$(document).ready(function() {
+    $("#deleteForm").submit(function(event) {
+        event.preventDefault();
+        let personnageId = $("#personnageId").val();
+
+        $.ajax({
+            url: "/personnage/" + personnageId,
+            type: "DELETE",
+            success: function(response) {
+                alert("Personnage supprimé avec succès!");
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                alert("Erreur lors de la suppression du personnage.");
+            }
+        });
     });
-}
+});
 
 document.getElementById("modify-user-info-form").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     const email = document.getElementById("email").value;
     const emailError = document.getElementById("emailError");
@@ -129,7 +119,6 @@ document.getElementById("modify-user-info-form").addEventListener("submit", func
         },
         error: function(xhr, status, error) {
             console.error("Error checking uniqueness:", error);
-            // Handle error if needed
         }
     });
 
@@ -155,10 +144,21 @@ document.getElementById('image-input').addEventListener('change', function (e) {
         imagePreview.src = imageUrl;
 
         cropper = new Cropper(imagePreview, {
-            aspectRatio: 1, // Set aspect ratio as needed
-            viewMode: 1, // Set view mode as needed
+            aspectRatio: 1,
+            viewMode: 1
         });
     };
 
     reader.readAsDataURL(file);
 });
+
+function validateForm() {
+    let fileInput = document.getElementById('image-input');
+    let file = fileInput.files[0];
+
+    if (!file) {
+        alert("Veuillez sélectionner une image.");
+        return false;
+    }
+    return true;
+}

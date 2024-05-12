@@ -81,7 +81,16 @@ public class UserController {
 
 		session.setAttribute("personnage", currentPersonnage);
 
-		PersonnageDto personnageDto = new PersonnageDto(currentPersonnage, currentPersonnage.getRace().getDisplayName());
+		PersonnageDto personnageDto = new PersonnageDto(
+				currentPersonnage.getId(),
+				currentPersonnage.getFirstName(),
+				currentPersonnage.getLastName(),
+				currentPersonnage.getImage(),
+				currentPersonnage.getLevel(),
+				currentPersonnage.getMoney(),
+				currentPersonnage.getUser().getId(),
+				currentPersonnage.getRace().getDisplayName()
+		);
 		return ResponseEntity.ok(personnageDto);
 	}
 

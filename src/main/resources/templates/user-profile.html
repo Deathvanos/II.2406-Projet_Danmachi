@@ -86,31 +86,31 @@
 				<div class="div-info py-3" id="create-player" style="display:none;">
 					<h1 class="text-white mb-5">Créer nouveau personnage :</h1>
 					<form class="form-group mx-5" id="createPlayerForm" method="post" th:action="@{/save-personnage}" th:object="${newPersonnage}" enctype="multipart/form-data">
-						<input class="form-control mb-3" type="text" placeholder="Prénom" th:field="*{firstName}">
-						<input class="form-control mb-3" type="text" placeholder="Nom" th:field="*{lastName}">
+						<input class="form-control mb-3" type="text" placeholder="Prénom" th:field="*{firstName}" required>
+						<input class="form-control mb-3" type="text" placeholder="Nom" th:field="*{lastName}" required>
 
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<button class="btn btn-outline-light" type="button" onclick="clearSelection()" style="height: 38px;">&times;</button>
 							</div>
-							<select class="form-control" id="race-select" th:field="*{race}" style="height: 38px;">
+							<select class="form-control" id="race-select" th:field="*{race}" style="height: 38px;" required>
 								<option value="" selected disabled>Race</option>
 								<option th:each="value : ${T(com.isep.appli.models.enums.Race).values()}" th:value="${value}" th:text="${value.getDisplayName()}"></option>
 							</select>
 						</div>
 
 						<!-- File input field for selecting image -->
-						<input class="form-control mb-3" type="file" id="image-input" name="file" accept="image/*" placeholder="Profil du personnage">
+						<input class="form-control mb-3" type="file" id="image-input" name="file" accept="image/*" placeholder="Profil du personnage" required>
 
 						<!-- Hidden input field to store cropped image data -->
-						<input type="hidden" id="croppedImageData" name="croppedImageData">
+						<input type="hidden" id="croppedImageData" name="croppedImageData" required>
 
-						<button class="btn btn-light btn-outline-success d-block mx-auto" type="submit" id="submit-button">Créer personnage</button>
+						<button class="btn btn-light btn-outline-success d-block mx-auto" type="submit" id="submit-button" onclick="return validateForm()">Créer personnage</button>
 					</form>
 					<p class="text-danger" th:if="${createPersonaError}" th:value="'Il y a eu une erreur en créant le personnage veuillez reessayer plus tard'"></p>
 				</div>
 
-				<div class="div-info py-3" id="player-information" style="display:none;">
+				<div class="div-info py-3" id="player-information" style="display:none;" th:with="personnageId=${session.personnage.getId()}">
 					<h1 class="text-white my-3">Information Personnage :</h1>
 					<div class="container bg-container py-3">
 						<div class="row">
@@ -160,8 +160,10 @@
 						</div>
 					</div>
 
-					<button class="btn btn-light btn-outline-danger d-block mx-auto" onclick="deletePersonnage(this)" id="deletePersonnage">Suprimer personnage</button>
-
+					<form id="deleteForm">
+						<input type="hidden" id="personnageId" name="id" th:value="${personnageId}">
+						<button class="btn btn-light btn-outline-danger d-block mx-auto" type="submit">Supprimer personnage</button>
+					</form>
 				</div>
 
 			</div>
