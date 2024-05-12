@@ -1,4 +1,4 @@
-package com.isep.appli.models;
+package com.isep.appli.models.enums;
 
 public enum Race {
     HUMAN("Humain"),

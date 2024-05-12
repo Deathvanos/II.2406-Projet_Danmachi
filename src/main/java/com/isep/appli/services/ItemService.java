@@ -1,6 +1,6 @@
 package com.isep.appli.services;
 
-import com.isep.appli.models.Item;
+import com.isep.appli.dbModels.Item;
 import com.isep.appli.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

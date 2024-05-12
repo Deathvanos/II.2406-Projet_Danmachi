@@ -1,13 +1,12 @@
 package com.isep.appli.services;
 
-import com.isep.appli.models.Personnage;
-import com.isep.appli.models.User;
+import com.isep.appli.dbModels.Personnage;
+import com.isep.appli.dbModels.User;
 import com.isep.appli.repositories.PersonnageRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Base64;
 import java.util.List;
 
@@ -27,21 +26,23 @@ public class PersonnageService {
         return personnageRepository.findPersonasByUser(user);
     }
 
-    public boolean savePersona(MultipartFile file, User user, Personnage personnage) {
+    public boolean savePersona(InputStream imageData, User user, Personnage personnage) {
 
         personnage.setUser(user);
         personnage.setLevel(baseLevel);
         personnage.setMoney(baseMoney);
 
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        if(fileName.contains("..")) {
-            return false;
-        }
         try {
-            byte[] compressedFile = imageService.compressImage(file);
-            personnage.setImage(Base64.getEncoder().encodeToString(compressedFile));
+            byte[] compressedImage = imageService.compressImage(imageData); // assuming this method compresses the image
+            personnage.setImage(Base64.getEncoder().encodeToString(compressedImage));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error compressing image", e);
+        } finally {
+            try {
+                imageData.close(); // close the input stream
+            } catch (IOException e) {
+                // handle or log any potential exception while closing the stream
+            }
         }
 
         personnageRepository.save(personnage);

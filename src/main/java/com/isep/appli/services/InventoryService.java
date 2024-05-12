@@ -1,7 +1,7 @@
 package com.isep.appli.services;
 
-import com.isep.appli.models.Inventory;
-import com.isep.appli.models.Item;
+import com.isep.appli.dbModels.Inventory;
+import com.isep.appli.dbModels.Item;
 import com.isep.appli.repositories.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
