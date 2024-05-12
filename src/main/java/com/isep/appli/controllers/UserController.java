@@ -47,6 +47,9 @@ public class UserController {
 		}
 
 		List<Personnage> personnages = personnageService.getPersonasByUser(user);
+		if(!personnages.isEmpty()){
+			session.setAttribute("personnage", personnages.get(0));
+		}
 
 		model.addAttribute("user", user);
 		model.addAttribute("personnages", personnages);

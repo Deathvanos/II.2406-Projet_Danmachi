@@ -110,7 +110,7 @@
 					<p class="text-danger" th:if="${createPersonaError}" th:value="'Il y a eu une erreur en créant le personnage veuillez reessayer plus tard'"></p>
 				</div>
 
-				<div class="div-info py-3" id="player-information" style="display:none;" th:with="personnageId=${session.personnage.getId()}">
+				<div class="div-info py-3" id="player-information" style="display:none;" th:with="personnageId=${session.personnage.id}">
 					<h1 class="text-white my-3">Information Personnage :</h1>
 					<div class="container bg-container py-3">
 						<div class="row">
