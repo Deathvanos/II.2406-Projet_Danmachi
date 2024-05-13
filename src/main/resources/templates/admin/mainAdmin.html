@@ -22,22 +22,37 @@
         </div>
     </div>
 
-    <p th:text="'Bonjour '+${user.getFirstName()+' !'}">Bonjour Prénom</p>
 
-    <ul>
-        <li><a href="/admin/users-management">Users management</a></li>
-        <li><a href="#">Player management</a></li>
-        <li><a href="#">Famillia management</a></li>
-        <li><a href="#">Items management</a></li>
-        <br></br>
-        <li><a href="#">Monsters management</a></li>
-        <li><a href="#">Donjon management</a></li>
-        <li><a href="#">Game Forgeron management</a></li>
-        <li><a href="#">Game alchimiste management</a></li>
-        <li><a href="#">Game enchanteur management</a></li>
-        <li><a href="#">Game cuisinier  management</a></li>
-        <li><a href="#">gérer les signalements</a></li>
-    </ul>
+
+
+    <div class="container-fluid">
+        <div class="row bodySize">
+            <div class="col-sm-1 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+            <div class="col-sm-10 borderImage">
+
+                <p th:text="'Bonjour '+${user.getFirstName()+' !'}">Bonjour Prénom</p>
+
+                <ul>
+                    <li><a href="/admin/users-management">Users management</a></li>
+                    <li><a href="#">Player management</a></li>
+                    <li><a href="#">Famillia management</a></li>
+                    <li><a href="#">Items management</a></li>
+                    <br></br>
+                    <li><a href="#">Monsters management</a></li>
+                    <li><a href="#">Donjon management</a></li>
+                    <li><a href="#">Game Forgeron management</a></li>
+                    <li><a href="#">Game alchimiste management</a></li>
+                    <li><a href="#">Game enchanteur management</a></li>
+                    <li><a href="#">Game cuisinier  management</a></li>
+                    <li><a href="#">gérer les signalements</a></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-1 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+        </div>
+    </div>
+
 
 
     <footer th:insert="~{common/footer :: footer}"></footer>
