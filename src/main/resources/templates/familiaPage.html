@@ -11,14 +11,12 @@
 <body>
 <header th:insert="~{common/header :: header}"></header>
 <h1 th:text="'Familia de ' + ${leaderFirstName} + ${leaderLastName}"></h1>
-<!--Voir comment séparer le prénom et le nom-->
 
 <p>Description:</p>
 <p th:text="${familia.description}"></p>
 
 <p>Leader:</p> <!--Leader = Dieu-->
 <p th:text="${leaderFirstName} + ${leaderLastName}"></p> <!--+ ajouter image-->
-<!--Voir comment séparer le prénom et le nom-->
 
 <p>Emblème:</p>
 <img th:src="'data:image/png;base64,' + ${familia.embleme_image}" style="max-width: 200px;" alt="Embleme de la familia">

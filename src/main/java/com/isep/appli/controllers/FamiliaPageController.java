@@ -50,9 +50,11 @@ public class FamiliaPageController {
         if (leader == null) {
             throw new IllegalArgumentException("Le nom du leader n'est pas correct.");
         }
+
+
         model.addAttribute("familia", familia);
-        model.addAttribute("leaderFirstName", leader.getFirstName());
-        model.addAttribute("leaderLastName", leader.getLastName());
+        //model.addAttribute("leaderFirstName", leader.getFirstName());
+        //model.addAttribute("leaderLastName", leader.getLastName());
         return "familiaPage";
     }
     @GetMapping("/new_familia")
