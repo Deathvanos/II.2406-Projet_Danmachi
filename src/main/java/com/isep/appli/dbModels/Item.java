@@ -1,5 +1,6 @@
 package com.isep.appli.dbModels;
 
+import com.isep.appli.models.enums.ItemCategory;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +19,15 @@ public class Item implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String name;
+
 	@Lob
 	@Column(columnDefinition = "MEDIUMBLOB")
 	private String urlImage;
-	private String category;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private ItemCategory category;
+
 	private boolean canUse;
 	private String description;
 	private String useDescription;

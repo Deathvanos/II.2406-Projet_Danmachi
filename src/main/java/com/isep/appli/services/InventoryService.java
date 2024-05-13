@@ -2,6 +2,7 @@ package com.isep.appli.services;
 
 import com.isep.appli.dbModels.Inventory;
 import com.isep.appli.dbModels.Item;
+import com.isep.appli.models.enums.ItemCategory;
 import com.isep.appli.repositories.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,5 +75,27 @@ public class InventoryService {
 			}
 		}
 		return  returnedList;
+	}
+
+	public Map<Item, Inventory> getPlayerInventoryByItemNameAndItemCategory(long playerId, String itemName, ItemCategory itemCategory){
+		Map<Item, Inventory> playerInventory = getPlayerInventory(playerId);
+		Map<Item, Inventory> inventory = new HashMap<>();
+		for (Item item: playerInventory.keySet()) {
+			if(item.getName().toLowerCase().contains(itemName.toLowerCase()) && item.getCategory().equals(itemCategory)){
+				inventory.put(item, playerInventory.get(item));
+			}
+		}
+		return inventory;
+	}
+
+	public Map<Item, Inventory> getPlayerInventoryByItemCategory(long playerId, ItemCategory itemCategory){
+		Map<Item, Inventory> playerInventory = getPlayerInventory(playerId);
+		Map<Item, Inventory> inventory = new HashMap<>();
+		for (Item item: playerInventory.keySet()) {
+			if(item.getCategory().equals(itemCategory)){
+				inventory.put(item, playerInventory.get(item));
+			}
+		}
+		return inventory;
 	}
 }

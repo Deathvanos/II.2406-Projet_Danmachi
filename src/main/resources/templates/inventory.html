@@ -51,7 +51,7 @@
     <div class="container-fluid text-center" style="position : absolute;">
         <div class="row vh-100">
             <div class="col-sm-4 d-flex flex-column align-content-start" style="background-color:#67819A; font-family: Inter;">
-                <h2 class="text-white text-left font-weight-bold">
+                <h2 class="text-white text-left font-weight-bold" th:text="${'Inventaire de ' + session.personnage.firstName + ' ' + session.personnage.lastName}">
                     Inventaire de
                 </h2>
                 <form action="#" th:action="@{/inventory}" th:object="${item}" method="POST">
@@ -60,7 +60,7 @@
                         <div class="form-check d-flex flex-column my-3 px-0">
                             <label class="form-check-label my-4">
                                 <div class="form-check d-inline-flex align-items-center w-100">
-                                    <input type="radio" class="form-check-input h-100 w-25 border" name="category" value="equipement" id="equipement">
+                                    <input type="radio" class="form-check-input h-100 w-25 border" th:field="*{category}" name="category" th:value="EQUIPEMENT" id="equipement">
                                     <h2 class="text-white font-weight-bold mx-4 my-0 w-75">
                                         Equipement
                                     </h2>
@@ -69,15 +69,15 @@
 
                             <label class="form-check-label my-4">
                                 <div class="form-check d-inline-flex align-items-center w-100">
-                                    <input type="radio" class="form-check-input h-100 w-25" name="category" value="consomable" id="consomable">
+                                    <input type="radio" class="form-check-input h-100 w-25" th:field="*{category}" name="category" th:value="CONSOMMABLE" id="consomable">
                                     <h2 class="text-white font-weight-bold mx-4 my-0 w-75">
-                                        Consomable
+                                        Consommable
                                     </h2>
                                 </div>
                             </label>
                             <label class="form-check-label my-4">
                                 <div class="form-check d-inline-flex align-items-center w-100">
-                                    <input type="radio" class="form-check-input h-100 w-25" name="category" value="ressource" id="resource">
+                                    <input type="radio" class="form-check-input h-100 w-25" th:field="*{category}" name="category" th:value="RESSOURCE" id="resource">
                                     <h2 class="text-white font-weight-bold mx-4 my-0 w-75">
                                         Ressource
                                     </h2>
@@ -85,7 +85,7 @@
                             </label>
                             <label class="form-check-label my-4">
                                 <div class="form-check d-inline-flex align-items-center w-100">
-                                    <input type="radio" class="form-check-input h-100 w-25 " name="category" value="artefact" id="artefact">
+                                    <input type="radio" class="form-check-input h-100 w-25" th:field="*{category}" name="category" th:value="ARTEFACT" id="artefact">
                                     <h2 class="text-white font-weight-bold mx-4 my-0 w-75">
                                         Artefact
                                     </h2>
@@ -102,7 +102,7 @@
                     <th:block th:unless="${playerInventory.isEmpty()}" th:each="item : ${playerInventory.keySet()}">
                         <div class="card my-3 w-25 h-25" th:id="${playerInventory.get(item).getId()}" th:onclick="showItemSell(this, [[${playerInventory.get(item).getQuantity()}]] )" >
                             <div class="card-body" style="background-color:#D9D9D9;">
-                                <img th:unless="${item.getUrlImage().equals('Null')}" src="${item.urlImage}" class="mx-auto d-block">
+                                <img th:unless="${item.getUrlImage().equals('Null')}" th:src="'data:image/png;base64,' + ${item.getUrlImage()}" class="mx-auto d-block">
                             </div>
                             <div class="card-footer text-left" th:text="${playerInventory.get(item).getQuantity() + ' x ' + item.getName()}" style="background-color:#FFFFFF; font-family: Inter;"></div>
                         </div>

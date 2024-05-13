@@ -1,7 +1,6 @@
 package com.isep.appli.services;
 
-import com.isep.appli.models.Inventory;
-import com.isep.appli.models.Item;
+
 import com.isep.appli.models.Shop;
 import com.isep.appli.repositories.InventoryRepository;
 import com.isep.appli.repositories.ShopRepository;

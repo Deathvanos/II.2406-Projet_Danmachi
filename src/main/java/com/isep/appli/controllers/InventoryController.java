@@ -1,12 +1,15 @@
 package com.isep.appli.controllers;
 
-import com.isep.appli.models.Inventory;
-import com.isep.appli.models.Item;
-import com.isep.appli.models.Personnage;
+
+import com.isep.appli.dbModels.Inventory;
+import com.isep.appli.dbModels.Item;
+import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.models.Shop;
+import com.isep.appli.models.enums.ItemCategory;
 import com.isep.appli.services.InventoryService;
 import com.isep.appli.services.ItemService;
 import com.isep.appli.services.ShopService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,32 +51,50 @@ public class InventoryController {
     /*******************************************************************************/
 
     @GetMapping("/inventory")
-    public ModelAndView inventory(@Valid Personnage personnage) {
-        Map<Item,Inventory> playerInventory = inventoryService.getPlayerInventory(1L);
-        ModelAndView modelAndView = new ModelAndView("inventory");
-        modelAndView.addObject("playerInventory", playerInventory);
-        modelAndView.addObject("personnage", personnage);
-        modelAndView.addObject("item",new Item());
-        modelAndView.addObject("shop", new Shop());
-        return modelAndView;
-    }
-
-    @PostMapping("/inventory")
-    public String searchItem(@Valid Item item, BindingResult result, Model model){
-        if (item.getName() == null) {
-            return "/inventory";
+    public String inventory(Model model, HttpSession session) {
+        if(session.isNew()){
+            return "/login";
         }
-        Map<Item,Inventory> playerInventory = inventoryService.getPlayerInventoryByItemName(1L , item.getName());
+        Personnage character = (Personnage) session.getAttribute("personnage");
+        Map<Item, Inventory> playerInventory = inventoryService.getPlayerInventory(character.getId());
         model.addAttribute("playerInventory", playerInventory);
+        model.addAttribute("personnage", character);
+        model.addAttribute("item",new Item());
         model.addAttribute("shop", new Shop());
         return "/inventory";
     }
 
+    @PostMapping("/inventory")
+    public String searchItem(@Valid Item item, BindingResult result, Model model, HttpSession session){
+        Personnage character = (Personnage) session.getAttribute("personnage");
+        model.addAttribute("shop", new Shop());
+        long characterId = character.getId();
+        String itemName = item.getName();
+        ItemCategory itemCategory = item.getCategory();
+        if (!itemName.equals("") && itemCategory != null) {
+            Map<Item,Inventory> playerInventory = inventoryService.getPlayerInventoryByItemNameAndItemCategory(characterId, itemName, itemCategory);
+            model.addAttribute("playerInventory", playerInventory);
+        } else if (!itemName.equals("") && itemCategory == null){
+            Map<Item,Inventory> playerInventory = inventoryService.getPlayerInventoryByItemName(characterId, itemName);
+            model.addAttribute("playerInventory", playerInventory);
+        } else if (itemName.equals("") && itemCategory != null) {
+            Map<Item,Inventory> playerInventory = inventoryService.getPlayerInventoryByItemCategory(characterId, itemCategory);
+            model.addAttribute("playerInventory", playerInventory);
+        } else {
+            Map<Item,Inventory> playerInventory = inventoryService.getPlayerInventory(characterId);
+            model.addAttribute("playerInventory", playerInventory);
+            return "/inventory";
+        }
+
+        return "/inventory";
+    }
+
     @PostMapping("/shop")
-    public String sellItem(@Valid Shop shop, BindingResult result, Model model){
-        Inventory inventory = inventoryService.getByItemId(1L, shop.getIdItem()).get(0);
+    public String sellItem(@Valid Shop shop, BindingResult result, Model model, HttpSession session){
+        Personnage character = (Personnage) session.getAttribute("personnage");
+        Inventory inventory = inventoryService.getByItemId(character.getId(), shop.getIdItem()).get(0);
         inventoryService.removeItemInInventory(inventory, shop.getQuantity());
-        shop.setIdPlayer(1L);
+        shop.setIdPlayer(character.getId());
         shopService.save(shop);
         return "redirect:/inventory";
     }
