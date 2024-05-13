@@ -2,7 +2,7 @@
 
 1. Open IntelliJ
 2. File -> New -> Project from version controle
-3. Select github [your name] -> Projet_Danmachi and choose your work directory
+3. Select github [your name] -> Projet_Danmachi and choose your work directory (work directory and github project must be the same name)
 
 if neccessary :
 5. Setup the SDK to java 17 (go to src/main/java/com/isep/appli/ProjetDanmachiApplication.java)

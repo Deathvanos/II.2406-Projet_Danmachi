@@ -1,4 +1,4 @@
-package com.isep.appli.models;
+package com.isep.appli.dbModels;
 
 import jakarta.persistence.*;
 import lombok.Getter;

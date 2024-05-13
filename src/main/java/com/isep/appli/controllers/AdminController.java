@@ -1,6 +1,6 @@
 package com.isep.appli.controllers;
 
-import com.isep.appli.models.User;
+import com.isep.appli.dbModels.User;
 import com.isep.appli.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;

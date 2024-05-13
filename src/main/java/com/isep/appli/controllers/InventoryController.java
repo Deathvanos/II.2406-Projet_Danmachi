@@ -1,6 +1,6 @@
 package com.isep.appli.controllers;
 
-import com.isep.appli.models.Item;
+import com.isep.appli.dbModels.Item;
 import com.isep.appli.services.InventoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
