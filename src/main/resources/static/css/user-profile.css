@@ -1,0 +1,19 @@
+html, body {
+    background-color: #D5E4D9;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.bg-container {
+    background: #F6F6F6;
+}
+
+.bg-information {
+    background: #67819A;
+}
+
+label {
+    font-weight: bold;
+}

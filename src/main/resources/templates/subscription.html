@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+	<head>
+		<title>Subscription Page</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE-edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	</head>
+	<body>
+
+
+	
+		<div class="container">
+			<h1>Subscription</h1>
+			
+			<form id="signup-form" th:action="@{/subscription}" th:object="${user}" method="POST">
+				<div class="form-group">
+				
+					<label for="firstName">firstName</label>
+					<input class="form-control" type="text" th:field="*{firstName}"  id="firstName" placeholder="Prénom">
+					<p id="firstNameError" class="text-danger"></p>
+					
+					<label for="lastName">lastName</label>
+					<input class="form-control" type="text" th:field="*{lastName}"  id="lastName" placeholder="Nom">
+					<p id="lastNameError" class="text-danger"></p>
+
+					<label for="username">Pseudonym</label>
+					<input class="form-control" type="text" th:field="*{username}"  id="username" placeholder="Pseudonym">
+					<p id="usernameError" class="text-danger"></p>
+					
+					<label for="email">mail</label>
+					<input class="form-control" type="text" th:field="*{email}"  id="email" placeholder="Adresse mail">
+					<p id="emailError" class="text-danger"></p>
+
+					<label for="password">password</label>
+					<input type="password" class="form-control" th:field="*{password}" placeholder="Mot de passe" id="password">
+					<input type="password" class="form-control" placeholder="Confirmer mot de passe" id="confirmPassword">
+					<p id="passwordError" class="text-danger"></p>
+
+					<button type="submit" class="btn btn-outline-success">Subscription</button>
+					<p><a class="text-black" href="/login">Déjà un compte ?</a></p>
+					<a class="btn" href="/home"> Back</a>
+					
+
+					
+				</div>
+			</form>
+
+		</div>
+
+		<div id="alertContainer"></div>
+
+	<footer th:insert="~{common/footer :: footer}"></footer>
+
+	<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+		<script src="/js/subscription.js"></script>
+	</body>
+</html>

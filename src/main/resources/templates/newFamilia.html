@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+  <title>New familia</title>
+
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+
+
+<div class="container">
+  <h1>Create a new familia</h1>
+
+  <form id="familia-form"  method="POST">
+    <div class="form-group">
+
+      <!--Form-->
+
+
+
+      <button type="submit" class="btn btn-outline-success"></i>Create familia</button>
+      <a class="btn" href="/home"> Back</a>
+
+
+
+    </div>
+  </form>
+
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"></script>
+<script src="/js/subscription.js"></script>
+</body>
+</html>
