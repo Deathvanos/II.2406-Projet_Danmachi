@@ -125,6 +125,11 @@ public class UserController {
 
 		return "redirect:/login";
 	}
+
+	@GetMapping("/session/personnage")
+	public ResponseEntity<Personnage> getSessionPersonnage(HttpSession session) {
+		return ResponseEntity.ok((Personnage)session.getAttribute("personnage"));
+	}
 	
 	@GetMapping("/chatPage")
 	public String chatPage() {
