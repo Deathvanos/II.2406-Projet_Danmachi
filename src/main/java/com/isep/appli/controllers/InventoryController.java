@@ -83,9 +83,7 @@ public class InventoryController {
         } else {
             Map<Item,Inventory> playerInventory = inventoryService.getPlayerInventory(characterId);
             model.addAttribute("playerInventory", playerInventory);
-            return "/inventory";
         }
-
         return "/inventory";
     }
 
