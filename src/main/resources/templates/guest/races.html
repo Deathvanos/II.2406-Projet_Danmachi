@@ -1,0 +1,169 @@
+<!-- https://danmachi.fandom.com/wiki/Races -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Race</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Race</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;">
+            <div class="row">
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/race_humans.jpg}" width="75%" alt="">
+                </div>
+                <div class="col-sm-8">
+                    <h1>Les humains</h1>
+                    <p class="text-center">Souvent considéré comme la race la plus faible...</p>
+                    <p class="text-center">[/]</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Les Amazones</h1>
+                    <p class="text-justify">
+                        Les Amazones sont une  race Demi-humaine  de femmes à la peau foncée.
+                        Ne donnant naissance qu'à des amazones, elles doivent quitter leurs villages pour trouver des hommes.
+                        En raison de leur instinct d'élever des descendants forts, ils désirent se reproduire avec n'importe quel homme qu'ils jugent fort et ont donc tendance à tomber amoureux des mâles qui les ont vaincus.
+                        Ils ont aussi leur propre langue qui est différente du koine, le dialecte commun.
+                    </p>
+                    <p class="text-center">[+10% F +10% D - 20% M]</p>
+                </div>
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/race_amazones.webp}" width="75%" alt="">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/race_nains.webp}" width="75%" alt="">
+                </div>
+                <div class="col-sm-8">
+                    <h1>Les Nains</h1>
+                    <p class="text-justify">
+                        Les nains sont une race demi-humaine de personnes de petite taille, bien qu'il puisse y avoir des exceptions.
+                        Ils ont une force considérable et peuvent vaincre des monstres faibles sans Falna.
+                        Ils sont également connus pour leur aptitude aux tâches impliquant la terre et les roches, comme l'exploitation minière et la construction.
+                    </p>
+                    <p class="text-center">[+F20% +E10%; -A10% -M10% -D10% ]</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Les Pallums</h1>
+                    <p class="text-justify">
+                        Pallum est une race Demi Human de petites personnes.
+                        Comme les humains, on dit généralement qu'ils sont la race la plus faible, mais ils ont une excellente vue qui leur permet de voir dans l'obscurité.
+                    </p>
+                    <p class="text-center">[+10% D +10% A ; -10% E -10% F ; SP : Vision Nocturne]</p>
+                </div>
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/race_pallums.webp}" width="75%" alt="">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/race_elfes2.jpeg}" width="75%" alt="">
+                </div>
+                <div class="col-sm-8">
+                    <h1>Les Elfes</h1>
+                    <p class="text-justify">
+                        Les elfes blancs, plus communément appelés elfes, sont une race demi-humaine d'êtres très intelligents qui excellent dans la magie et vivent dans les forêts.
+                        Ils ont de longues oreilles pointues et sont naturellement attrayants en apparence.
+                        Cependant, ils sont assez réservés par nature, ce qui les amène à détester le contact physique avec des personnes d'autres races.
+                        Les elfes sont extrêmement fiers et ont tendance à mépriser les autres races, en particulier les nains en raison de leur inimitié innée.
+                    </p>
+                    <p class="text-center">[+10% M ; -10% F ; SP : Vision Nocturne]</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Les Elfes Noir</h1>
+                    <p class="text-justify">
+                        Les elfes noirs sont une race similaire aux elfes, bien qu'avec une magie, un pouvoir magique et une couleur de peau différente.
+                        Ils sont rares à l'époque actuelle car une grande partie de leur population a été tuée par des monstres pendant l'Antiquité.
+                    </p>
+                    <p class="text-center">[ +10% F ; -10% M ; SP : Vision Nocturne]</p>
+                </div>
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/race_blackElfes.jpeg}" width="75%" alt="">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/race_humanBests.jpeg}" width="75%" alt="">
+                </div>
+                <div class="col-sm-8">
+                    <h1>Les Hommes Bêtes</h1>
+                    <p class="text-justify">
+                        Ce sont des êtres humanoïdes avec des traits semblables aux animaux.
+                        Il en existe beaucoup de genre et ils sont très répandus dans le monde.
+                    </p>
+                    <p class="text-center">[ +10% A +10% F ; SP : Sens Développé]</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Les Esprits</h1>
+                    <p class="text-justify">
+                        On dit que les esprits sont les enfants que les dieux aimaient le plus et on les appelle même partie de dieu.
+                        Ce sont de grands utilisateurs de magie et peuvent même utiliser la magie mieux que les Elfes.
+                        Comme les Dieux, les Esprits ne peuvent pas avoir d'enfants.
+                        Il existe différents types d'esprits, tels que Salamander, Gnome, Tonitrus, Lux, Undine et Shade.
+                        Les esprits peuvent également fabriquer spécialement des objets tels que la laine de salamandre et le tissu d'Ondine qui ont des effets spéciaux.
+                        Pendant l'ère des héros, les esprits ont aidé les héros à combattre des monstres, bien que certains esprits aient été mangés.
+                        Cependant la guilde interdit l'accès au donjon.
+                        Aujourd'hui ils ont quasiment tous disparu.
+                    </p>
+                    <p class="text-center">[/]</p>
+                </div>
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/race_spirit.webp}" width="75%" alt="">
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

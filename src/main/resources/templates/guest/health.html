@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Santé</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Santé</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;">
+
+            <h1>La vie</h1>
+            <p class="text-justify">
+                Vous risquez d'être blessé et vous allez donc perdre des points de vie en fonction de votre résistance.
+                Dans le cas où vous êtes en dessous des 5 hp, vous ne pouvez plus combattre.
+                À zéro il vous est interdit de bouger et vous aurez une blessure.
+            </p>
+            <p class="text-justify">
+                Il y a deux moyens pour regagner de la vie: les potions qui redonne de la vie de manière instantanée ou bien ne pas faire de combat qui permet de redonner 10% de votre vie actuelle toutes les heures (arrondi à l'unité près en cas de virgule).
+            </p>
+            <p class="text-justify">
+                Si vous avez en dessous de 5 hp après une bataille, il vous faudra une potion de soins pour guérir.
+                Si une personne reste 24h en dessous de la barre des 5 hp, il meurt.
+                Les remèdes de grand-mère vous permet d'échapper de peu à la mort, mais malheureusement ceux-ci ne sont pas transportables, il est donc interdit d'en utiliser dans le donjon.
+            </p>
+            <p class="text-justify">
+                Attention !! Prendre un coup lorsque vous êtes à 0 hp signifie que vous êtes mort.
+                Faites donc très attention.
+                Atteindre 0 hp signifie mourir, il n'y aura aucun sauvetage héroïque autorisé.
+            </p>
+
+            <h1>Énergie</h1>
+            <p class="text-justify">
+                Vous êtes un aventurier, votre énergie n'est pas illimité c'est pour cela que vous ne pouvez pas aller au donjon tous les jours.
+                Il est nécessaire de passer une journée (24H) avec quelqu'un d'autre pour pouvoir recharger votre batterie.
+                Il doit donc y avoir un écart d'au moins 48H entre chacun de votre donjon.
+            </p>
+            <p class="text-justify">
+                Certains aventuriers sont introvertis et ne souhaite pas interagir avec les autres, recharger leurs batteries n'est pas impossible, mais reste plus lent.
+                Il leur faut trois jours de repos avant d'aller de nouveau dans le donjon.
+                Il y a donc un écart de 96H entre chaque donjon pour ceux-ci.
+            </p>
+
+
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

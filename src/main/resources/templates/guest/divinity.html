@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Divinity</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Divinity</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;">
+
+            <h1>Divinité : Dieu/Déesse </h1>
+            <p class="text-justify">
+                Les Dieux et Déesses ont commencé à descendre dans le monde inférieur depuis le Ciel depuis quelques années.
+                Certains étaient là depuis lors, et certains ne sont pas encore descendus.
+                Il leur est interdit d'utiliser leurs pouvoirs, connus sous le nom d'Arcanum , et ont les mêmes capacités physiques que les gens normaux.
+                Malgré la règle, ils sont autorisés à utiliser leur Arcanum sous certaines conditions uniquement pour une utilisation avec des miroirs, comme la diffusion de War Games.
+                Bien qu'ils ne fassent pas partie de leur Arcane, les dieux et les déesses émettent une aura connue sous le nom de divinité qui permet aux autres de les reconnaître comme tels, et certains dieux tels que Zeus, Odin et Kali sont capables de complètement le cachez pour se fondre dans la masse.
+                La divinité d'un dieu a apparemment une couleur et elle peut être détectée à travers Orario si un dieu le libère dans les étages supérieurs du donjon.
+                Les autres capacités autorisées incluent les charmes des déesses de la beauté.
+                Si un dieu ou une déesse enfreint les règles, il est renvoyé de force au paradis.
+            </p>
+            <p class="text-justify">
+                Les dieux et les déesses de grande famille peuvent vivre facilement grâce aux revenus de leurs enfants, tandis que les dieux et les déesses de petite famille, travaillent pour gagner de l'argent.
+                Le nombre de Dieux et Déesses au Ciel est devenu si petit que les Dieux et Déesses restants travaillent sans arrêt pour guider les âmes des morts.
+            </p>
+
+            <h1>Les familias</h1>
+            <p class="text-justify">
+                Les Familia sont composées d'aventuriers et de partisans dirigés par un Dieu ou une Déesse.
+                Ils portent le nom du Dieu ou de la Déesse responsable.
+                La plupart des familia sont de type exploration, bien qu'il existe d'autres types tels que le type commercial, le type industriel, le type médical et même le type national.
+                Chaque familia reçoit un rang allant de I à S en fonction de sa taille et de ses réalisations, qui est pris en compte pour déterminer combien d'argent chaque familia doit payer à la Guilde lors de ses impôts mensuels.
+                Lorsqu'une familia de type exploration atteint le rang D, elle est tenue par la Guilde de commencer des expéditions.
+            </p>
+
+            <h1>Denatus</h1>
+            <p class="text-justify">
+                Le Denatus est une réunion des dieux qui se tient une fois tous les trois mois.
+                Beaucoup de choses sont discutées et des alias sont donnés aux aventuriers qui ont progressé.
+            </p>
+
+            <h1>War Game</h1>
+            <p class="text-justify">
+                Un jeu de guerre est une bataille entre familia avec des règles définies.
+                Les dieux et les déesses utilisent les membres de leur familia pour exprimer leur volonté, semblable à une guerre par procuration.
+                Un Denatus spécial est organisé pour établir des règles et décider du type de jeu de guerre ainsi que de ce que le gagnant recevra.
+                Le Dieu ou la Déesse qui perd dans un jeu de guerre doit obéir sans poser de questions aux conditions fixées pendant le Denatus.
+                Les types de jeu de guerre incluent le combat unique, le siège et divers autres.
+            </p>
+
+            <h1>Conversion</h1>
+            <p class="text-justify">
+                Les conversions se produisent lorsqu'une personne passe d'une familia à une autre.
+                Une fois qu'une personne change de famille, elle doit attendre un an avant de revenir en arrière ou de changer de famille.
+                Avoir une conversion nécessite le consentement des deux dieux impliqués.
+            </p>
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
