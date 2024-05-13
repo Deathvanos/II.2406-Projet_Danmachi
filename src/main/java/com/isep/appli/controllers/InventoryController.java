@@ -52,8 +52,8 @@ public class InventoryController {
 
     @GetMapping("/inventory")
     public String inventory(Model model, HttpSession session) {
-        if(session.isNew()){
-            return "/login";
+        if(session.getAttribute("user") == null || session.getAttribute("personnage") == null){
+            return "errors/error-401";
         }
         Personnage character = (Personnage) session.getAttribute("personnage");
         Map<Item, Inventory> playerInventory = inventoryService.getPlayerInventory(character.getId());
