@@ -1,0 +1,396 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Metiers</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Metiers</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9; padding-right:0; padding-left:0;">
+            <div id="accordion">
+
+                <div class="card center" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse1" style="color:black;">Forgerons</a></div>
+                    <div id="collapse1" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <div class="text-center align-content-center">
+                            <img th:src="@{/images/guest/metier_forgerons.png}" height="200rem" alt="">
+                        </div>
+                        <h1>Forgeron</h1>
+                        <p class="text-justify">
+                            Le métier de forgeron est un artisanat ancien qui consiste à travailler le métal en utilisant principalement la chaleur et des outils spécialisés tels que l'enclume, le marteau et les pinces.
+                            Le forgeron façonne le métal en le chauffant à une température élevée jusqu'à ce qu'il devienne malléable, puis le forge en lui donnant la forme désirée.
+                        </p>
+                        <p class="text-justify">
+                            Les principales tâches d'un forgeron comprennent la fabrication, la réparation et la modification d'objets en métal tels que des outils, des armes, des pièces de quincaillerie, des ornements et des éléments décoratifs.
+                            Traditionnellement, les forgerons travaillaient principalement le fer, mais aujourd'hui, ils peuvent également travailler d'autres métaux tels que l'acier, le cuivre, le bronze et l'aluminium.
+                        </p>
+                        <p class="text-justify">
+                            Le processus de forgeage commence par la conception de l'objet, souvent en utilisant des schémas ou des plans.
+                            Le forgeron chauffe ensuite le métal dans une forge, qui est un foyer spécialement conçu pour atteindre des températures élevées.
+                            Une fois le métal chauffé à la bonne température, le forgeron le retire de la forge à l'aide de pinces et le place sur l'enclume, où il le frappe avec un marteau pour le façonner.
+                        </p>
+                        <p class="text-justify">
+                            Le forgeron utilise différentes techniques de forgeage telles que le martelage, l'estampage, le pliage et le laminage pour donner forme au métal.
+                            Il peut également utiliser des outils spécifiques tels que des matrices, des mandrins et des ciseaux pour réaliser des détails complexes.
+                            Une fois l'objet forgé, le forgeron le refroidit souvent dans un bain d'eau ou d'huile pour le durcir.
+                        </p>
+                        <p class="text-justify">
+                            Outre le forgeage, les forgerons peuvent également effectuer d'autres tâches liées à leur métier, telles que le meulage, le polissage, la soudure et le trempage.
+                            Certains forgerons se spécialisent dans des domaines particuliers tels que la ferronnerie d'art, la coutellerie ou la fabrication d'armes.
+                        </p>
+                        <p class="text-justify">
+                            Le métier de forgeron requiert des compétences techniques, une bonne coordination œil-main et une connaissance approfondie des propriétés des métaux.
+                            Il demande également de la patience, de la précision et de la créativité pour créer des objets fonctionnels et esthétiques.
+                            Le prix du marché pour une armure et arme très bas de gamme est de 3600 le Point d'Armure et 5000 le Point de Dégât.
+                            Elle augmente ensuite en prix d'un multiplicateur de 10 pour les armes intermédiaire, puis de 100 pour les armes hardcore.
+                        </p>
+                        <h1>Les petits tips</h1>
+                        <span style="text-decoration: underline;">Où se trouve les minerais ?</span>
+                        <ul>
+                            <li>Les minerais sont trouvable dans le donjon. Selon leurs rareté, ils sont trouvable à différent niveau , vous pouvez les récolter à l'aide d'un roll 1d10. (Pssh : il en est de même pour les gemmes ! )</li>
+                            <li>
+                                Vous voulez savoir s'il est possible d'assemblé des métaux ? Bien sûr ! Voici une petite liste exhaustive :
+                                <ul>
+                                    <li>Fer + Carbonne = Acier.</li>
+                                    <li>Étain + Cuivre = Bronze</li>
+                                    <li>Plomb + Étain = Métal blanc</li>
+                                    <li>Argent + Or = Electrum</li>
+                                    <li>Cuivre + Argent = Billons</li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                        <span style="text-decoration: underline;">Pourquoi ma pioche se casse en minant du fer ?</span>
+                        <p>
+                            As-tu vérifier si elle est faîtes avec le bon matériel ?
+                            (ps : il faut du bronze , coule un bronzeee pour le fer ! et ainsi de suite)
+                        </p>
+                        <h1>Au Forgeage</h1>
+                        <p>A présent , avec tous les matériaux en main , rien de plus simple passez au fourneau et forger !</p>
+                        <ul>
+                            <li>PA = Point d'Armure.</li>
+                            <li>M = Max améliorable en y trempant son arme convenablement et en y ajoutant des lingots.</li>
+                            <li>L = Lingots.</li>
+                            <li>D = Dégâts.</li>
+                        </ul>
+                        <p>
+                            ⚠ Les lingots à partir du niveau intermédiaire se forment à l'aide de 6 minerais et non pas 3, puis au niveau hardcore 10 minerais !
+                            Il vous faudra toujours 1 de charbon pour 1 minerais, soit 6 de charbon pour 1 lingot de cuivre par exemple ⚠
+                            <br> ➺ Une armure portée est une armure qui enlève la moitié du bonus d'armure en agilité.
+                            <br> ➺ Une arme tenue est une arme nécessitant le double de dégâts en dextérité.
+                            <br> ➺ Il est possible de faire des pioches , haches et faucille avec les minerais disponible , demandant alors les mêmes matériaux que pour les épée avec 10 morceaux de bois.
+                            <br> ➺ Il est possible de récolter des ressources une fois par heures à l'aide de la commande (!roll 1d10).
+                        </p>
+                        <h3>Niveau simple :</h3>
+                        <ul>
+                            <li>Cuivre M2→ Fabrication de l'armure, 36L de cuivre = 12PA | Fabrication de l'arme, 10L de cuivre et 5 de bois = 6D</li>
+                            <li>Étain M2→ Fabrication de l'armure, 36L d'étain = 14PA | Fabrication de l'arme, 10L d'étain et 5 de bois = 8D.</li>
+                            <li>Bronze M8→ Fabrication de l'armure, 36L de cuivre et 36L d'étain = 16PA. | Fabrication de l'arme, 4L de cuivre et 6 d'étain et 5 de bois = 12D.</li>
+                            <li>Fer M14→ Fabrication de l'armure, 45L de fer = 18PA. | Fabrication de l'arme, 12L de fer et 5 de bois = 16D.</li>
+                            <li>Plomb M20→ Fabrication de l'armure, 45L de plomb = 22PA. | Fabrication de l'arme, 12L de plomb et 5 de bois = 18D.</li>
+                            <li>Métal Blanc M22→ Fabrication de l'armure, 45L d'étain et de plomb = 36PA. | Fabrication de l'arme, 8L de plomb et 4L d'étain et 5 de bois = 26D.</li>
+                        </ul>
+                        <h3>Niveau intermédiaire :</h3>
+                        <ul>
+                            <li>Acier M32→ Fabrication de l'armure, 45L de fer et carbone = 40PA. | Fabrication de l'arme, 10L de fer et 8 de carbone et 5 de bois = 32D.</li>
+                            <li>Acier Trempé M64→ Fabrication de l'armure, 45L d'acier et trempe = 80PA | Fabrication de l'arme, 20L d'acier et le faire trempé et 5 de bois = 56D.</li>
+                            <li>Argent M30→ Fabrication de l'armure, 45L d'argent = 26PA | Fabrication de l'arme, 12L d'argent et 5 de bois = 18D.</li>
+                            <li>Tungstène M44→ Fabrication de l'armure, 45L de tungstène = 30PA | Fabrication de l'arme, 12L de tungstène et 5 de bois = 20D.</li>
+                            <li>Or M58→ Fabrication de l'armure, 56L d'or = 32PA | Fabrication de l'arme, 16L d'or et 5 de bois = 24D.</li>
+                            <li>Platine M74→ Fabrication de l'armure, 56L de platine = 40PA | Fabrication de l'arme, 16L de platine et 5 de bois = 40D.</li>
+                            <li>Cobalt M88→ Fabrication de l'armure, 56L de cobalt = 54PA | Fabrication de l'arme, 20L de cobalt et 5 de bois = 68D.</li>
+                        </ul>
+                        <h3>Niveau hardcore</h3>
+                        <ul>
+                            <li>Palladium M102→ Fabrication de l'armure, 63L de palladium = 64PA | Fabrication de l'arme, 24L de palladium et 5 de bois = 98D.</li>
+                            <li>Mithril M128→ Fabrication de l'armure, 68L de mithril = 74PA | Fabrication de l'arme, 28L de Mithril et 5 de bois = 116D.</li>
+                            <li>Adamantine M150→ Fabrication de l'armure, 70L d'adamantine = 84PA | Fabrication de l'arme, 32L de orichalque et 5 de bois = 136D.</li>
+                            <li>Titane M172→ Fabrication de l'armure, 85L de titane = 100PA | Fabrication de l'arme, 36L de titane et 5 de bois = 160D.</li>
+                            <li>Orichalque M200→ Fabrication de l'armure, 100L de orichalque = 120PA | Fabrication de l'arme, 50L de Orichalque et 5 de bois = 200D.</li>
+                        </ul>
+                    </div></div>
+                </div>
+
+                <div class="card" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse2" style="color:black;">Alchimiste</a></div>
+                    <div id="collapse2" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-5 text-center align-content-center">
+                                <img th:src="@{/images/guest/metiers_alchimiste1.png}" width="100%" alt="">
+                            </div>
+                            <div class="col-sm-7">
+                                <h1>Definition</h1>
+                                <p class="text-justify">
+                                    L'alchimie est une discipline magique qui permet de créer des potions, des objets enchantés et de manipuler les éléments.
+                                    L'alchimie joue un rôle important en tant que moyen de renforcer les aventuriers, de créer des équipements magiques et de soutenir les combats contre les monstres.
+                                </p>
+                                <p class="text-justify">
+                                    Les alchimistes utilisent des ingrédients magiques, des formules et des rituels spéciaux pour créer des potions qui peuvent guérir les blessures, augmenter la force ou conférer des pouvoirs temporaires.
+                                    Bien que l'alchimie soit puissante, elle a ses limites.
+                                    La création d'objets magiques complexes ou de potions extrêmement puissantes peut nécessiter des connaissances avancées et des ressources rares.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <h1>Rôle</h1>
+                                <p class="text-justify">
+                                    Les alchimistes peuvent contribuer à l'exploration des donjons en créant des potions de soin, des objets de détection et des équipements spéciaux qui aident les aventuriers à survivre et à affronter les monstres rencontrés.
+                                    Les alchimistes contribuent à la croissance de la ville en fournissant des potions de guérison, des objets magiques utiles et des services d'enchantement, ce qui renforce la force et la prospérité de la communauté des aventuriers.
+                                    Les alchimistes ont la responsabilité de fournir des objets et des potions de qualité aux aventuriers, de soutenir les missions de la guilde et de contribuer à la sécurité de la ville.
+                                </p>
+                                <p class="text-justify">
+                                    Les motivations des alchimistes peuvent varier.
+                                    Certains cherchent à améliorer leurs compétences et leur réputation, tandis que d'autres sont motivés par la curiosité, le désir d'aider les autres ou la quête de puissance.
+                                </p>
+                                <p class="text-justify">
+                                    Bien que l'alchimie soit puissante, elle a ses limites.
+                                    La création d'objets magiques complexes ou de potions extrêmement puissantes peut nécessiter des connaissances avancées et des ressources rares.
+                                </p>
+                            </div>
+                            <div class="col-sm-5 text-center align-content-center">
+                                <img th:src="@{/images/guest/metiers_alchimiste2.jpg}" width="100%" alt="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5 text-center align-content-center">
+                                <img th:src="@{/images/guest/metiers_alchimiste3.gif}" width="100%" alt="">
+                            </div>
+                            <div class="col-sm-7">
+                                <h1>Ethique / Limite</h1>
+                                <p class="text-justify">
+                                    Les alchimistes sont encouragés à respecter des codes d'éthique tels que l'utilisation responsable de la magie, l'obtention légale d'ingrédients et le respect des règles de sécurité pour éviter les accidents.
+                                    Ils peuvent obtenir leurs ingrédients à partir de plantes, de monstres, de minéraux et d'autres sources magiques.
+                                    Certains ingrédients rares peuvent nécessiter des expéditions dangereuses pour les collecter.
+                                </p>
+                                <p class="text-justify">
+                                    L'alchimie expérimentale peut être risquée car elle implique souvent des procédures non testées ou des ingrédients instables, ce qui peut entraîner des effets inattendus ou des accidents magiques.
+                                    L'alchimie peut être dangereuse si elle est mal utilisée.
+                                    Une mauvaise préparation des potions ou des enchantements peut entraîner des effets indésirables, voire des explosions.
+                                </p>
+                                <p class="text-justify">
+                                    Bien que l'alchimie soit puissante, elle a ses limites.
+                                    La création d'objets magiques complexes ou de potions extrêmement puissantes peut nécessiter des connaissances avancées et des ressources rares.
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <h1>Réglement</h1>
+                            <ul>
+                                <li>Pour la sécurité de tous, l'alchimie doit être pratiqué dans une pièce spécialisé qu'on nomme laboratoire</li>
+                                <li>Afin de pratiquer l'alchimie le laboratoire doit avoir au minimum des alambics, des mortiers, des grimoires de formules et des fioles magiques pour faciliter les expérimentations et les créations alchimiques.</li>
+                                <li>Lors de la création d'objet alchimique, l'objet doit être certifié afin de pouvoir être vendu sur le marché. L'objet en question sera soumis à plusieurs test de sécurité afin d'approuvé la qualité de la marchandise.</li>
+                                <li>Tout poison doit avoir son antidote sous peine d'avoir ça recette mise sur liste noir. La création d'un poison sans antidote peut être passible de mort par ce même poison.</li>
+                                <li>Toute pratique doit avoir la possibilité d'arrêter le processus à tout moment et instantanément.</li>
+                            </ul>
+                        </div>
+                    </div></div>
+                </div>
+
+                <div class="card" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse3" style="color:black;">Enchanteur</a></div>
+                    <div id="collapse3" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <div class="text-center align-content-center">
+                            <img th:src="@{/images/guest/metier_enchanteur1.jpg}" height="200rem" alt="">
+                        </div>
+                        <h1>Enchanteur</h1>
+                        <p class="text-justify">
+                            Le métier d'enchanteur consiste à maîtriser une forme de magie, nommée la magie runique.
+                        </p>
+                        <p class="text-justify">
+                            La magie runique est une magie pratiquée par des enchanteurs.
+                            En effet elle se doit d'être utilisées par des savants ayant reçu un apprentissage du Futhark et une compréhension complète des runes.
+                        </p>
+                        <p class="text-justify">
+                            "Chaque rune possède un nom et un son qui désignent un objet, un animal ou une qualité.
+                            Chaque nom de rune porte un concept et celui-ci reflète la symbolique de cette rune et ses correspondances.
+                            Il existe alors trois niveaux d'analyse pour chaque rune : sa forme (géométrique et phonétique), son concept (sa symbolique), son nombre (ce qui la lie aux autres runes et la rend dynamique, l'ordre des runes à un sens et il ne doit pas être modifié)"
+                        </p>
+                        <p class="text-justify">
+                            Savoir tatouer une rune ou la graver ne signifie pas pouvoir l'utiliser, c'est pour cela que seulement les initiés à la magie runique peuvent se permettre de se servir des runes dans différents domaines.
+                            Combiné à d'autre forme de la magie nordique elle peut devenir encore plus puissante.
+                        </p>
+                        <p class="text-justify">
+                            Le Futhark lui est un alphabet bien plus magique qu'utiliser dans l'écriture d'actes quotidien et "profane".
+                            En effet la tradition nordique est une tradition orale ; l'écrit est alors réservé au sacré.
+                        </p>
+                        <p class="text-justify">
+                            Le Futhark est décliné en trois aett, celui de Freyr, celui d'Hagal et celui de Tyr, les runes ne peuvent alors être changées de place dans l'alphabet runique.
+                            Dernière précision, selon les époques et celui les populations, les runes ne se prononce pas de la même manière et si l'on associe ses runes aux runes britanniques ont obtient un ensemble de runes plus complexe.
+                        </p>
+                        <p class="text-justify">
+                            Crée une rune demande de la poudre de billons, assemblé plusieurs runes demande de l'électrum.
+                            Certains minerais permettent de crée des armes à haute conductivité magique tel que le Mithril, le Seiros ect...
+                        </p>
+                        <p class="text-justify">
+                            Les runes consomment 1 de mana de base par runes de différents types. (Chaque fois que de l'electrum est agouté).
+                        </p>
+                        <h1>Les runes</h1>
+                        <h4>Aett de Freyr :</h4>
+                        <img th:src="@{/images/guest/metier_enchanteur2.png}" width="100%" alt="">
+                        <div class="row">
+                            <div class="col">feu sauvage/vie</div>
+                            <div class="col">force primordial</div>
+                            <div class="col">force brute/épines (sens formel)</div>
+                            <div class="col">souffle divin</div>
+                            <div class="col">chevauchée/voyage</div>
+                            <div class="col">feu domestique</div>
+                            <div class="col">équilibre des forces</div>
+                            <div class="col">prospérité</div>
+                        </div>
+                        <h4>Aett d'Hagal :</h4>
+                        <img th:src="@{/images/guest/metier_enchanteur3.png}" width="100%" alt="">
+                        <div class="row">
+                            <div class="col">grêlons</div>
+                            <div class="col">malédiction</div>
+                            <div class="col">glace</div>
+                            <div class="col">terre/ moissons</div>
+                            <div class="col">visiter les morts</div>
+                            <div class="col">divination/clairvoyance/destin</div>
+                            <div class="col">protection/absorption</div>
+                            <div class="col">soleil/ foudre et éclairs (sens formel)</div>
+                        </div>
+                        <h4>Aett de Tyr :</h4>
+                        <img th:src="@{/images/guest/metier_enchanteur4.png}" width="100%" alt="">
+                        <div class="row">
+                            <div class="col">sacrifice/victoire/justice</div>
+                            <div class="col">régénération/purification</div>
+                            <div class="col">cheval/déplacement</div>
+                            <div class="col">harmonisation/parole</div>
+                            <div class="col">croissance/amplification</div>
+                            <div class="col">création</div>
+                            <div class="col">protection/blocage</div>
+                            <div class="col">conservation</div>
+                        </div>
+                        <h1>Les niveaux</h1>
+                        <p class="text-justify">
+                            Il existe différents stades d'enchanteurs.
+                            Les amateurs connaissent que quelques runes tandis que le maître de ce domaine peut écrire des ouvrages magiques.
+                        </p>
+
+                    </div></div>
+                </div>
+
+                <div class="card" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse4" style="color:black;">Cuisinier</a></div>
+                    <div id="collapse4" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <div class="text-center align-content-center">
+                            <img th:src="@{/images/guest/metier_cuisinier1.png}" height="200rem" alt="">
+                        </div>
+                        <h1>Cuisinier</h1>
+                        <p class="text-justify">
+                            Le métier de cuisiner consiste à préparer de bons petits plats.
+                            Ces plats pourront remettre en forme les personnes les ingurgitant, à valeur de 3 repas par jours espacé de même manière que si on petit déjeuner, déjeuner, diner soit un espace de 5h.
+                        </p>
+                        <p class="text-justify">
+                            Comment cuisiner ?<br>
+                            C'est simple, il vous suffit de venir acheter vos ingrédients au marché pour ensuite concocter de bon plat, libre arbitre des recettes cependant il vous faut une taverne pour pouvoir jouir de vos ventes.
+                        </p>
+                        <p class="text-justify">
+                            Il est possible de cuisiner des petits plats lambda dans votre familia cependant il vous redonnera seulement 1 point d'énergie.
+                        </p>
+                        <div class="row">
+                            <div class="col-sm-6 text-center align-content-center">
+                                <img th:src="@{/images/guest/metier_cuisinier2.png}" width="100%" alt="">
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="text-justify">
+                                    Ceci est la charte du Cuisinier, c'est cette charte qui détermine les effets des plats cuisiner et le prix des ingrédients.
+                                </p>
+                                <p class="text-justify">
+                                    Il vous est possible d'additionner plusieurs effets sur un même plat cependant pas possible de cumuler deux fois le même effet. Sauf la durée.
+                                </p>
+                                <p class="text-justify">
+                                    Plus tard, il vous sera possible d'ajouter des loots de créatures, à condition que ce soit comestible par exemple de la chaire.
+                                </p>
+                                <p class="text-justify">
+                                    Sur ceux à vos fourneaux et devenez les meilleurs cuisto d'Orario !
+                                </p>
+                                <p class="text-justify">
+                                    (Petit tips, il est possible de demander crédit à la guilde si vous ne possédez pas les fonds pour débuter en tant que cuisto, valable pour tous les métiers d'ailleurs cependant le taux est de 25% !)
+                                </p>
+                            </div>
+                        </div>
+                        <p class="text-justify">Au faaite ! Selon le chiffre d'affaire à la semaine votre taverne touche 500 valis par vente !</p>
+
+                    </div></div>
+                </div>
+
+                <div class="card" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse5" style="color:black;">Artisan</a></div>
+                    <div id="collapse5" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <div class="text-center align-content-center">
+                            <img th:src="@{/images/guest/metier_artisan.png}" height="200rem" alt="">
+                        </div>
+                        <h1>Artisan</h1>
+                        <p class="text-justify">
+                            Le métier d'artisan consiste à fabriquer des objets, décoratifs, utilitaire, voir même construire des établissements.
+                            Comment cela fonctionne ?
+                            Et bien c'est un métier particulier puisqu'il se base à une logique rp, si vous voulez construire un petit coffre en bois, mettez-vous d'accord pour que cela reste logique, cela vous coûtera plus au moins 10 buches de bois.
+                            Toutes les ressources sont trouvables à l'extérieur d'Orario dans la forêt, les plaines ect...
+                        </p>
+                        <p class="text-justify">
+                            La récolte fonctionne comme tel (!roll 1d10 puis le résultat signifie votre récolte, ceci est améliorable avec des outils que vous pouvez acheter chez le forgeron par exemple)
+                            Il vous faudra un atelier (coûtant 60.000 valis) pour exercer ce métier et une licence de 40k valis à la guilde.
+                        </p>
+                        <h1>Les sacs</h1>
+                        <p class="text-justify">
+                            Il est possible de fabriquer des sacs offrant des bonus de places pour les personnes se les offrants.
+                            Voici la liste de craft de ces fameux sacs.
+                        </p>
+                        <p class="text-justify">(petite valeur pour la vente , généralement 1 emplacement équivaut à 2.500 valis!)</p>
+                        <ul>
+                            <li>Sac en toile : 4 ficelles (obtenable tous les 15 fibres) , 30 toiles d'araignée. +25 de capacité.</li>
+                            <li>Sac à dos : 8 ficelles , 50 de cuirs. +75 de capacité.</li>
+                            <li>Sac de rando : Sac en toile + sac à dos , 15 ficelles. +175 de capacité.</li>
+                            <li>Sac de supporter : Sac en toile + sac à dos + Sac de rando , 30 ficelles. +375 de capacité.</li>
+                            <li>Enorme sac : Tout les sacs , 50 ficelles. +775 capacité.</li>
+                        </ul>
+                        <h1>Ergonomie</h1>
+                        <p class="text-justify">
+                            L'Artisan est également capable d'arranger des objets qu'il crée (bague, collier, sceptre, ect..) pour pouvoir faire gagner de la place aux utilisateur de runes ou autre dans leurs inventaire.
+                        </p>
+                        <p class="text-justify">
+                            Ps : L'artisan est capable de construire des maisons, cabanon ect.. un emplacement est équivaut à (250 emplacement pour vous donner une valeur de prix).
+                            Les ressources extérieures sont récupérables une fois par heure par rapport à la catégorie donc vous n'allez pas récupérer une ressource à la rivière puis dans la forêt juste après.
+                        </p>
+                    </div></div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

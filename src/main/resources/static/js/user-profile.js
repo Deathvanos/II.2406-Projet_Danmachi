@@ -124,15 +124,6 @@ document.getElementById("modify-user-info-form").addEventListener("submit", func
 
 });
 
-function showBootstrapAlert(type, message) {
-    const alertElement = $('<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
-        message +
-        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-        '</div>');
-
-    $('#alertContainer').append(alertElement);
-}
-
 document.getElementById('image-input').addEventListener('change', function (e) {
     const file = e.target.files[0];
     const reader = new FileReader();

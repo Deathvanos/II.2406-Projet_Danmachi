@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Réputation</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Réputation</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;">
+
+            <h1>Réputation</h1>
+            <p class="text-justify">
+                La réputation est une valeur entière, définissant votre notoriété de manière générale.
+                Cette dernière peut être positif comme négatif s'accompagnant alors d'effet non direct varier, tout comme la reconnaissance ou le mépris de certain PNJ, ou bien de vous permettre à accéder à diverse activité liée à la réputation.
+                De plus, elle favorise le gain d'excelia de hauts rangs peu importe dans quelle branche vous vous situez.
+            </p>
+            <p class="text-justify">
+                La réputation peut être gagnée ou perdue de différente façon suite aux actions d'un ou plusieurs personnes.
+            </p>
+
+            <h1>Positif</h1>
+            <p class="text-justify">
+                La réputation dite positive, est l'une des plus simples a gagné puis-ce que cette dernière est souvent issu de bonne action, d'actes héroïques ou simplement d'exploits "positif".
+                Cependant, afin de toujours garder une bonne réputation, les agissements des personnes souhaitant garder une bonne réputation devront toujours montrer une bonne image de manière générale au risque de perdre en autorité.
+            </p>
+
+            <h1>Négatif</h1>
+            <p class="text-justify">
+                La réputation, dite négative, est la réputation aux effets assez hasardeuse, puisque ce dernier permet de pouvoir toucher à l'illégal et avoir accès aux avantages du marché noir.
+                On peut également être ciblé par diverses menaces autant du côté du mal que du côté du bien.
+                Une réputation négative élevée vous permet d'avoir une notoriété élevée au saint des zones de non-droit et de bénéficier d'avantage que n'auraient pas les personnes d'une bonne réputation.
+                Cependant beaucoup de choses vous sera difficiles d'accès dû au fait que même la guilde aura tendance à vouloir éviter de faire a vous et pourrai même enquêter sur vos agissements.
+                Elle peut aussi vous arrêter si votre réputation négative devient d’un coup très élevé et que beaucoup trop de rumeurs se répandent.
+            </p>
+
+
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

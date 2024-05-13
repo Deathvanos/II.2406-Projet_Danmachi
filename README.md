@@ -15,6 +15,10 @@ Projet_Danmachi.iml file will be created (in gitignore)
 target folder will be created (in gitignore)  
 You must create your table "danmachi" in phpMyAdmin from xampp and start the serveur  
 
+# Comment merger ma branch sur le master ?
+1. Aller dans IntelliJ -> onglet (du bas) Git
+2. Se mettre sur la branch Local.master ()
+
 
 # Comment merger ma branche sur le master ?
 0. Ne pas oublier de commit et push sa branche sur github

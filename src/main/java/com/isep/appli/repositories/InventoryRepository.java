@@ -11,4 +11,5 @@ import java.util.List;
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 	List<Inventory> findById(long id);
 	List<Inventory> findByIdPlayer(long id);
+	List<Inventory> findByIdItem(long id);
 }

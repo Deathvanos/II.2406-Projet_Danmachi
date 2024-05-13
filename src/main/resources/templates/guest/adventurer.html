@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Adventurer</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Adventurer</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;">
+
+            <h1>Aventuriers : les Falna</h1>
+            <p class="text-justify"> On appelle aventuriers les personnes qui reçoivent le falna d'une divinité et qui explore le donjon.</p>
+            <p class="text-justify"> Les dieux ont donné la falna aux aventuriers pour faire naître des héros.
+                Falna est la grâce, parfois appelée bénédiction, donnée par les dieux et les déesses aux membres de leur familia.
+                Ceux qui ont une falna acquièrent des prouesses physiques surhumaines lorsqu'ils en sont dotés.
+                Chaque falna cherche à rassembler des excelia pour élever leur statue et devenir encore plus forts.
+            </p>
+            <p class="text-justify">
+                La falna elle-même accorde quelques améliorations en plus de celles indiquées dans le statut d'une personne; à savoir, sens accrus, longévité et endurance accrue.
+                Cette série d'effets est encore augmentée à chaque niveau supérieur atteint.
+                L'amélioration est proportionnelle, ce qui signifie qu'il est déconseillé de mettre toutes ses compétences au même niveau.
+                Les humains-bêtes sont connus pour posséder de meilleurs sens que la plupart des gens.
+                Il a été démontré que ceux qui ont falna ont de meilleurs sens que les autres personnes qui n'ont pas de falna.
+            </p>
+
+            <h1>Statut</h1>
+            <div class="row">
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/adventurer.jpeg}" width="75%" alt="">
+                </div>
+                <div class="col-sm-8">
+                    <h1>Statut</h1>
+                    <p class="text-justify">
+                        Le statut est le falna défini comme divers paramètres.
+                        Le statut est composé des capacités de base, des capacités de développement, de la magie, des compétences et du niveau général.
+                        Il se manifeste physiquement sous une forme similaire à un tatouage comme une masse de texte avec toutes ses caractéristiques détaillées, ainsi que l'emblème de la familia correspondant.
+                        Afin de protéger son précieux contenu, les dieux ont développé une méthode par laquelle ils sont capables de cacher les statuts des membres de leur famille, ne les révélant que pour les mises à jour.
+                        Cependant, comme tout est écrit en hiéroglyphes, la langue des dieux, très peu de mortels sont réellement capables de le lire.
+                        Seul le Dieu patron respectif peut dévoiler et mettre à jour le statut d'une personne.
+                        Néanmoins, il existe des objets qui permettent à d'autres de le faire, même s'ils ne sont pas eux-mêmes des dieux.
+                    </p>
+                </div>
+            </div>
+
+
+
+            <h1>Capacités de base</h1>
+            <p class="text-justify">
+                Les capacités de base sont la force, l'endurance, la dextérité, l'agilité et la magie.
+                Chacun est affiché avec un rang et un numéro de 0 à 999.
+                0-99 est I, 100-199 est H, 200-299 est G, 300-399 est F, 400-499 est E, 500-599 est D, 600-699 est C, 700-79 est B, 800- 899 est A et 900-999 est S.
+                Les capacités de base peuvent être élevées grâce à l'excelia acquise lors de l'entraînement et des batailles.
+                Les capacités de base sont réinitialisées à I0 à chaque niveau supérieur, bien que celles acquises avant chaque niveau supérieur restent une base invisible.
+            </p>
+
+            <h1>Skill</h1>
+            <p class="text-justify">
+                Les capacités de développement sont des capacités spéciales qui ont une chance d'apparaître à chaque niveau supérieur à partir du niveau 2.
+                Les capacités de développement sont différentes des capacités de base en ce sens qu'elles sont des caractéristiques spécialisées dans un certain domaine.
+                À partir du niveau 2, il y a une chance d'en gagner un à chaque niveau supérieur.
+                Il y a aussi la possibilité qu'un seul n'apparaisse pas au rang supérieur, ou que plusieurs apparaissent parmi lesquels choisir.
+                Abnormal Resistance et Hunter sont des exemples de choix parmi plusieurs capacités de développement.
+                Comme les capacités de base, les capacités de développement sont également classées de I à S.
+                Ils sont beaucoup plus difficiles à entraîner et ne se réinitialisent pas à chaque nouveau rang.
+                Les capacités de développement peuvent s'améliorer lors d'une mise à jour de statut normale, mais elles peuvent également le faire lorsque leur utilisateur monte de niveau.
+            </p>
+
+            <h1>Capacité</h1>
+            <p class="text-justify">
+                Contrairement aux capacités de développement, les compétences peuvent apparaître, quel que soit le niveau.
+                Ils peuvent corriger et renforcer des capacités de base spécifiques, la magie et les actions.
+                On dit que la chance de découvrir une compétence est rare et les compétences avec des effets que personne d'autre n'a sont considérées comme des compétences rares.
+                Les compétences peuvent être découvertes lors d'un niveau supérieur ou par d'autres méthodes telles que la forge.
+                Certaines compétences peuvent avoir des variantes.
+                Si un Dieu le souhaite, il peut décider de ne pas ajouter de compétence lorsqu'elle apparaît, cependant, celles qui apparaissent lorsqu'une personne obtient une falna ne peuvent pas être rejetées.
+            </p>
+
+            <h1>Magie</h1>
+            <p class="text-justify">
+                La magie est considérée comme un pouvoir puissant.
+                Il existe deux types de magie différents : la magie congénitale basée sur ses propres capacités et sa race et la magie acquise basée sur la falna donnée par les dieux et les déesses.
+                La plupart des magies nécessitent un chant spécifique pour s'activer, à l'exception de magie sans chant.
+                Plus le chant est long, plus la magie est forte.
+                Lorsque l'utilisateur devient incapable de contrôler le pouvoir magique lorsqu'il utilise sa magie, un Ignis Fatuus se produit, le faisant exploser et endommager l'utilisateur.
+                La magie utilise l'esprit pour lancer, et une utilisation excessive peut provoquer l'évanouissement d'un individu, une condition connue sous le nom de Mind Down ou Mind Zero.
+            </p>
+            <p class="text-justify">
+                Les gens ont naturellement entre un et trois emplacements pour la magie et ne peuvent normalement apprendre qu'une seule magie par emplacement.
+                La plupart des gens ont tendance à ne jamais faire apparaître de magie.
+                Pour les personnes disposant d'un ou deux emplacements, le nombre peut être augmenté via l'utilisation d'un grimoire, mais le maximum absolu est de 3, même avec un grimoire.
+                Remplir son premier emplacement magique est apparemment quelque peu difficile à réaliser, tandis que remplir le second est plus difficile et le troisième est encore plus difficile à remplir que le second.
+                Dans de rares cas, une troisième magie n'est pas obtenue, peu importe le nombre de grimoires utilisés, ce qui arrive souvent aux mages et sorciers de haut rang.
+                Une excelia spéciale est nécessaire pour obtenir une troisième magie.
+            </p>
+            <p class="text-justify">
+                La capacité de développement Mage peut renforcer la puissance, la durée, la quantité de cibles et la zone d'effet de la magie, en plus de créer un cercle magique lorsque l'utilisateur lance de la magie.
+                Cependant, certains personnages tels que Airmid Teasanare possèdent un cercle magique indépendamment de Mage pour une raison inconnue.
+            </p>
+            <p class="text-justify">
+                Il est également possible d'utiliser la magie sans falna, bien que cela oblige l'utilisateur à suivre une formation et des rituels et à utiliser un long chant systématisé pendant les temps anciens.
+                La magie utilisée par les Elfes dans la Forêt Royale d'Alf compte plus de douze versets.
+                La magie utilisée sans falna est faible par rapport à la magie utilisée avec une, ce qui la rend impraticable contre cette dernière, et elle a une plus grande chance d'avoir un Ignis Fatuus.
+                Il existe également certains monstres capables d'utiliser la magie sous forme d'attaques respiratoires.
+                Des exemples de ceci sont le souffle de feu des Hellhounds, le hurlement du Black Goliath et le souffle de feu des Valgang Dragons.
+            </p>
+            <p class="text-justify">
+                Certaines personnes sont capables d'utiliser le chant simultané, une technique de haut niveau consistant à lancer de la magie tout en se battant ou en se déplaçant.
+                Sa difficulté est comparable à la manipulation d'une bombe à deux mains pendant le combat en raison du risque d'échouer à un chant ou de ne pas pouvoir contrôler son propre pouvoir magique.
+                La compétence à utiliser le chant simultané dépend de l'expérience de l'utilisateur.
+            </p>
+
+            <h1>Malédiction</h1>
+            <p class="text-justify">
+                Contrairement à la magie, les malédictions sont principalement utilisées pour gêner un adversaire, comme confondre, lier ou partager la douleur avec un adversaire, bien que comme la magie, elles soient lancées à travers un chant.
+                Toutes les malédictions nécessitent un coût de la part de l'utilisateur en échange de leur pouvoir, ce qui est un point clé pour différencier la magie des malédictions.
+            </p>
+            <p class="text-justify">
+                Les effets des malédictions ne peuvent être prévenus ou traités qu'en utilisant certains objets magiques créés spécifiquement pour les combattre, comme la cape de Fels, et ne peuvent pas être prévenus par la capacité de développement Résistance anormale.
+            </p>
+            <p class="text-justify">
+                Les malédictions peuvent également être transformées en armes connues sous le nom d'armes maudites par les maléficiaires.
+                Comme les malédictions ordinaires, les dégâts qu'elles infligent nécessiteront des objets ou de la magie pour s'en débarrasser.
+                Toutes les armes maudites ont un effet secondaire négatif qu'elles infligent à leurs utilisateurs chaque fois qu'ils versent leur magie dans l'arme ou coupent quelqu'un avec.
+                Les effets secondaires varient selon l'arme, mais certains d'entre eux peuvent temporairement abaisser le statut de l'utilisateur ou drainer l'esprit ou l'endurance de l'utilisateur, entre autres effets secondaires.
+            </p>
+
+
+
+
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

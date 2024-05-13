@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Excelia</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Excelia</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;">
+
+            <h1>Excelias</h1>
+            <p class="text-justify">
+                L'Excelia est gagnée par des actions, comme en combattant des monstres.
+                Il existe deux types d'excellia.
+                Le type régulier est utilisé par les dieux pour améliorer le statut de leurs partisans autre que le niveau.
+                Des exemples de ceci déverrouillent certaines capacités de développement qui peuvent être choisies pour être obtenues lors de la mise à niveau ou pour augmenter les capacités de base d'un aventurier.
+                Le deuxième type est appelé excelia de haut rang et est utilisé par les dieux pour augmenter le niveau de leurs partisans après en avoir accumulé suffisamment.
+                Une excelia de hautes qualités est obtenue en accomplissant des choses qui impressionneraient même les dieux, comme vaincre des adversaires plus forts.
+            </p>
+            =
+            <h1>Niveaux</h1>
+            <p class="text-justify">
+                Un niveau indique le rang d'une personne.
+                C'est la partie la plus importante du statut, car une personne est effectivement supérieure à toutes celles des niveaux inférieurs dans pratiquement tous les aspects.
+                Cependant, des exceptions existent, car les mages ont apparemment tendance à prendre du retard en termes de prouesses physiques en raison de statistiques extrêmement faibles.
+                Le statut d'un l'aventurier est considéré comme une information secrète, mais le niveau d'un aventurier doit être signalé et montré à la Guilde.
+            </p>
+            <p class="text-justify">
+                La plupart des personnes ayant un statut sont au niveau 1, peu de gens sont capables de dépasser le niveau 1 et le niveau 3 est considéré comme excellent.
+            </p>
+
+            <h1>Rank Up</h1>
+            <p class="text-justify">
+                Rank Up est l'acte de monter à un niveau supérieur.
+                Le simple fait de vaincre des monstres ne mène pas à un niveau supérieur.
+                Pour monter de niveau, il faut avoir au moins un rang D dans une capacité de base et accumuler suffisamment d'excellia de haute qualité pour qu'elle déborde de son conteneur, lui permettant ainsi de monter de niveau.
+            </p>
+            <p class="text-justify">
+                La mise à niveau n'est pas automatique.
+                Son Dieu doit consciemment prendre la décision de mettre à niveau un membre de la familia.
+                Retenir le niveau supérieur est une stratégie que certains pourraient adopter pour des raisons telles que l'amélioration de leurs capacités de base ou le déblocage de capacités de développement.
+                Cependant, la plupart des familias s'abstiennent de le faire en raison de la forte augmentation de leurs capacités globales accordée par un niveau supérieur, ce qui en fait une pratique pratiquée uniquement par des familias fortes.
+            </p>
+            <p class="text-justify">
+                Bien que monter de niveau soit généralement une tâche risquée, ceux qui ont acquis des compétences de combat avant de recevoir une falna sont généralement capables de le faire sans difficulté.
+            </p>
+            <p class="text-justify">
+                Lors de la mise à niveau, une personne reçoit un énorme coup de pouce dans toutes ses capacités de base.
+                L'augmentation est si importante que c'est ce qui crée l'écart de puissance entre les niveaux.
+                De plus, alors qu'il renforce la personne, le pouvoir soudainement acquis provoque une désynchronisation entre l'esprit et le corps qui diminue sa capacité de combat.
+                Néanmoins, cet inconvénient peut être surmonté en combattant un adversaire puissant ou une grande quantité d'ennemis afin de s'habituer pleinement à ses prouesses accrues.
+            </p>
+            <p class="text-justify">
+                Bien que la plupart des gens n'augmentent qu'un niveau à la fois, il est possible de faire l'expérience de plusieurs niveaux à la fois lorsque suffisamment d'excelia de hautes qualités sont collectées.
+                Cependant, un tel événement est extrêmement rare.
+                Lorsque cela se produit, plutôt que d'avoir à satisfaire à l'exigence de rang D dans les niveaux intermédiaires, une personne atteinte directement le niveau supérieur, sautant essentiellement les autres.
+                Malgré cela, une personne a toujours la possibilité de choisir autant de capacités de développement que de niveaux qu'elle monte.
+            </p>
+
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

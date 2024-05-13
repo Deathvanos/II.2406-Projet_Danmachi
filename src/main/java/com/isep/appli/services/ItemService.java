@@ -39,4 +39,8 @@ public class ItemService {
 	public List<Item> findById(long id) {
 		return this.itemRepository.findById(id);
 	}
+
+	public List<Item> findByName(String name) {
+		return this.itemRepository.findByName(name);
+	}
 }
