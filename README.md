@@ -24,7 +24,8 @@ You must create your table "danmachi" in phpMyAdmin from xampp and start the ser
 0. Ne pas oublier de commit et push sa branche sur github
 1. Aller dans IntelliJ -> onglet (du bas) Git
 2. Se mettre sur la branche Local.master (clic droit ->check out)
-3. Clic droit sur ma branche et clic sur " merge "maBranche" into master
-4. Optionnel : on peut supprimer sa branche si on ne compte plus travailler dessus
-5. Toujours en étant dans la branche Local.master : clic droit sur Local.master et "push"
+3. Clic sur ma branche et clic sur " merge "maBranche" into master
+4. Fetch (flèche bleue vers le bas)
+5. Optionnel : on peut supprimer sa branche si on ne compte plus travailler dessus
+6. Toujours en étant dans la branche Local.master : clic droit sur Local.master et "push"
 
