@@ -1,33 +1,3 @@
-$(document).ready(function () {
-    let cropper;
-
-    $('#imageModal').on('shown.bs.modal', function () {
-        let image = document.getElementById('image');
-        cropper = new Cropper(image, {
-            aspectRatio: 3 / 4
-        });
-    });
-
-    $('#cropButton').click(function () {
-        let croppedImageData = cropper.getCroppedCanvas().toDataURL('image/jpeg');
-        $('#croppedImageData').val(croppedImageData);
-        $('#imageModal').modal('hide');
-    });
-
-    $('#image-input').change(function (event) {
-        let files = event.target.files;
-        let reader = new FileReader();
-
-        reader.onload = function (event) {
-            $('#image').attr('src', event.target.result);
-            $('#imageModal').modal('show');
-        };
-
-        reader.readAsDataURL(files[0]);
-    });
-});
-
-
 function showDiv(divId, button) {
     const divsToHide = document.querySelectorAll('.div-info');
     Array.prototype.forEach.call(divsToHide, function(div) {
@@ -39,7 +9,6 @@ function showDiv(divId, button) {
 
     if (divId === 'player-information') {
         let playerId = button.id;
-        sessionStorage.setItem("personnageId", playerId);
 
         $.ajax({
             type: 'GET',
@@ -66,20 +35,30 @@ function clearSelection() {
 $(document).ready(function() {
     $("#deleteForm").submit(function(event) {
         event.preventDefault();
-        let personnageId = $("#personnageId").val();
 
         $.ajax({
-            url: "/personnage/" + personnageId,
-            type: "DELETE",
-            success: function(response) {
-                alert("Personnage supprimé avec succès!");
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                alert("Erreur lors de la suppression du personnage.");
-            }
-        });
+                url: "/session/personnage",
+                type: "GET",
+                success: function(response) {
+                    let personnageId = response.id
+
+                    $.ajax({
+                        url: "/personnage/" + personnageId,
+                        type: "DELETE",
+                        success: function(response) {
+                            alert("Personnage supprimé avec succès!");
+                            location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            alert("Erreur lors de la suppression du personnage.");
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
     });
 });
 
@@ -124,32 +103,49 @@ document.getElementById("modify-user-info-form").addEventListener("submit", func
 
 });
 
-function showBootstrapAlert(type, message) {
-    const alertElement = $('<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
-        message +
-        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-        '</div>');
-
-    $('#alertContainer').append(alertElement);
-}
-
-document.getElementById('image-input').addEventListener('change', function (e) {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    const imagePreview = document.getElementById('image-preview');
+$(document).ready(function () {
     let cropper;
 
-    reader.onload = function (event) {
-        const imageUrl = event.target.result;
-        imagePreview.src = imageUrl;
-
-        cropper = new Cropper(imagePreview, {
-            aspectRatio: 1,
-            viewMode: 1
+    $('#imageModal').on('shown.bs.modal', function () {
+        let image = document.getElementById('image');
+        console.log(image);
+        cropper = new Cropper(image, {
+            aspectRatio: 3 / 4
         });
-    };
+    });
 
-    reader.readAsDataURL(file);
+    $('#imageModal').on('hidden.bs.modal', function () {
+        cropper.destroy();
+    });
+
+    $('#closeButton').on('click', function() {
+        $('#imageModal').modal('hide');
+    });
+
+    $(document).on('click', function (e) {
+        if ($(e.target).hasClass('modal')) {
+            $('#imageModal').modal('hide');
+        }
+    });
+
+    $('#cropButton').click(function () {
+        let croppedImageData = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+        $('#croppedImageData').val(croppedImageData);
+        $('#imageModal').modal('hide');
+        cropper.destroy();
+    });
+
+    $('#image-input').change(function (event) {
+        let file = event.target.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#image').attr('src', e.target.result);
+            $('#imageModal').modal('show');
+        };
+
+        reader.readAsDataURL(file);
+    });
 });
 
 function validateForm() {

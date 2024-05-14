@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Familias</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Familias</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;">
+
+            <h1>Les Familias</h1>
+            <p class="text-justify">
+                Pour faire court, c'est un ensemble de personnes réuni par la bénédiction d'un même dieu.
+                Chaque familia possède une maison et elle peut l'agrandir en payant 100.000 valis au bot falna.
+            </p>
+
+            <h1>La Guilde</h1>
+            <div class="row">
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/familias.png}" width="100%" alt="">
+                </div>
+                <div class="col-sm-8">
+                    <p class="text-justify">
+                        La Guilde est une organisation qui gère Familia au sein d'Orario et fournit des services aux aventuriers.
+                    </p>
+                    <p class="text-justify">
+                        La guilde a succédé à un groupe de personnes qui ont combattu les monstres dans le donjon sans la grâce de Dieu.
+                    </p>
+                </div>
+            </div>
+
+            <h1>Information</h1>
+            <p class="text-justify">
+                L'objectif principal de la Guilde est de gérer la menace monstrueuse créée dans le donjon.
+                En dehors de cela, la Guilde achète des pierres magiques, dépose du butin et l'aventurier créé des cartes du donjon.
+                La Guilde fournit également des armes et des armures aux nouveaux aventuriers qui débutent et aide les familia à se développer rapidement.
+            </p>
+            <p class="text-justify">
+                Le personnel de la Guilde prend également la position de conseillers pour les aventuriers.
+                Elle suggère souvent à quelle profondeur un aventurier devrait aller dans un donjon en fonction de son niveau et de ses compétences.
+                Elle les avertit aussi des dangers particuliers de certains étages et comment se préparer contre eux..
+                Un membre du personnel peut être en charge d'un ou plusieurs aventuriers.
+            </p>
+
+            <h1>Recrutement</h1>
+            <p class="text-justify">
+                Vous pouvez rejoindre la guilde pour percevoir un salaire ainsi que participer à l'animation de la ville.
+                Vous serrez alors un pilier dans les expéditions des aventuriers qui viendront se renseigner auprès de vous.
+                Pour cela il vous suffit de passer un entretien avec le chef de la guilde.
+            </p>
+
+            <h1>Uniforme</h1>
+            <p class="text-justify">
+                L'uniforme standard de la Guilde est un ensemble de gilets et de pantalons noirs avec une chemise à manches longues à col blanc en dessous et un nœud papillon gris.
+                La seule caractéristique distinctive entre les deux sexes est d'avoir des bottes noires et brunes pour les hommes et des chaussures noires pour les femmes.
+                Les membres du personnel masculin et féminin de la Guilde sont tenus de porter cet uniforme dans la Guilde.
+            </p>
+
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

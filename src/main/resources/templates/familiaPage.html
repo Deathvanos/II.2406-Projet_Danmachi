@@ -1,27 +1,37 @@
-<!DOCTYPE HTML> <!--"Esthétique" à compléter-->
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
-    <title th:text=" ${familia.leaderId}"></title>
+    <title th:text=" ${leaderFirstName}"></title>
+    <link rel="stylesheet" href="/css/common.css"/>
 </head>
 <body>
 <header th:insert="~{common/header :: header}"></header>
-    <h1 th:text="'Familia de ' + ${familia.leaderId}"></h1>
+    <div class="container-fluid">
+        <div class="row bodySize">
+            <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+                <div class="col-sm-8" style="background-color:#D5E4D9;">
 
-    <p>Description:</p>
-    <p th:text="${familia.description}"></p>
+                            <!--Ajouter un bouton pour rejoindre la familia si on n'en a pas-->
+                            <h1 class="display-5" th:text="'Familia de ' + ${leaderFirstName} + ' ' +  ${leaderLastName}"></h1>
 
-    <p>Leader:</p> <!--Leader = Dieu-->
-    <p th:text="${familia.leaderId}"></p> <!--+ ajouter image-->
+                            <h2>Description:</h2>
+                            <p class="text-justify" th:text="${familia.description}"></p>
 
-    <p>Emblème:</p>
-    <img th:src="${familia.emblemeImage}" style="max-width: 200px;" />
+                            <h2>Leader:</h2> <!--Leader = Dieu-->
+                            <p th:text="${leaderFirstName} + ' '+  ${leaderLastName}"></p> <!--+ ajouter image-->
 
-    <h2>Membres</h2> <!--Chercher parmi les persos ceux qui sont dans la guilde-->
+                            <h2>Emblème:</h2>
+                            <img th:src="'data:image/png;base64,' + ${familia.embleme_image}" style="max-width: 200px;" alt="Embleme de la familia">
 
+                            <h2>Membres</h2> <!--Chercher parmi les persos ceux qui sont dans la guilde-->
+                </div>
+            <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+            </div>
+    </div>
 <footer th:insert="~{common/footer :: footer}"></footer>
 
 <script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>

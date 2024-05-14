@@ -42,9 +42,7 @@ public class UserController {
 	public String checkLogin(Model model, HttpSession session) {
 
 		User user = (User) session.getAttribute("user");
-		if (user == null) {
-			return "redirect:/login";
-		}
+		checkIsUser(user, model);
 
 		List<Personnage> personnages = personnageService.getPersonasByUser(user);
 		if(!personnages.isEmpty()){
@@ -126,6 +124,11 @@ public class UserController {
 		}
 
 		return "redirect:/login";
+	}
+
+	@GetMapping("/session/personnage")
+	public ResponseEntity<Personnage> getSessionPersonnage(HttpSession session) {
+		return ResponseEntity.ok((Personnage)session.getAttribute("personnage"));
 	}
 	
 	@GetMapping("/chatPage")
