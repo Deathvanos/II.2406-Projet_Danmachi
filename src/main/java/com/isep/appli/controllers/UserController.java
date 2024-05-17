@@ -130,15 +130,4 @@ public class UserController {
 	public ResponseEntity<Personnage> getSessionPersonnage(HttpSession session) {
 		return ResponseEntity.ok((Personnage)session.getAttribute("personnage"));
 	}
-	
-	@GetMapping("/chatPage")
-	public String chatPage() {
-		return "chatPage";
-	}
-
-	@GetMapping("/sendMessage")
-	public String sendMessage(@Valid Message message) {
-
-		return "chatPage";
-	}
 }

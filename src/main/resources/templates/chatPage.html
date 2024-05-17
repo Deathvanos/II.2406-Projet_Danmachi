@@ -1,41 +1,96 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE-edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/css/chatPage.css"/>
 </head>
 <body>
-
-
 <header th:insert="~{common/header :: header}"></header>
 
-<div class="container">
-  <h1>Messagerie</h1>
-
-
-  <div>
-    <span></span>
-    <span>
-      <form id="chat-form" th:action="@{/sendMessage}" th:object="${message}" method="POST">
-
-          <div class="form-group">
-              <input class="form-control" type="text"  id="content" placeholder="Ecrivez un message ...">
-              <button type="submit" class="btn btn-outline-success"></i>Envoyer</button>
-          </div>
-      </form>
-
-    </span>
-  </div>
-
-
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Messagerie</h1>
+            </div>
+        </div>
+    </div>
 </div>
 
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+        <div class="col-sm-8" style="background-color:#D5E4D9; padding:0">
 
+            <div th:if="${personnage == null}" class="discussion-info">
+                Vous n'avez pas sélectionné de personnage.
+            </div>
+
+            <div th:if="${personnage != null}">
+                <div th:if="${discussions.size() == 0}" class="discussion-info">
+                    Vous n’avez aucune conversation en cours.
+                </div>
+
+                <span class="discussion-list">
+                    <div th:each="discussion : ${discussions}" class="discussion-item">
+
+                        <a th:href="${discussion.getId()}" class="link">
+                            <div th:if="${discussion.getConversationType() == 'PRIVATE'}">
+                                <p class="discussion-small-title">Joueur</p>
+                            </div>
+
+                            <div th:if="${discussion.getConversationType() == 'FAMILIA'}">
+                                <p class="discussion-small-title">Familia</p>
+                            </div>
+
+                            <p th:text="${discussion.getDisplayDestination()}" class="discussion-small-title destination-name"></p>
+                            <p th:text="${discussion.getLastMessageDate}" class="message-timestamp"></p>
+                        </a>
+
+                    </div>
+                </span>
+
+                <span style="float: left; width: 65%;" class="discussion-field">
+
+                    <div th:if="${discussion == null && discussions.size() != 0}" class="discussion-info">
+                        Veuillez sélectionner une discussion.
+                    </div>
+
+                    <div th:if="${discussion != null}">
+                        <h1 class="display-5 discussion-title destination-name" th:text="${discussion.getDisplayDestination()}"></h1>
+
+                        <div th:each="message : ${messages}">
+                             <div class="message-container">
+                                <div th:if="${message.getSenderId() == personnage.getId()}" th:text="${message.getContent()}" class="message-content message-sender"></div>
+                                <div th:if="${message.getSenderId() != personnage.getId()}" th:text="${message.getContent()}" class="message-content"></div>
+                                <div th:text="${message.getDate()}" class="message-timestamp"></div>
+                             </div>
+                        </div>
+
+                        <form id="chat-form" th:action="@{/sendMessage}" th:object="${message}" method="POST">
+                          <div class="form-group">
+                              <input class="form-control"  type="text"  th:field="*{content}" placeholder="Ecrivez un message ..."id="content" name="content">
+
+                              <input type="hidden" th:field="*{discussion}" id="discussion">
+                              <input type="hidden"  th:field="*{senderId}" id="senderId">
+                              <input type="hidden" th:field="*{destinationId}" id="destinationId">
+
+                              <button type="submit" class="btn btn-outline-success"></i>Envoyer</button>
+                          </div>
+                        </form>
+                    </div>
+                </span>
+            </div>
+
+        </div>
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
 <footer th:insert="~{common/footer :: footer}"></footer>
-
-
 <script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
 </body>
 </html>
