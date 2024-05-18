@@ -19,7 +19,7 @@
                     <img id="item-image">
                 </div>
                 <div class="col-sm-8 d-flex flex-column h-100" style="background-color:#D5E4D9;">
-                    <form action="#" th:action="@{/shop}" th:object="${shop}" method="POST">
+                    <form action="#" th:action="@{/inventory/sellItem}" th:object="${shop}" method="POST">
                         <div class="form-group d-flex flex-column">
                             <label>
                                 <h2>Quantité : </h2>
@@ -95,6 +95,7 @@
                         <button type="submit" class="btn btn-light btn-outline-success mt-3">Find It !</button>
                     </div>
                 </form>
+                <button class="btn btn-light btn-outline-success mt-3" th:onclick="location.href = '/shop'">Shop</button>
             </div>
             <div class="col-sm-8 d-flex flex-column h-100" style="background-color:#D5E4D9;">
                 <div class="container text-center d-flex flex-row flex-wrap p-10 h-100" >
