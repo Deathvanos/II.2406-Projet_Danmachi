@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <style>
+        body {
+            background-color: #D5E4D9;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="container my-5 px-3 py-3">
+    <h1>Tableau de personnages</h1>
+    <table id="personnages-table" class="table table-striped table-bordered" style="width:100%">
+        <thead class="thead-dark">
+        <tr>
+            <th>Nom</th>
+            <th>Profile</th>
+            <th>Pseudonym</th>
+            <th>Race</th>
+            <th>Niveau</th>
+            <th>Argent</th>
+            <th>Description</th>
+            <th>Story</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="personnage : ${personnages}">
+            <td th:text="${personnage.getFirstName() + ' ' + personnage.getLastName()}"></td>
+            <td><img th:src="'data:image/png;base64,' + ${personnage.getImage()}" alt="Profile Image" style="max-width: 100px"></td>
+            <td th:text="${personnage.getUserUsername()}"></td>
+            <td th:text="${personnage.getRaceString()}"></td>
+            <td th:text="${personnage.getLevel()}"></td>
+            <td th:text="${personnage.getMoney()}"></td>
+            <td th:text="${personnage.getDescription()}"></td>
+            <td th:text="${personnage.getStory()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-center">
+    <ul class="pagination">
+        <li class="page-item" th:classappend="${currentPage == 0} ? disabled">
+            <a class="page-link" th:href="@{/personnage/all(page=0)}">Première</a>
+        </li>
+        <li class="page-item" th:classappend="${currentPage == 0} ? disabled">
+            <a class="page-link" th:href="@{/personnage/all(page=${currentPage - 1})}">Précédente</a>
+        </li>
+        <!-- Iterate through pages -->
+        <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${pageNumber == currentPage} ? active">
+            <a class="page-link" th:href="@{/personnage/all(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+        </li>
+        <!-- Next and Last buttons -->
+        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? disabled">
+            <a class="page-link" th:href="@{/personnage/all(page=${currentPage + 1})}">Suivante</a>
+        </li>
+        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? disabled">
+            <a class="page-link" th:href="@{/personnage/all(page=${totalPages - 1})}">Dernière</a>
+        </li>
+    </ul>
+</div>
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+</body>
+</html>

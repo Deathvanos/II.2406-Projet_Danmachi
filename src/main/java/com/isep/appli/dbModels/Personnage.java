@@ -46,4 +46,10 @@ public class Personnage implements Serializable {
     @JoinColumn(name = "familia_id")
     @JsonIgnore
     private Familia familia;
+
+    @Column(columnDefinition = "text")
+    private String description;
+
+    @Column(columnDefinition = "text")
+    private String story;
 }

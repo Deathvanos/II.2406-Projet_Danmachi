@@ -10,8 +10,6 @@ import com.isep.appli.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,56 +53,6 @@ public class UserController {
 		return "user-profile";
 	}
 
-	@PostMapping("/save-personnage")
-	public String savePersonaToUser(@Valid Personnage personnage,
-									@RequestParam("croppedImageData") String croppedImageData,
-									HttpSession session,
-									Model model) {
-		User user = (User) session.getAttribute("user");
-
-		String base64Image = croppedImageData.split(",")[1]; // Extract Base64 portion
-		byte[] decodedImageData = Base64.getDecoder().decode(base64Image.getBytes());
-
-		ByteArrayInputStream bis = new ByteArrayInputStream(decodedImageData);
-
-		if (personnageService.savePersona(bis, user, personnage)) {
-			return "redirect:/user-profile";
-		}
-
-		model.addAttribute("createPersonaError", true);
-		return "user-profile";
-	}
-
-
-	@GetMapping("/personnage/{id}")
-	public ResponseEntity<PersonnageDto> getPersonnageById(@PathVariable long id, HttpSession session) {
-		Personnage currentPersonnage = personnageService.getPersonnageById(id);
-
-		session.setAttribute("personnage", currentPersonnage);
-
-		PersonnageDto personnageDto = new PersonnageDto(
-				currentPersonnage.getId(),
-				currentPersonnage.getFirstName(),
-				currentPersonnage.getLastName(),
-				currentPersonnage.getImage(),
-				currentPersonnage.getLevel(),
-				currentPersonnage.getMoney(),
-				currentPersonnage.getUser().getId(),
-				currentPersonnage.getRace().getDisplayName()
-		);
-		return ResponseEntity.ok(personnageDto);
-	}
-
-	@DeleteMapping("/personnage/{id}")
-	public ResponseEntity<String> deletePersonnageById(@PathVariable long id) {
-		try {
-			personnageService.deletePersonnageById(id);
-			return ResponseEntity.ok("Personnage bien suprimer");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting personnage");
-		}
-	}
-
 	@PostMapping("/modify-user")
 	public String updateUser(@ModelAttribute ModifyUserInfoForm newUserInfo, HttpSession session) {
 		User user = (User) session.getAttribute("user");
@@ -124,11 +72,6 @@ public class UserController {
 		}
 
 		return "redirect:/login";
-	}
-
-	@GetMapping("/session/personnage")
-	public ResponseEntity<Personnage> getSessionPersonnage(HttpSession session) {
-		return ResponseEntity.ok((Personnage)session.getAttribute("personnage"));
 	}
 	
 	@GetMapping("/chatPage")
