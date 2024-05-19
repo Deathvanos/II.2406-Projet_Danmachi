@@ -64,9 +64,10 @@
                         <h1 class="display-5 discussion-title destination-name" th:text="${discussion.getDisplayDestination()}"></h1>
 
                         <div th:each="message : ${messages}">
+                             <div th:if="${message.isReceived() && discussion.getConversationType() == 'FAMILIA'}" th:text="${message.getDisplaySender()}" class="message-content"></div>
                              <div class="message-container">
-                                <div th:if="${message.getSenderId() == personnage.getId()}" th:text="${message.getContent()}" class="message-content message-sender"></div>
-                                <div th:if="${message.getSenderId() != personnage.getId()}" th:text="${message.getContent()}" class="message-content"></div>
+                                <div th:if="${!message.isReceived()}" th:text="${message.getContent()}" class="message-content message-sender"></div>
+                                <div th:if="${message.isReceived()}" th:text="${message.getContent()}" class="message-content"></div>
                                 <div th:text="${message.getDate()}" class="message-timestamp"></div>
                              </div>
                         </div>

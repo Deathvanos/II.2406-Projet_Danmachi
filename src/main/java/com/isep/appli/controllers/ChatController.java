@@ -1,7 +1,7 @@
 package com.isep.appli.controllers;
 
 import com.isep.appli.dbModels.*;
-import com.isep.appli.models.FormattedDiscussion;
+import com.isep.appli.models.FormattedMessage;
 import com.isep.appli.services.DiscussionService;
 import com.isep.appli.services.MessageService;
 import com.isep.appli.services.PersonnageService;
@@ -14,8 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -63,7 +61,7 @@ public class ChatController {
                     destination = discussion.getFamiliaId();
                 }
 
-                List<Message> messages = messageService.getMessagesByDiscussion(discussionId);
+                List<FormattedMessage> messages = messageService.getFormattedMessagesByDiscussionId(discussionId, personnage);
                 model.addAttribute("messages", messages);
 
                 Message message = new Message();

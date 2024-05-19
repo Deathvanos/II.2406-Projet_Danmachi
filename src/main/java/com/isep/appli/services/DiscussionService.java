@@ -33,17 +33,13 @@ public class DiscussionService {
         return discussionRepository.findById(id);
     }
 
-    public List<Discussion> getDiscussionsByPersonnage(Long personnage) {
-        List<Discussion> discussions = discussionRepository.findByFirstPersonnageId(personnage);
-        discussions.addAll(discussionRepository.findBySecondPersonnageId(personnage));
-        return  discussions;
-    }
-
-    public List<Discussion> getDiscussionsByPersonnageAndFamilia(Long personnage, Long familia) {
-        List<Discussion> discussions = discussionRepository.findByFirstPersonnageId(personnage);
-        discussions.addAll(discussionRepository.findBySecondPersonnageId(personnage));
-        List<Discussion> familiaDiscussion = discussionRepository.findByFamiliaId(familia);
-        discussions.addAll(familiaDiscussion);
+    public List<Discussion> getDiscussionsByPersonnage(Personnage personnage) {
+        List<Discussion> discussions = discussionRepository.findByFirstPersonnageId(personnage.getId());
+        discussions.addAll(discussionRepository.findBySecondPersonnageId(personnage.getId()));
+        if (personnage.getFamilia() != null) {
+            List<Discussion> familiaDiscussion = discussionRepository.findByFamiliaId(personnage.getFamilia().getId());
+            discussions.addAll(familiaDiscussion);
+        }
         return  discussions;
     }
 
@@ -69,32 +65,31 @@ public class DiscussionService {
         return destinationPersonnage;
     }
 
-    public String displayDestination(Personnage personnage) {
-        return personnage.getFirstName() + " " + personnage.getLastName();
-    }
-
     public FormattedDiscussion formatDiscussion (Discussion discussion, Personnage selectedPersonnage) {
         FormattedDiscussion formattedDiscussion = new FormattedDiscussion(
                 discussion.getId(),
                 discussion.getConversationType(),
-                this.displayDestination(this.getDestinationPersonnage(discussion, selectedPersonnage)),
-                this.getDestinationPersonnage(discussion, selectedPersonnage).getImage(),
-                messageService.formatDate(this.getLastMessageDate(discussion))
+                messageService.displayDestination(getDestinationPersonnage(discussion, selectedPersonnage)),
+                getDestinationPersonnage(discussion, selectedPersonnage).getImage(),
+                messageService.formatDate(getLastMessageDate(discussion))
         );
         return formattedDiscussion;
     }
 
     public List<FormattedDiscussion> getformattedDiscussions (Personnage selectedPersonnage) {
-        List<Discussion> discussions = this.getDiscussionsByPersonnage(selectedPersonnage.getId());
+        List<Discussion> discussions = getDiscussionsByPersonnage(selectedPersonnage);
         List<FormattedDiscussion> formattedDiscussions = new ArrayList();
         for (Discussion discussion : discussions) {
-            formattedDiscussions.add(this.formatDiscussion(discussion, selectedPersonnage));
+            formattedDiscussions.add(formatDiscussion(discussion, selectedPersonnage));
         }
         return formattedDiscussions;
     }
 
     public Date getLastMessageDate(Discussion discussion) {
         List<Message> messages = messageService.getMessagesByDiscussion(discussion.getId());
+        if (messages.isEmpty()) {
+            return null;
+        }
         Date maxDate = messages.get(0).getDate();
         for (Message message : messages) {
             if (message.getDate().after(maxDate)) {
