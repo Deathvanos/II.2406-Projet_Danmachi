@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Danmachi - Shop</title>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+<div class="container-fluid row vh-100">
+    <div id="sellItemPanel" class="container-fluid row vh-100 justify-content-center align-content-center" style="z-index : 5; visibility: hidden;">
+        <div class="container h-50 w-50 bg-info" style="z-index : 10;">
+            <div class="row h-100">
+                <div class="col-sm-4 d-flex flex-column align-content-start" style="background-color:#67819A; font-family: Inter;">
+                    <h1 id="item-name"></h1>
+                    <img id="item-image">
+                </div>
+                <div class="col-sm-8 d-flex flex-column h-100" style="background-color:#D5E4D9;">
+                    <form action="#" th:action="@{/shop/buyItem}" th:object="${shopCell}" method="POST">
+                        <div class="form-group d-flex flex-column">
+                            <label>
+                                <h2>Quantité : </h2>
+                                <input class="form-control mt-3" type="number" th:field="*{quantity}" id="quantity" value="1" min="1">
+                            </label>
+                            <label>
+                                <h2>
+                                    Prix Unitaire :
+                                </h2>
+                                <input class="form-control mt-3" type="number" th:field="*{price}" id="price" value="1000" min="100">
+                            </label>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn btn-light btn-outline-danger mt-3 w-100" th:onclick="cancel()">Cancel</button>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-light btn-outline-success mt-3 w-100" >Sell</button>
+                                </div>
+                            </div>
+                            <input type="number" class="invisible" th:field="*{idItem}" id="idItem">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid row vh-100 bg-dark" style="position: absolute;  opacity: 0.5;" ></div>
+    </div>
+
+    <div class="container-fluid text-center" style="position : absolute;">
+        <div class="row vh-100">
+            <div class="col-sm-4 d-flex flex-column align-content-start" style="background-color:#67819A; font-family: Inter;">
+                <h2 class="text-white text-left font-weight-bold" th:text="${'Shop : ' + session.personnage.firstName + ' ' + session.personnage.lastName}">
+                    Shop
+                </h2>
+                <form action="#" th:action="@{/findItem}" th:object="${item}" method="POST">
+                    <div class="form-group d-flex flex-column">
+                        <input class="form-control mt-3" type="text" th:field="*{name}" id="name" placeholder="Recherche ...">
+                        <div class="form-check d-flex flex-column my-3 px-0">
+                            <label class="form-check-label my-4">
+                                <div class="form-check d-inline-flex align-items-center w-100">
+                                    <input type="radio" class="form-check-input h-100 w-25 border" th:field="*{category}" name="category" th:value="EQUIPEMENT" id="equipement">
+                                    <h2 class="text-white font-weight-bold mx-4 my-0 w-75">
+                                        Equipement
+                                    </h2>
+                                </div>
+                            </label>
+
+                            <label class="form-check-label my-4">
+                                <div class="form-check d-inline-flex align-items-center w-100">
+                                    <input type="radio" class="form-check-input h-100 w-25" th:field="*{category}" name="category" th:value="CONSOMMABLE" id="consomable">
+                                    <h2 class="text-white font-weight-bold mx-4 my-0 w-75">
+                                        Consommable
+                                    </h2>
+                                </div>
+                            </label>
+                            <label class="form-check-label my-4">
+                                <div class="form-check d-inline-flex align-items-center w-100">
+                                    <input type="radio" class="form-check-input h-100 w-25" th:field="*{category}" name="category" th:value="RESSOURCE" id="resource">
+                                    <h2 class="text-white font-weight-bold mx-4 my-0 w-75">
+                                        Ressource
+                                    </h2>
+                                </div>
+                            </label>
+                            <label class="form-check-label my-4">
+                                <div class="form-check d-inline-flex align-items-center w-100">
+                                    <input type="radio" class="form-check-input h-100 w-25" th:field="*{category}" name="category" th:value="ARTEFACT" id="artefact">
+                                    <h2 class="text-white font-weight-bold mx-4 my-0 w-75">
+                                        Artefact
+                                    </h2>
+                                </div>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-light btn-outline-success mt-3">Find It !</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-8 d-flex flex-column h-100" style="background-color:#D5E4D9;">
+                <div class="container text-center d-flex flex-row flex-wrap p-10 h-100" >
+
+                    <th:block th:unless="${allShop.isEmpty()}" th:each="item : ${allShop.keySet()}">
+                        <div class="card my-3 w-25 h-25" th:id="${allShop.get(item).getId()}" th:onclick="#" >
+                            <div class="card-body" style="background-color:#D9D9D9;">
+                                <img th:unless="${item.getUrlImage().equals('Null')}" th:src="'data:image/png;base64,' + ${item.getUrlImage()}" class="mx-auto d-block">
+                            </div>
+                            <div class="card-footer text-left" style="background-color:#FFFFFF; font-family: Inter;">
+                                <a th:text="${allShop.get(item).getQuantity() + ' x ' + item.getName()}"></a>
+                                <br>
+                                <a th:text="${allShop.get(item).getPrice() + ' x valis'}"></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </th:block>
+
+                    <th:block th:if="${allShop.isEmpty()}">
+                        <div class="container my-4 col-8">
+                            <h1 class="text-white font-weight-bold">
+                                Aucun Item Trouver...
+                            </h1>
+                        </div>
+                    </th:block>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
+<script src="/js/inventory.js"></script>
+</body>
