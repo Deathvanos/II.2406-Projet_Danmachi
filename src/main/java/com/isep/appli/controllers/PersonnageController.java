@@ -3,6 +3,7 @@ package com.isep.appli.controllers;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.User;
 import com.isep.appli.models.PersonnageDto;
+import com.isep.appli.models.enums.Race;
 import com.isep.appli.services.PersonnageService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 @Controller
 public class PersonnageController {
@@ -107,6 +110,12 @@ public class PersonnageController {
         model.addAttribute("personnages", personnagePage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", personnagePage.getTotalPages());
+
+        List<String> distinctRaces = new ArrayList<>();
+        for (Race race : Race.values()) {
+            distinctRaces.add(race.getDisplayName());
+        }
+        model.addAttribute("distinctRaces", distinctRaces);
 
         return "/personnagesTable";
     }
