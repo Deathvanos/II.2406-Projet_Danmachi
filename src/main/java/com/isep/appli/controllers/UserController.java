@@ -73,15 +73,4 @@ public class UserController {
 
 		return "redirect:/login";
 	}
-	
-	@GetMapping("/chatPage")
-	public String chatPage() {
-		return "chatPage";
-	}
-
-	@GetMapping("/sendMessage")
-	public String sendMessage(@Valid Message message) {
-
-		return "chatPage";
-	}
 }
