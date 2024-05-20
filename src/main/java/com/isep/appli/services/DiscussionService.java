@@ -33,6 +33,10 @@ public class DiscussionService {
         return discussionRepository.findById(id);
     }
 
+    public Discussion save(Discussion discussion) {
+        return discussionRepository.save(discussion);
+    }
+
     public List<Discussion> getDiscussionsByPersonnage(Personnage personnage) {
         List<Discussion> discussions = discussionRepository.findByFirstPersonnageId(personnage.getId());
         discussions.addAll(discussionRepository.findBySecondPersonnageId(personnage.getId()));

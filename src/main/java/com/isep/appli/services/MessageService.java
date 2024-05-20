@@ -35,7 +35,14 @@ public class MessageService {
         if (date == null) {
             return " ";
         }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date now = new Date();
+        SimpleDateFormat simpleDateFormat;
+        if (now.getDate() == date.getDate() && now.getMonth() == date.getMonth() && now.getYear() == date.getYear()) {
+            simpleDateFormat = new SimpleDateFormat("HH:mm");
+        }
+        else {
+            simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        }
         return simpleDateFormat.format(date);
     }
 
