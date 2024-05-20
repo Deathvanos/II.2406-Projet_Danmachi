@@ -20,6 +20,8 @@ function showDiv(divId, button) {
                 $('#info-money').text(response.money);
                 $('#info-level').text(response.level);
                 $('#button-race').text('Fiche '+response.raceString);
+                $('#info-description').text(response.description);
+                $('#info-story').text(response.story);
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
@@ -32,6 +34,7 @@ function clearSelection() {
     document.getElementById('race-select').selectedIndex = 0;
 }
 
+//delete personnage
 $(document).ready(function() {
     $("#deleteForm").submit(function(event) {
         event.preventDefault();
@@ -62,6 +65,7 @@ $(document).ready(function() {
     });
 });
 
+//modify user information
 document.getElementById("modify-user-info-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -103,6 +107,7 @@ document.getElementById("modify-user-info-form").addEventListener("submit", func
 
 });
 
+//image cropper
 $(document).ready(function () {
     let cropper;
 
@@ -148,6 +153,7 @@ $(document).ready(function () {
     });
 });
 
+// user proof image
 function validateForm() {
     let fileInput = document.getElementById('image-input');
     let file = fileInput.files[0];
@@ -158,3 +164,14 @@ function validateForm() {
     }
     return true;
 }
+
+$(document).ready(function(){
+    $("#show-description-edit").click(function(){
+        $("#info-description").toggle();
+        $("#description-edit").toggle();
+    });
+    $("#show-story-edit").click(function(){
+        $("#info-story").toggle();
+        $("#story-edit").toggle();
+    });
+});

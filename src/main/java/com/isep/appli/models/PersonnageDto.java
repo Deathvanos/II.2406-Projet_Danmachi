@@ -16,4 +16,7 @@ public class PersonnageDto {
     private int money;
     private long userId;
     private String raceString;
+    private String description;
+    private String story;
+    private String userUsername;
 }
