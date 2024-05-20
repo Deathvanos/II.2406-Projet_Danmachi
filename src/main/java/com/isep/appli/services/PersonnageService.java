@@ -53,6 +53,10 @@ public class PersonnageService {
         return personnageRepository.findPersonnageById(id);
     }
 
+    public List<Personnage> getPersonnagesByFamiliaId(Long familiaId) {
+        return personnageRepository.findByFamiliaId(familiaId);
+    }
+
     public void deletePersonnageById(long id) {
         Personnage personnage = personnageRepository.findPersonnageById(id);
 

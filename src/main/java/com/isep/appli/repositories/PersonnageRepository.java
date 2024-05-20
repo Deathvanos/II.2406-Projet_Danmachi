@@ -12,4 +12,6 @@ public interface PersonnageRepository extends JpaRepository<Personnage, Long> {
     List<Personnage> findPersonasByUser(User user);
 
     Personnage findPersonnageById(long id);
+
+    List<Personnage> findByFamiliaId(Long familiaId);
 }
