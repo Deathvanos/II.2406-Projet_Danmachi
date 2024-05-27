@@ -98,7 +98,7 @@ document.getElementById("modify-user-info-form").addEventListener("submit", func
 
             if (uniqueError) {return;}
 
-            document.getElementById("signup-form").submit();
+            document.getElementById("modify-user-info-form").submit();
         },
         error: function(xhr, status, error) {
             console.error("Error checking uniqueness:", error);

@@ -71,6 +71,6 @@ public class UserController {
 			emailService.sendConfirmationEmail(user);
 		}
 
-		return "redirect:/login";
+		return "redirect:/user-profile";
 	}
 }
