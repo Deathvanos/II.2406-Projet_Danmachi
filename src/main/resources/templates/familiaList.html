@@ -7,6 +7,9 @@
   <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
   <title>Familias</title>
   <link rel="stylesheet" href="/css/common.css"/>
+  <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 </head>
 <body>
 <header th:insert="~{common/header :: header}"></header>
@@ -15,10 +18,13 @@
     <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
     <div class="col-sm-8" style="background-color:#D5E4D9;">
 
+      <a class="nav-link" href="/familia/new">Créer une familia</a>
+
       <!--Ajouter un bouton pour créer une familia si on n'en a pas-->
+      <div class="container my-5 px-3 py-3">
       <h1 class="display-5">Liste des familias</h1>
-        <table class="table table-bordered table-striped">
-          <thead>
+        <table id="familia-table" class="table table-bordered table-striped" style="width:100%">
+          <thead class="thead-dark">
           <tr>
             <th>Embleme</th>
             <th>Leader</th>
@@ -34,14 +40,14 @@
             </td>
             <td class="align-middle">
               <div class="d-flex align-items-center"> <!--Ajouter lien vers page du perso-->
-                <span th:text="${f.value.firstName}"></span>
-                <span th:text="${f.value.lastName}"></span>
+                <span th:text="${f.value.firstName} + '&nbsp;' + ${f.value.lastName}"></span>
               </div>
             </td>
 
 
           </tbody>
         </table>
+        </div>
 
 
     </div>
@@ -50,5 +56,5 @@
 </div>
 <footer th:insert="~{common/footer :: footer}"></footer>
 
-<script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
+<script src="/js/familiaList.js"></script>
 </body>>

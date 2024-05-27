@@ -3,6 +3,7 @@ package com.isep.appli.controllers;
 import com.isep.appli.dbModels.Familia;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.User;
+import com.isep.appli.models.enums.Race;
 import com.isep.appli.services.FamiliaService;
 import com.isep.appli.services.ImageService;
 import com.isep.appli.services.PersonnageService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +61,13 @@ public class FamiliaController {
         }
 
         List<Personnage> members = personnageService.getPersonnagesByFamiliaId(familiaId);
+
+        List<String> distinctRaces = new ArrayList<>();
+        for (Race race : Race.values()) {
+            distinctRaces.add(race.getDisplayName());
+        }
+        model.addAttribute("distinctRaces", distinctRaces);
+
 
         // Filtrer la liste des membres pour enlever le leader
         List<Personnage> filteredMembers = members.stream()

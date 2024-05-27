@@ -7,6 +7,9 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
     <title th:text=" ${leaderFirstName}"></title>
     <link rel="stylesheet" href="/css/common.css"/>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 </head>
 <body>
 <header th:insert="~{common/header :: header}"></header>
@@ -36,9 +39,16 @@
                 <img th:src="'data:image/png;base64,' + ${familia.embleme_image}" style="width: 250px;" alt="Embleme de la familia">
             </div>
 
-            <h1>Membres:</h1> <!--Ajouter liens vers leurs pasges-->
-            <table class="table table-bordered table-striped text-center">
-                <thead>
+            <div class="container my-5 px-3 py-3">
+            <h1>Membres:</h1> <!--Ajouter liens vers leurs pages-->
+                <select id="race-filter" class="form-control my-2">
+                    <option value="">Toutes races</option>
+                    <th:block th:each="race : ${distinctRaces}">
+                        <option th:text="${race}"></option>
+                    </th:block>
+                </select>
+            <table id="personnages-table" class="table table-bordered table-striped text-center" style="width:100%">
+                <thead class="thead-dark">
                 <tr>
                     <th>Image</th>
                     <th>Nom</th>
@@ -68,6 +78,7 @@
                 </tr>
                 </tbody>
             </table>
+                </div>
 
         </div>
         <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
@@ -76,6 +87,6 @@
 
 <footer th:insert="~{common/footer :: footer}"></footer>
 
-<script th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"></script>
+<script src="/js/listMembers.js"></script>
 </body>
 </html>
