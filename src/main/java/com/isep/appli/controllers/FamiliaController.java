@@ -11,21 +11,24 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.isep.appli.controllers.UserController.checkIsUser;
 
 @Controller
+@RequestMapping("familia")
 public class FamiliaController {
 
     @PersistenceContext
@@ -39,11 +42,10 @@ public class FamiliaController {
         this.personnageService = personnageService;
     }
 
-    @GetMapping("/familiaPage/{familiaId}")
+    @GetMapping("/{familiaId}")
     public String familiaPage(@PathVariable Long familiaId, Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        String checkUser = checkIsUser(user, model);
-        if (!checkUser.equals("200")){return checkUser;}
+        if (UserController.checkIsUser(user, model).equals("200")){model.addAttribute("user", user);}
 
         // Utilisation de l'EntityManager pour récupérer la Familia par son ID
         Familia familia = entityManager.find(Familia.class, familiaId);
@@ -52,18 +54,27 @@ public class FamiliaController {
         }
 
         Personnage leader = personnageService.getPersonnageById(familia.getLeader_id());
-
         if (leader == null) {
             throw new IllegalArgumentException("Le nom du leader n'est pas correct.");
         }
 
+        List<Personnage> members = personnageService.getPersonnagesByFamiliaId(familiaId);
+
+        // Filtrer la liste des membres pour enlever le leader
+        List<Personnage> filteredMembers = members.stream()
+                .filter(member -> !member.getId().equals(leader.getId()))
+                .collect(Collectors.toList());
 
         model.addAttribute("familia", familia);
+        model.addAttribute("leader", leader);
         model.addAttribute("leaderFirstName", leader.getFirstName());
         model.addAttribute("leaderLastName", leader.getLastName());
+        model.addAttribute("leaderImage", leader.getImage());
+        model.addAttribute("members", filteredMembers);
+
         return "familiaPage";
     }
-    @GetMapping("/new_familia")
+    @GetMapping("/new")
     public String createFamiliaPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         String checkUser = checkIsUser(user, model);
@@ -73,7 +84,7 @@ public class FamiliaController {
         return "newFamilia";
     }
 
-    @PostMapping("/new_familia")
+    @PostMapping("/new")
     public String createFamilia(@Valid Familia familia, @RequestParam("croppedImageData") String croppedImageData, BindingResult result, Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         String checkUser = checkIsUser(user, model);
@@ -93,13 +104,17 @@ public class FamiliaController {
     }
 
 
-    @PostMapping("/familia_list")
-    public String familiaList(){
-        //A compléter
+    @GetMapping("/list")
+    public String familiaList(Model model, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if (UserController.checkIsUser(user, model).equals("200")){model.addAttribute("user", user);}
+        //Bouton à ajouter si le personnage n'a pas de familia
+
+        Map<Familia, Personnage> familiasWithLeaders = familiaService.getAllFamiliasWithLeaders();
+        model.addAttribute("familiasWithLeaders", familiasWithLeaders);
+
         return "familiaList";
     }
-
-
 
 
 }
