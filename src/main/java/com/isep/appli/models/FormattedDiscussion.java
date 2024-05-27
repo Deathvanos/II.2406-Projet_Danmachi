@@ -12,4 +12,5 @@ public class FormattedDiscussion {
     private String displayDestination;
     private String image;
     private String lastMessageDate;
+    private boolean canDelete;
 }

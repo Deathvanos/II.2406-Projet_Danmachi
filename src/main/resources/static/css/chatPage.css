@@ -98,3 +98,8 @@
     margin-top: 10px;
 }
 
+.chat-button {
+    font-size: 12px;
+    display: flow-root;
+}
+

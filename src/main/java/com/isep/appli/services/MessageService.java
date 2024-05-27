@@ -27,6 +27,12 @@ public class MessageService {
         return messageRepository.save(message);
     }
 
+    public void deleteMessageById(long id) {
+        Optional<Message> messageOptional = getById(id);
+        Message message = messageOptional.orElse(null);
+        messageRepository.delete(message);
+    }
+
     public String displayDestination(Personnage personnage) {
         return personnage.getFirstName() + " " + personnage.getLastName();
     }

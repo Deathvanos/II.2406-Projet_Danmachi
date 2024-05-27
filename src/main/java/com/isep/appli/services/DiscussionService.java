@@ -6,8 +6,6 @@ import com.isep.appli.dbModels.Message;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.models.FormattedDiscussion;
 import com.isep.appli.repositories.DiscussionRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,13 +18,13 @@ public class DiscussionService {
     private final DiscussionRepository discussionRepository;
     private final MessageService messageService;
     private final PersonnageService personnageService;
-    @PersistenceContext
-    private EntityManager entityManager;
+    private final FamiliaService familiaService;
 
-    DiscussionService(DiscussionRepository discussionRepository, MessageService messageService, PersonnageService personnageService) {
+    DiscussionService(DiscussionRepository discussionRepository, MessageService messageService, PersonnageService personnageService, FamiliaService familiaService) {
         this.discussionRepository = discussionRepository;
         this.messageService = messageService;
         this.personnageService = personnageService;
+        this.familiaService = familiaService;
     }
 
     public Optional<Discussion> getById(Long id) {
@@ -49,7 +47,7 @@ public class DiscussionService {
 
     public Long getPrivateDestinationId(Discussion discussion, Personnage personnage) {
         Long destination;
-        if (discussion.getFirstPersonnageId() == personnage.getId()) {
+        if (discussion.getFirstPersonnageId().equals(personnage.getId())) {
             destination = discussion.getSecondPersonnageId();
         }
         else {
@@ -64,7 +62,7 @@ public class DiscussionService {
             destinationPersonnage = personnageService.getPersonnageById(getPrivateDestinationId(discussion, personnage));
         }
         else {
-            destinationPersonnage = personnageService.getPersonnageById(entityManager.find(Familia.class, discussion.getFamiliaId()).getLeader_id());
+            destinationPersonnage = personnageService.getPersonnageById(familiaService.findFamiliaById(discussion.getFamiliaId()).getLeader_id());
         }
         return destinationPersonnage;
     }
@@ -75,7 +73,8 @@ public class DiscussionService {
                 discussion.getConversationType(),
                 messageService.displayDestination(getDestinationPersonnage(discussion, selectedPersonnage)),
                 getDestinationPersonnage(discussion, selectedPersonnage).getImage(),
-                messageService.formatDate(getLastMessageDate(discussion))
+                messageService.formatDate(getLastMessageDate(discussion)),
+                getCanDelete(selectedPersonnage, discussion)
         );
         return formattedDiscussion;
     }
@@ -101,5 +100,24 @@ public class DiscussionService {
             }
         }
         return maxDate;
+    }
+
+    public void deleteDiscussionById(Long id) {
+        List<Message> messages = messageService.getMessagesByDiscussion(id);
+        for (Message message : messages) {
+            messageService.deleteMessageById(message.getId());
+        }
+
+        Optional<Discussion> discussionOptional = getById(id);
+        Discussion discussion = discussionOptional.orElse(null);
+        discussionRepository.delete(discussion);
+    }
+
+    public boolean getCanDelete(Personnage personnage, Discussion discussion) {
+        if (discussion.getConversationType().equals("FAMILIA")) {
+            Familia familia = familiaService.findFamiliaById(discussion.getFamiliaId());
+            return familia.getLeader_id() == personnage.getId();
+        }
+        return true;
     }
 }
