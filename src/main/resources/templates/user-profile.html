@@ -14,7 +14,7 @@
 
 		<!-- User & Personnage info-->
 		<div class="row">
-			<div class="container bg-container mt-5 ml-5 py-3 col-md-6">
+			<div class="container bg-container mt-5 ml-5 py-3 col-6" style="min-width: 300px">
 				<div class="row">
 					<div class="col text-left">
 						<p class="h1 ml-2 mt-3" th:text="'Bonjour '+${user.getFirstName()+' !'}">Bonjour Prénom</p>
@@ -51,7 +51,7 @@
 
 			</div>
 
-			<div class="bg-information col-md-5 mt-5 px-5 mr-5">
+			<div class="container bg-information col-5 mt-5 px-5" style="min-width: 300px">
 
 				<div class="div-info py-3" id="user-information">
 					<h1 class="text-white">Information Utilisateur :</h1>
@@ -195,6 +195,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
+						<small class="mb-1">Vous pouvez modifier un seul champ.</small>
 						<form th:action="@{/modify-user}" method="post" id="modify-user-info-form">
 							<div class="form-group">
 								<label for="email">Adresse mail:</label>

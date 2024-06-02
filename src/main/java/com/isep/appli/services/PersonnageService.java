@@ -5,14 +5,13 @@ import com.isep.appli.dbModels.User;
 import com.isep.appli.models.PersonnageDto;
 import com.isep.appli.repositories.PersonnageRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonnageService {
@@ -73,21 +72,23 @@ public class PersonnageService {
         personnageRepository.save(personnage);
     }
 
-    public Page<PersonnageDto> getAllPersonnages(Pageable pageable) {
-        Page<Personnage> personnagePage = personnageRepository.findAll(pageable);
+    public List<PersonnageDto> getAllPersonnages() {
+        List<Personnage> personnages = personnageRepository.findAll();
 
-        return personnagePage.map(personnage -> new PersonnageDto(
-                personnage.getId(),
-                personnage.getFirstName(),
-                personnage.getLastName(),
-                personnage.getImage(),
-                personnage.getLevel(),
-                personnage.getMoney(),
-                personnage.getUser().getId(),
-                personnage.getRace().getDisplayName(),
-                personnage.getDescription(),
-                personnage.getStory(),
-                personnage.getUser().getUsername()
-        ));
+        return personnages.stream()
+                .map(personnage -> new PersonnageDto(
+                        personnage.getId(),
+                        personnage.getFirstName(),
+                        personnage.getLastName(),
+                        personnage.getImage(),
+                        personnage.getLevel(),
+                        personnage.getMoney(),
+                        personnage.getUser().getId(),
+                        personnage.getRace().getDisplayName(),
+                        personnage.getDescription(),
+                        personnage.getStory(),
+                        personnage.getUser().getUsername()
+                ))
+                .collect(Collectors.toList());
     }
 }

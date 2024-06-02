@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -99,17 +100,14 @@ public class PersonnageController {
     }
 
     @GetMapping("/personnage/all")
-    public String getAllPersonnagesToTable(@RequestParam(defaultValue = "0") int page, Model model, HttpSession session) {
+    public String getAllPersonnagesToTable(Model model, HttpSession session) {
         if(session.getAttribute("user") == null){
             return "errors/error-401";
         }
 
-        Pageable pageable = PageRequest.of(page, 5);
-        Page<PersonnageDto> personnagePage = personnageService.getAllPersonnages(pageable);
+        List<PersonnageDto> personnages = personnageService.getAllPersonnages();
 
-        model.addAttribute("personnages", personnagePage.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", personnagePage.getTotalPages());
+        model.addAttribute("personnages", personnages);
 
         List<String> distinctRaces = new ArrayList<>();
         for (Race race : Race.values()) {
