@@ -1,16 +1,12 @@
 package com.isep.appli.services;
 import com.isep.appli.dbModels.Familia;
 import com.isep.appli.dbModels.Personnage;
-import com.isep.appli.dbModels.User;
+
 import com.isep.appli.repositories.FamiliaRepository;
 import com.isep.appli.repositories.PersonnageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,13 +35,15 @@ public class FamiliaService {
         return this.familiaRepository.findFamiliaById(id);
     }
 
-    public boolean createFamilia(byte[] compressedImage, User user, Familia familia) {
-        familia.setLeader_id(user.getId());
+    public boolean createFamilia(byte[] compressedImage, Personnage personnage, Familia familia) {
+        familia.setLeader_id(personnage.getId());
         familia.setEmbleme_image(Base64.getEncoder().encodeToString(compressedImage));
         familiaRepository.save(familia);
+
+        personnage.setFamilia(familia);
+        personnageRepository.save(personnage);
         return true;
     }
-
     public Map<Familia, Personnage> getAllFamiliasWithLeaders() {
         Iterable<Familia> familias = getAllFamilias();
         Map<Familia, Personnage> familiaWithLeaders = new HashMap<>();
@@ -54,6 +52,12 @@ public class FamiliaService {
             familiaWithLeaders.put(familia, leader);
         }
         return familiaWithLeaders;
+    }
+
+    public boolean joinFamilia(Personnage personnage, Familia familia){
+        personnage.setFamilia(familia);
+        personnageRepository.save(personnage);
+        return true;
     }
 
 }

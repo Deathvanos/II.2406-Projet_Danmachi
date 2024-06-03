@@ -18,9 +18,10 @@
     <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
     <div class="col-sm-8" style="background-color:#D5E4D9;">
 
-      <a class="nav-link" href="/familia/new">Créer une familia</a>
+      <div class="d-flex justify-content-end" th:if="${canCreate}">
+        <a class="btn btn-secondary mt-3 mr-0" href="/familia/new">Créer une familia</a>
+      </div>
 
-      <!--Ajouter un bouton pour créer une familia si on n'en a pas-->
       <div class="container my-5 px-3 py-3">
       <h1 class="display-5">Liste des familias</h1>
         <table id="familia-table" class="table table-bordered table-striped" style="width:100%">

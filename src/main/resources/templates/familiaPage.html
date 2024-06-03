@@ -1,15 +1,18 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:c="http://www.thymeleaf.org/extras/thymeleaf-extras-java8"
+      lang = "fr">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
-    <title th:text=" ${leaderFirstName}"></title>
     <link rel="stylesheet" href="/css/common.css"/>
     <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+    <title th:text="'Familia de ' + ${leaderFirstName} + ' ' + ${leaderLastName}"></title>
 </head>
 <body>
 <header th:insert="~{common/header :: header}"></header>
@@ -30,7 +33,16 @@
                 </div>
             </div>
 
-            <!--Ajouter un bouton pour rejoindre la familia si on n'en a pas-->
+            <div class="d-flex justify-content-end">
+                <a href="/familia/list">Voir la liste des familias</a>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4" th:if="${canJoin}">
+                <form method="post" th:action="@{'/familia/join/'+${familiaId}}">
+                    <button type="submit" class="btn btn-success">Rejoindre</button>
+                </form>
+            </div>
+
             <h1>Description:</h1>
             <p class="text-justify" th:text="${familia.description}"></p>
 
