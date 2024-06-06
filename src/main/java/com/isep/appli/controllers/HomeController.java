@@ -86,6 +86,14 @@ public class HomeController {
         // return the page
         return "guest/reputation";
     }
+    @GetMapping("/fight")
+    public String fightPage(Model model, HttpSession session) {
+        // Check user session
+        User user = (User) session.getAttribute("user");
+        if (UserController.checkIsUser(user, model).equals("200")){model.addAttribute("user", user);}
+        // return the page
+        return "guest/fight";
+    }
 
 
 }

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Divinity</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Divinity</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;">
+
+            <h1>Les Statistiques</h1>
+            <p class="text-justify">
+                Force : Puissance d'action physique.
+                Elle determine les points de dégâts lorsque vous voulez attaquer.
+            </p>
+            <p class="text-justify">
+                Magie : Capacité à défier les lois physiques du monde.
+                La magie vous permet tout simplement d'utiliser la magie et de lancer des sorts.
+            </p>
+            <p class="text-justify">
+                Endurance : Aptitude à résister à la fatigue, à la souffrance.
+                Elle est donc indicateur de points de vie!
+                Chaque points d'endurance est un point de vie.
+                Elle permet aussi à bloquer les attaques des monstres, cependant en cas d'échec vous prendrai la totalité des dégâts.
+            </p>
+            <p class="text-justify">
+                Agilité : L'agilité est l'habileté à changer rapidement la position de son corps.
+                Ceci requiert une combinaison d'équilibre, de coordination psychomotrice et de réflexes.
+                Cette stat va vous permettre de déterminer la vitesse de votre personnage ce qui permettra de désigner votre ordre d'attaque ainsi que vos esquives.
+                En cas d'esquive raté les dégâts seront tout de même diminuer.
+            </p>
+            <p class="text-justify">
+                La Dextérité : Adresse manuelle ; délicatesse, aisance dans l'exécution de quelque chose.
+                Cette statistique permet de déterminer votre capacité à manier votre arme, certaine arme ne peuvent pas être manipuler si vous n'avez pas assez de dextérité.
+                Elle sert aussi pour des styles de combat très précis.
+            </p>
+
+
+            <h1>Autres concepts à comprendre</h1>
+            <ul>
+                <li><a href="<">L'Hyper Agilité</a></li>
+                <li><a href="<">Patience</a></li>
+                <li><a href="<">Attaque Combiné</a></li>
+                <li><a href="<">Replie Stratégique</a></li>
+                <li><a href="<">Armure et Arme</a></li>
+                <li><a href="<">Entrainement</a></li>
+                <li><a href="<">Supporter</a></li>
+                <li><a href="<">Skill de Classe</a></li>
+            </ul>
+
+            <h1>Commandes donjon</h1>
+            <ul>
+                <li>
+                    Pour combattre dans le donjon il vous faudra un groupe, pour en crée un taper simplement la commande : ?groupe-create 	&#60;Nom du Groupe>
+                </li>
+                <li>
+                    Vous pouvez ensuite ajouter vos coéquipier dans votre groupe avec la commande : ?groupe-add &#60;Nom du Groupe> &#60;Ping Joueur à ajouter>
+                </li>
+            </ul>
+            <p class="text-justify">
+                Une fois votre groupe former il y a certaine règle à respecter pour la commande qui suivra.
+                La première c'est que les membres du groupe ne doivent pas avoir faire de donjon dans la journée.
+                La seconde c'est de ne pas dépasser les étages en fonction de ce qui est conseillé dans info donjon.
+                C'est à dire que si vous êtes seul et que vous souhaiter aller à l'étage 5 par exemple toute vos statistique devront être à G.
+                Si vous former un groupe l'ensemble des meilleurs statistique du groupe doit être à G.
+            </p>
+            <ul>
+                <li>
+                    Pour faire un donjon c'est donc la commande : ?donjon &#60;Etage d'arrêt> &#60;Nom du Groupe>
+                </li>
+                <li>
+                    Pensez à dissoudre votre groupe à la fin du donjon en faisant :  ?groupe-delete &#60;Nom du Groupe>
+                </li>
+            </ul>
+
+
+
+
+
+
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

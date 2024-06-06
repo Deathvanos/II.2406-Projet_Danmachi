@@ -8,8 +8,6 @@
 		<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
 	</head>
 	<body>
-
-
 	
 		<div class="container-fluid text-center">
 
@@ -20,8 +18,8 @@
 					<h1>Login</h1>
 					<form action="#" th:action="@{/login}" th:object="${user}" method="POST">
 						<div class="form-group">
-							<input class="form-control mt-3" type="text" th:field="*{email}" id="email" placeholder="test@yahoo.fr">
-							<input class="form-control mt-3 input-short" type="password" th:field="*{password}" id="password" placeholder="root">
+							<input class="form-control mt-3" type="text" th:field="*{email}" id="email" placeholder="Adresse mail">
+							<input class="form-control mt-3 input-short" type="password" th:field="*{password}" id="password" placeholder="Mot de passe">
 							<div th:if="${loginError}">
 								<p class="text-danger">Email ou mot de passe incorrect</p>
 							</div>

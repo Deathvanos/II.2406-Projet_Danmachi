@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "message")
 public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,14 +22,14 @@ public class Message implements Serializable {
     private String content;
 
     @Column(nullable = false)
-    private Long expeditorId;
+    private Long senderId;
 
     @Column(nullable = false)
     private Long destinationId;
 
     @Column(nullable = false)
-    private String conversationType;
+    private Date date;
 
     @Column(nullable = false)
-    private Date date;
+    private Long discussion;
 }

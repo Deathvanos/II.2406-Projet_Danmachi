@@ -100,8 +100,6 @@
 			<artifactId>cropperjs</artifactId>
 			<version>1.1.3</version>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>
