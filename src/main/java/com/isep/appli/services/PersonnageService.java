@@ -1,5 +1,6 @@
 package com.isep.appli.services;
 
+import com.isep.appli.dbModels.JoinRequest;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.User;
 import com.isep.appli.models.PersonnageDto;
@@ -18,12 +19,14 @@ import java.util.List;
 public class PersonnageService {
     private final ImageService imageService;
     private final PersonnageRepository personnageRepository;
+    private final JoinRequestService joinRequestService;
     private final int baseLevel = 1;
     private final int baseMoney = 15000;
 
-    PersonnageService(PersonnageRepository personnageRepository, ImageService imageService) {
+    PersonnageService(PersonnageRepository personnageRepository, ImageService imageService, JoinRequestService joinRequestService) {
         this.personnageRepository = personnageRepository;
         this.imageService = imageService;
+        this.joinRequestService = joinRequestService;
     }
 
     public List<Personnage> getPersonasByUser(User user) {
@@ -63,6 +66,11 @@ public class PersonnageService {
 
     public void deletePersonnageById(long id) {
         Personnage personnage = personnageRepository.findPersonnageById(id);
+
+        List<JoinRequest> pendingRequests = joinRequestService.getPendingRequestsByPersonnage(personnage);
+        for (JoinRequest request : pendingRequests) {
+            joinRequestService.deleteJoinRequest(request);
+        }
 
         personnageRepository.delete(personnage);
     }

@@ -19,7 +19,7 @@
     <div class="col-sm-8" style="background-color:#D5E4D9;">
 
       <div class="d-flex justify-content-end" th:if="${canCreate}">
-        <a class="btn btn-secondary mt-3 mr-0" href="/familia/new">Créer une familia</a>
+        <a class="btn btn-success mt-3 mr-3" href="/familia/new">Créer une familia</a>
       </div>
 
       <div class="container my-5 px-3 py-3">
@@ -44,7 +44,7 @@
                 <span th:text="${f.value.firstName} + '&nbsp;' + ${f.value.lastName}"></span>
               </div>
             </td>
-
+          </tr>
 
           </tbody>
         </table>

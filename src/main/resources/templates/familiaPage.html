@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:c="http://www.thymeleaf.org/extras/thymeleaf-extras-java8"
-      lang = "fr">
+      lang="fr">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
@@ -34,13 +34,16 @@
             </div>
 
             <div class="d-flex justify-content-end">
-                <a href="/familia/list">Voir la liste des familias</a>
+                <a href="/familia/list" class="btn btn-outline-success mr-4 mt-1">Voir la liste des familias</a>
             </div>
 
             <div class="d-flex justify-content-center mt-4" th:if="${canJoin}">
-                <form method="post" th:action="@{'/familia/join/'+${familiaId}}">
-                    <button type="submit" class="btn btn-success">Rejoindre</button>
+                <form method="post" th:action="@{'/familia/request/' + ${familiaId}}">
+                    <button type="submit" class="btn btn-outline-success">Rejoindre</button>
                 </form>
+            </div>
+            <div class="d-flex justify-content-center mt-4" th:if="${hasPendingRequest}">
+                <button class="btn btn-warning" disabled>Demande en attente</button>
             </div>
 
             <h1>Description:</h1>
@@ -52,53 +55,90 @@
             </div>
 
             <div class="container my-5 px-3 py-3">
-            <h1>Membres:</h1> <!--Ajouter liens vers leurs pages-->
+                <h1>Membres:</h1> <!--Ajouter liens vers leurs pages-->
                 <select id="race-filter" class="form-control my-2">
                     <option value="">Toutes races</option>
                     <th:block th:each="race : ${distinctRaces}">
                         <option th:text="${race}"></option>
                     </th:block>
                 </select>
-            <table id="personnages-table" class="table table-bordered table-striped text-center" style="width:100%">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Image</th>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Race</th>
-                    <th>Niveau</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="font-weight-bold">
-                    <td>
-                        <img th:src="'data:image/png;base64,' + ${leader.getImage()}" alt="Profil picture" style="max-height: 50px;"/>
-                    </td>
-                    <td th:text="${leader.getFirstName()} + ' (leader)' " ></td>
-                    <td th:text="${leader.getLastName()}"></td>
-                    <td th:text="${leader.getRace().getDisplayName()}"></td>
-                    <td th:text="${leader.getLevel()}"></td>
-                </tr>
-                <tr th:each="member, stat : ${members}">
-                    <td>
-                        <img th:src="'data:image/png;base64,' + ${member.getImage()}" alt="Profil picture" style="max-height: 50px;"/>
-                    </td>
-                    <td th:text="${member.firstName}" ></td>
-                    <td th:text="${member.lastName}"></td>
-                    <td th:text="${member.race.getDisplayName()}"></td>
-                    <td th:text="${member.level}"></td>
-                </tr>
-                </tbody>
-            </table>
-                </div>
+                <table id="personnages-table" class="table table-bordered table-striped text-center" style="width:100%">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Image</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Race</th>
+                        <th>Niveau</th>
+                        <th th:if="${isLeader}">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="font-weight-bold">
+                        <td>
+                            <img th:src="'data:image/png;base64,' + ${leader.getImage()}" alt="Profil picture" style="max-height: 50px;"/>
+                        </td>
+                        <td th:text="${leader.getFirstName()} + ' (leader)' " ></td>
+                        <td th:text="${leader.getLastName()}"></td>
+                        <td th:text="${leader.getRace().getDisplayName()}"></td>
+                        <td th:text="${leader.getLevel()}"></td>
+                    </tr>
+                    <tr th:each="member, stat : ${members}">
+                        <td>
+                            <img th:src="'data:image/png;base64,' + ${member.getImage()}" alt="Profil picture" style="max-height: 50px;"/>
+                        </td>
+                        <td th:text="${member.firstName}" ></td>
+                        <td th:text="${member.lastName}"></td>
+                        <td th:text="${member.race.getDisplayName()}"></td>
+                        <td th:text="${member.level}"></td>
+                        <td th:if="${isLeader}">
+                            <form method="post" th:action="@{'/familia/removeMember/' + ${familiaId} + '/' + ${member.id}}">
+                                <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
+            <div class="container my-5 px-3 py-3" th:if="${isLeader}">
+                <h1>Demandes en attente:</h1>
+                <table id="pending-requests-table" class="table table-bordered table-striped text-center" style="width:100%">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Race</th>
+                        <th>Niveau</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="request : ${pendingRequests}">
+                        <td th:text="${request.personnage.firstName}"></td>
+                        <td th:text="${request.personnage.lastName}"></td>
+                        <td th:text="${request.personnage.race.getDisplayName()}"></td>
+                        <td th:text="${request.personnage.level}"></td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Accepter ou refuser">
+                                <form method="post" th:action="@{'/familia/requests/accept/' + ${request.id}}">
+                                    <button type="submit" class="btn btn-outline-success mr-3">Accepter</button>
+                                </form>
+                                <form method="post" th:action="@{'/familia/requests/reject/' + ${request.id}}">
+                                    <button type="submit" class="btn btn-outline-danger">Refuser</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
     </div>
 </div>
-
 <footer th:insert="~{common/footer :: footer}"></footer>
-
 <script src="/js/listMembers.js"></script>
 </body>
 </html>
+

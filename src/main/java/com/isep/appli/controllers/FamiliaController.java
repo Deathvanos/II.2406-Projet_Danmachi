@@ -3,10 +3,12 @@ package com.isep.appli.controllers;
 import com.isep.appli.dbModels.Familia;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.User;
+import com.isep.appli.dbModels.JoinRequest;
 import com.isep.appli.models.enums.Race;
 import com.isep.appli.services.FamiliaService;
 import com.isep.appli.services.ImageService;
 import com.isep.appli.services.PersonnageService;
+import com.isep.appli.services.JoinRequestService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpSession;
@@ -41,9 +43,12 @@ public class FamiliaController {
     private final PersonnageService personnageService;
     @Autowired
     private PersonnageController personnageController;
-    public FamiliaController(PersonnageService personnageService, FamiliaService familiaService) {
+    @Autowired
+    private JoinRequestService joinRequestService;
+    public FamiliaController(PersonnageService personnageService, FamiliaService familiaService, JoinRequestService joinRequestService) {
         this.familiaService = familiaService;
         this.personnageService = personnageService;
+        this.joinRequestService = joinRequestService;
     }
 
     @GetMapping("/{familiaId}")
@@ -76,6 +81,8 @@ public class FamiliaController {
                 .filter(member -> !member.getId().equals(leader.getId()))
                 .collect(Collectors.toList());
 
+        List<JoinRequest> pendingRequests = joinRequestService.getPendingRequestsByFamilia(familia);
+
         model.addAttribute("familia", familia);
         model.addAttribute("leader", leader);
         model.addAttribute("leaderFirstName", leader.getFirstName());
@@ -83,14 +90,22 @@ public class FamiliaController {
         model.addAttribute("leaderImage", leader.getImage());
         model.addAttribute("members", filteredMembers);
         model.addAttribute("familiaId", familia.getId());
+        model.addAttribute("pendingRequests", pendingRequests);
 
         // Vérification si le personnage a déjà une Familia
         Personnage personnage = personnageController.getSessionPersonnage(session).getBody();
-        if (personnage != null && personnage.getFamilia() == null) {
-            model.addAttribute("canJoin", true);
+        if (personnage != null && personnage.getFamilia() == null && personnage.getRace() != Race.GOD) {
+            boolean hasPendingRequest = pendingRequests.stream()
+                    .anyMatch(request -> request.getPersonnage().getId().equals(personnage.getId()));
+            model.addAttribute("canJoin", !hasPendingRequest);
+            model.addAttribute("hasPendingRequest", hasPendingRequest);
         } else {
             model.addAttribute("canJoin", false);
+            model.addAttribute("hasPendingRequest", false);
         }
+
+        boolean isLeader = personnage != null && personnage.getId().equals(leader.getId());
+        model.addAttribute("isLeader", isLeader);
 
         return "familiaPage";
     }
@@ -161,11 +176,11 @@ public class FamiliaController {
 
     }
 
-    @PostMapping("/join/{familiaId}")
-    public String joinFamilia(@PathVariable Long familiaId, HttpSession session, Model model){
+    @PostMapping("/request/{familiaId}")
+    public String requestJoinFamilia(@PathVariable Long familiaId, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         String checkUser = checkIsUser(user, model);
-        if (!checkUser.equals("200")){return checkUser;}
+        if (!checkUser.equals("200")) { return checkUser; }
 
         Familia familia = entityManager.find(Familia.class, familiaId);
         if (familia == null) {
@@ -173,13 +188,30 @@ public class FamiliaController {
         }
 
         Personnage personnage = personnageController.getSessionPersonnage(session).getBody();
-        if (personnage != null && personnage.getFamilia()==null){
-            if (familiaService.joinFamilia(personnage, familia)){
-                return "redirect:/familia/{familiaId}";
-            }
+        if (personnage != null && personnage.getFamilia() == null) {
+            joinRequestService.createJoinRequest(personnage, familia);
+            return "redirect:/familia/" + familiaId;
         }
         return "home";
     }
 
+    @PostMapping("/requests/accept/{requestId}")
+    public String acceptJoinRequest(@PathVariable Long requestId) {
+        joinRequestService.acceptJoinRequest(requestId);
+        JoinRequest joinRequest = joinRequestService.getJoinRequestById(requestId);
+        return "redirect:/familia/" + joinRequest.getFamilia().getId();
+    }
 
+    @PostMapping("/requests/reject/{requestId}")
+    public String rejectJoinRequest(@PathVariable Long requestId) {
+        JoinRequest joinRequest = joinRequestService.getJoinRequestById(requestId);
+        joinRequestService.rejectJoinRequest(requestId);
+        return "redirect:/familia/" + joinRequest.getFamilia().getId();
+    }
+
+    @PostMapping("/removeMember/{familiaId}/{memberId}")
+    public String removeMember(@PathVariable Long familiaId, @PathVariable Long memberId) {
+        familiaService.removeMember(familiaId, memberId);
+        return "redirect:/familia/" + familiaId;
+    }
 }
