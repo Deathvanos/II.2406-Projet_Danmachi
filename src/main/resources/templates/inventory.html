@@ -39,7 +39,7 @@
                                     <button type="submit" class="btn btn-light btn-outline-success mt-3 w-100" >Sell</button>
                                 </div>
                             </div>
-                            <input type="number" class="invisible" th:field="*{idItem}" id="idItem">
+                            <input type="number" class="invisible" name="itemId" id="itemId">
                         </div>
                     </form>
                 </div>
@@ -100,12 +100,12 @@
             <div class="col-sm-8 d-flex flex-column h-100" style="background-color:#D5E4D9;">
                 <div class="container text-center d-flex flex-row flex-wrap p-10 h-100" >
 
-                    <th:block th:unless="${playerInventory.isEmpty()}" th:each="item : ${playerInventory.keySet()}">
-                        <div class="card my-3 w-25 h-25" th:id="${playerInventory.get(item).getId()}" th:onclick="showItemSell(this, [[${playerInventory.get(item).getQuantity()}]] )" >
+                    <th:block th:each="inventoryCell : ${playerInventory}">
+                        <div class="card my-3 w-25 h-25" th:id="${inventoryCell.getItem().getId()}" th:onclick="showItemSell(this, [[${inventoryCell.getQuantity()}]] )" >
                             <div class="card-body" style="background-color:#D9D9D9;">
-                                <img th:unless="${item.getUrlImage().equals('Null')}" th:src="'data:image/png;base64,' + ${item.getUrlImage()}" class="mx-auto d-block">
+                                <img th:unless="${inventoryCell.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${inventoryCell.getItem().getUrlImage()}" class="mx-auto d-block">
                             </div>
-                            <div class="card-footer text-left" th:text="${playerInventory.get(item).getQuantity() + ' x ' + item.getName()}" style="background-color:#FFFFFF; font-family: Inter;"></div>
+                            <div class="card-footer text-left" th:text="${inventoryCell.getQuantity() + ' x ' + inventoryCell.getItem().getName()}" style="background-color:#FFFFFF; font-family: Inter;"></div>
                         </div>
                         <div class="col-sm-1"></div>
                     </th:block>

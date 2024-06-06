@@ -19,10 +19,7 @@ public class ItemService {
 	public Iterable<Item> getAll() {
 		return itemRepository.findAll();
 	}
-	
-	public Optional<Item> getById(Long id) {
-		return itemRepository.findById(id);
-	}
+
 	
 	public Item save(Item item) {
 		if (item.getId() == null) {
@@ -36,7 +33,7 @@ public class ItemService {
 		itemRepository.delete(item);
 	}
 	
-	public List<Item> findById(long id) {
+	public Item findById(long id) {
 		return this.itemRepository.findById(id);
 	}
 

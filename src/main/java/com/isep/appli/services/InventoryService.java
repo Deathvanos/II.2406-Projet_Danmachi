@@ -2,100 +2,103 @@ package com.isep.appli.services;
 
 import com.isep.appli.dbModels.Inventory;
 import com.isep.appli.dbModels.Item;
-import com.isep.appli.models.enums.ItemCategory;
+import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.repositories.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class InventoryService {
 
-	@Autowired
-	private InventoryRepository inventoryRepository;
-	@Autowired
-	private ItemService itemService;
-	public Iterable<Inventory> getAll() {
-		return inventoryRepository.findAll();
-	}
-	
-	public Optional<Inventory> getById(Long id) {
-		return inventoryRepository.findById(id);
-	}
+    @Autowired
+    private InventoryRepository inventoryRepository;
+    @Autowired
+    private ItemService itemService;
 
-	public Map<Item, Inventory> getPlayerInventory(Long playerId){
-		Map<Item, Inventory> inventory = new HashMap<>();
-		List<Inventory> inventoryList = inventoryRepository.findByIdPlayer(playerId);
-		for(Inventory inventorySlots : inventoryList){
-			Item item = itemService.getById(inventorySlots.getIdItem()).get();
-			inventory.put(item, inventorySlots);
-		}
-		return inventory;
-	}
-	public Inventory save(Inventory inventory) {
-		return inventoryRepository.save(inventory);
-	}
-	
-	public void delete(Inventory inventory) {
-		inventoryRepository.delete(inventory);
-	}
+    public Iterable<Inventory> getAll() {
+        return inventoryRepository.findAll();
+    }
 
-	public void removeItemInInventory(Inventory inventory, int quantityToRemove){
-		int newQuantity = inventory.getQuantity() - quantityToRemove;
-		if(newQuantity > 0){
-			inventory.setQuantity(newQuantity);
-		} else {
-			delete(inventory);
-		}
-	}
-	
-	public List<Inventory> findById(long id) {
-		return this.inventoryRepository.findById(id);
-	}
+    public Optional<Inventory> getById(Long id) {
+        return inventoryRepository.findById(id);
+    }
 
-	public Map<Item, Inventory> getPlayerInventoryByItemName(Long playerId, String itemName){
-		Map<Item, Inventory> playerInventory = getPlayerInventory(playerId);
-		Map<Item, Inventory> inventory = new HashMap<>();
-		for (Item item: playerInventory.keySet()) {
-			if(item.getName().toLowerCase().contains(itemName.toLowerCase())){
-				inventory.put(item, playerInventory.get(item));
-			}
-		}
-		return inventory;
-	}
+    public List<Inventory> getPlayerInventory(Personnage character) {
+        return inventoryRepository.findByCharacter(character);
+    }
 
-	public List<Inventory> getByItemId(long playerId, long itemId){
-		List<Inventory> playerInventory = inventoryRepository.findByIdPlayer(playerId);
-		List<Inventory> returnedList = new ArrayList<>();
-		for (Inventory inventory: playerInventory ) {
-			if(inventory.getIdItem() == itemId){
-				returnedList.add(inventory);
-			}
-		}
-		return  returnedList;
-	}
+    public Inventory save(Inventory inventory) {
+        return inventoryRepository.save(inventory);
+    }
 
-	public Map<Item, Inventory> getPlayerInventoryByItemNameAndItemCategory(long playerId, String itemName, ItemCategory itemCategory){
-		Map<Item, Inventory> playerInventory = getPlayerInventory(playerId);
-		Map<Item, Inventory> inventory = new HashMap<>();
-		for (Item item: playerInventory.keySet()) {
-			if(item.getName().toLowerCase().contains(itemName.toLowerCase()) && item.getCategory().equals(itemCategory)){
-				inventory.put(item, playerInventory.get(item));
-			}
-		}
-		return inventory;
-	}
+    public void delete(Inventory inventory) {
+        inventoryRepository.delete(inventory);
+    }
 
-	public Map<Item, Inventory> getPlayerInventoryByItemCategory(long playerId, ItemCategory itemCategory){
-		Map<Item, Inventory> playerInventory = getPlayerInventory(playerId);
-		Map<Item, Inventory> inventory = new HashMap<>();
-		for (Item item: playerInventory.keySet()) {
-			if(item.getCategory().equals(itemCategory)){
-				inventory.put(item, playerInventory.get(item));
-			}
-		}
-		return inventory;
-	}
+    public void removeItemInInventory(Inventory inventory, int quantityToRemove) {
+        int newQuantity = inventory.getQuantity() - quantityToRemove;
+        if (newQuantity > 0) {
+            inventory.setQuantity(newQuantity);
+        } else {
+            delete(inventory);
+        }
+    }
+
+    public List<Inventory> findById(long id) {
+        return this.inventoryRepository.findById(id);
+    }
+
+    public List<Inventory> getPlayerInventoryByItemName(Personnage character, Item item) {
+
+        List<Inventory> playerInventory = getPlayerInventory(character);
+        List<Inventory> filterInventory = new ArrayList<>();
+
+        for (Inventory inventory : playerInventory) {
+            Item currentItem = inventory.getItem();
+            if (currentItem.getName().toLowerCase().contains(item.getName().toLowerCase())) {
+                filterInventory.add(inventory);
+            }
+        }
+        return filterInventory;
+    }
+
+    public Inventory findByItemId(Personnage character, Item item) {
+        List<Inventory> playerInventory = inventoryRepository.findByCharacter(character);
+        Inventory returnedInventory = new Inventory();
+        for (Inventory inventory : playerInventory) {
+            if (inventory.getItem().getId() == item.getId()) {
+                return inventory;
+            }
+        }
+        return returnedInventory;
+    }
+
+    public List<Inventory> getPlayerInventoryByItemNameAndItemCategory(Personnage character, Item itemToFind) {
+        List<Inventory> playerInventory = getPlayerInventory(character);
+        List<Inventory> filterInventory = new ArrayList<>();
+        for (Inventory inventory : playerInventory) {
+            Item item = inventory.getItem();
+            if (item.getName().toLowerCase().contains(itemToFind.getName().toLowerCase()) && item.getCategory().equals(itemToFind.getCategory())) {
+                filterInventory.add(inventory);
+            }
+        }
+        return filterInventory;
+    }
+
+    public List<Inventory> getPlayerInventoryByItemCategory(Personnage character, Item itemToFind) {
+        List<Inventory> playerInventory = getPlayerInventory(character);
+        List<Inventory> filterInventory = new ArrayList<>();
+        for (Inventory inventory : playerInventory) {
+            Item item = inventory.getItem();
+            if (item.getCategory().equals(itemToFind.getCategory())) {
+                filterInventory.add(inventory);
+            }
+        }
+        return filterInventory;
+    }
 }

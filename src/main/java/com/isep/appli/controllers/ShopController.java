@@ -2,7 +2,7 @@ package com.isep.appli.controllers;
 
 import com.isep.appli.dbModels.Item;
 import com.isep.appli.dbModels.Personnage;
-import com.isep.appli.models.Shop;
+import com.isep.appli.dbModels.Shop;
 import com.isep.appli.models.enums.ItemCategory;
 import com.isep.appli.services.ShopService;
 import jakarta.servlet.http.HttpSession;
@@ -14,7 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Map;
+import java.util.List;
 
 @Controller
 public class ShopController {
@@ -44,9 +44,9 @@ public class ShopController {
             return "errors/error-401";
         }
         model.addAttribute("personnage", character);
-        model.addAttribute("allShop", shopService.getAllShop());
+        model.addAttribute("allShop", shopService.getAll());
         model.addAttribute("shopCell", new Shop());
-        model.addAttribute("item",new Item());
+        model.addAttribute("item", new Item());
         return "/shop";
     }
 
@@ -54,20 +54,19 @@ public class ShopController {
     public String searchItem(@Valid Item item, BindingResult result, Model model, HttpSession session) {
         Personnage character = (Personnage) session.getAttribute("personnage");
         model.addAttribute("shop", new Shop());
-        long characterId = character.getId();
-        String itemName = item.getName();
+
         ItemCategory itemCategory = item.getCategory();
-        if (!itemName.equals("") && itemCategory != null) {
-            Map<Item, Shop> playerInventory = shopService.getShopByItemNameAndItemCategory(characterId, itemName, itemCategory);
+        if (!item.getName().equals("") && itemCategory != null) {
+            List<Shop> playerInventory = shopService.getShopByItemNameAndItemCategory(item);
             model.addAttribute("allShop", playerInventory);
-        } else if (!itemName.equals("") && itemCategory == null) {
-            Map<Item, Shop> playerInventory = shopService.getShopByItemName(characterId, itemName);
+        } else if (!item.getName().equals("") && itemCategory == null) {
+            List<Shop> playerInventory = shopService.getShopByItemName(item);
             model.addAttribute("allShop", playerInventory);
-        } else if (itemName.equals("") && itemCategory != null) {
-            Map<Item, Shop> playerInventory = shopService.getShopByItemCategory(characterId, itemCategory);
+        } else if (item.getName().equals("") && itemCategory != null) {
+            List<Shop> playerInventory = shopService.getShopByItemCategory(item);
             model.addAttribute("allShop", playerInventory);
         } else {
-            Map<Item, Shop> playerInventory = shopService.getAllShop();
+            List<Shop> playerInventory = (List<Shop>) shopService.getAll();
             model.addAttribute("allShop", playerInventory);
         }
         return "/shop";
