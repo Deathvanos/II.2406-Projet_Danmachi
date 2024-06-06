@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface JoinRequestRepository extends JpaRepository<JoinRequest, Long> {
     List<JoinRequest> findByFamiliaAndAcceptedFalse(Familia familia);
+    List<JoinRequest> findByFamilia(Familia familia);
     List<JoinRequest> findByPersonnageAndAcceptedIsNull(Personnage personnage);
 }

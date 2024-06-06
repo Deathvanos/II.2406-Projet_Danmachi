@@ -1,5 +1,6 @@
 package com.isep.appli.services;
 
+import com.isep.appli.dbModels.Familia;
 import com.isep.appli.dbModels.JoinRequest;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.User;
@@ -101,5 +102,15 @@ public class PersonnageService {
                 personnage.getStory(),
                 personnage.getUser().getUsername()
         ));
+    }
+
+    public void changeFamilia(Long personnageId, Familia newFamilia) {
+        Personnage personnage = getPersonnageById(personnageId);
+        if (personnage != null) {
+            personnage.setFamilia(newFamilia);
+            personnageRepository.save(personnage);
+        } else {
+            throw new IllegalArgumentException("Personnage introuvable avec l'ID: " + personnageId);
+        }
     }
 }

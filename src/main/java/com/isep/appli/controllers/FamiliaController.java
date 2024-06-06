@@ -214,4 +214,10 @@ public class FamiliaController {
         familiaService.removeMember(familiaId, memberId);
         return "redirect:/familia/" + familiaId;
     }
+
+    @PostMapping("/delete/{familiaId}")
+    public String deleteFamilia(@PathVariable Long familiaId) {
+        familiaService.deleteFamiliaByIdWithMembers(familiaId);
+        return "redirect:/familia/list";
+    }
 }

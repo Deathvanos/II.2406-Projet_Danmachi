@@ -1,8 +1,10 @@
 package com.isep.appli.services;
 import com.isep.appli.dbModels.Familia;
+import com.isep.appli.dbModels.JoinRequest;
 import com.isep.appli.dbModels.Personnage;
 
 import com.isep.appli.repositories.FamiliaRepository;
+import com.isep.appli.repositories.JoinRequestRepository;
 import com.isep.appli.repositories.PersonnageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class FamiliaService {
 
     @Autowired
     private PersonnageRepository personnageRepository;
+    @Autowired
+            private JoinRequestRepository joinRequestRepository;
+
 
     FamiliaService(FamiliaRepository familiaRepository) {
         this.familiaRepository = familiaRepository;
@@ -77,4 +82,20 @@ public class FamiliaService {
         }
     }
 
+    public void deleteFamiliaByIdWithMembers(Long familiaId) {
+        Familia familia = familiaRepository.findById(familiaId).orElse(null);
+        if (familia != null) {
+            List<Personnage> members = personnageRepository.findByFamiliaId(familiaId);
+            // Mettre tous les familiaId des membres à null
+            for (Personnage member : members) {
+                member.setFamilia(null);
+                personnageRepository.save(member);
+            }
+            List<JoinRequest> joinRequests = joinRequestRepository.findByFamilia(familia);
+            for (JoinRequest joinRequest : joinRequests) {
+                joinRequestRepository.delete(joinRequest);
+            }
+            familiaRepository.deleteById(familiaId);
+        }
+    }
 }

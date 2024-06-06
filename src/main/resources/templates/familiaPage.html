@@ -33,9 +33,13 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-end">
+            <div th:classappend="${isLeader} ? 'd-flex justify-content-between' : 'd-flex justify-content-end'">
+                <form method="post" th:action="@{'/familia/delete/' + ${familiaId}}" th:if="${isLeader}">
+                    <button type="submit" class="btn btn-outline-danger ml-4 mt-1">Supprimer la familia</button>
+                </form>
                 <a href="/familia/list" class="btn btn-outline-success mr-4 mt-1">Voir la liste des familias</a>
             </div>
+
 
             <div class="d-flex justify-content-center mt-4" th:if="${canJoin}">
                 <form method="post" th:action="@{'/familia/request/' + ${familiaId}}">
