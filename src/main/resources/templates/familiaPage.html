@@ -93,7 +93,7 @@
                         <td th:text="${member.level}"></td>
                         <td th:if="${isLeader}">
                             <form method="post" th:action="@{'/familia/removeMember/' + ${familiaId} + '/' + ${member.id}}">
-                                <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+                                <button type="submit" class="btn btn-outline-danger">Exclure</button>
                             </form>
                         </td>
                     </tr>
