@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/inventoryAndShop.css">
+
+    <title>Danmachi - Shop</title>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+<div class="container-fluid row vh-100">
+    <div id="buyItemPanel" class="container-fluid row vh-100 justify-content-center align-content-center" style="z-index : 5; visibility: hidden;">
+
+    </div>
+
+    <div class="container-fluid" style="position : absolute;">
+        <div class="row vh-100">
+            <div class="col-sm-4 d-flex flex-column align-content-start" style="background-color:#67819A; overflow-y : scroll;">
+                <h2 class="text-white font-weight-bold" th:text="${'Shop : ' + session.personnage.firstName + ' ' + session.personnage.lastName}">
+                </h2>
+                <span class="text-white" th:text="${'Bal = ' + session.personnage.money + ' valis'}"></span>
+                <form action="#" method="POST" id="formToFindItem" class="border p-4 border-white rounded-sm">
+                    <div class="form-group d-flex flex-column">
+                        <input class="form-control mt-3" type="text" id="name" placeholder="Recherche ...">
+                        <div class="row mt-3 my-3 text-center px-0 align-items-center">
+                            <label class="col-4 mx-auto">
+                                <h2 class="text-white">Min : </h2>
+                                <input class="form-control mt-3" type="number" id="minPrice" min="0">
+                            </label>
+                            <label class="col-4 mx-auto">
+                                <h2 class="text-white">Max : </h2>
+                                <input class="form-control mt-3" type="number" id="maxPrice" min="0">
+                            </label>
+                        </div>
+                        <div class="form-check d-flex flex-column my-3 mx-auto px-0">
+                            <label class="form-check-label my-4">
+                                <div class="form-check d-inline-flex col-12 p-0">
+                                    <input type="radio" class="form-check-input mx-auto h-100 col-2" name="category" value="EQUIPEMENT" id="equipement">
+                                    <div class="invisible col-2"></div>
+                                    <h2 class="text-white font-weight-bold my-0 col-10">
+                                        Equipement
+                                    </h2>
+                                </div>
+                            </label>
+
+                            <label class="form-check-label my-4">
+                                <div class="form-check d-inline-flex align-items-center col-12 p-0">
+                                    <input type="radio" class="form-check-input mx-auto h-100 col-2" name="category" value="CONSOMMABLE" id="consomable">
+                                    <div class="invisible col-2"></div>
+                                    <h2 class="text-white font-weight-bold my-0 col-10">
+                                        Consommable
+                                    </h2>
+                                </div>
+                            </label>
+                            <label class="form-check-label my-4">
+                                <div class="form-check d-inline-flex align-items-center col-12 p-0">
+                                    <input type="radio" class="form-check-input mx-auto h-100 col-2" name="category" value="RESSOURCE" id="resource">
+                                    <div class="invisible col-2"></div>
+                                    <h2 class="text-white font-weight-bold my-0 col-10">
+                                        Ressource
+                                    </h2>
+                                </div>
+                            </label>
+                            <label class="form-check-label my-4">
+                                <div class="form-check d-inline-flex align-items-center col-12 p-0">
+                                    <input type="radio" class="form-check-input mx-auto h-100 col-2" name="category" value="ARTEFACT" id="artefact">
+                                    <div class="invisible col-2"></div>
+                                    <h2 class="text-white font-weight-bold my-0 col-10">
+                                        Artefact
+                                    </h2>
+                                </div>
+                            </label>
+                        </div>
+                        <button id="findItemButton" type="button" class="btn btn-light btn-outline-success mt-3">Find It !</button>
+                    </div>
+                </form>
+                <button class="btn btn-light btn-outline-success mt-3" th:onclick="location.href = '/inventory'">Inventaire</button>
+            </div>
+            <div id="shopList" class="col-sm-8 d-flex flex-column h-100" style="background-color:#D5E4D9; overflow-y : scroll;">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
+<script src="/js/shop.js"></script>
+</body>

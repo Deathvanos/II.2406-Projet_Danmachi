@@ -1,5 +1,6 @@
 package com.isep.appli.repositories;
 
+import com.isep.appli.dbModels.Item;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.Shop;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +11,9 @@ import java.util.List;
 
 @Repository
 public interface ShopRepository extends JpaRepository<Shop, Long> {
-    List<Shop> findById(long id);
+    Shop findById(long id);
 
     List<Shop> findBySeller(Personnage character);
+
+    Shop findBySellerAndItem(Personnage personnage, Item item);
 }

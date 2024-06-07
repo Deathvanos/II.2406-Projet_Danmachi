@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -20,12 +19,8 @@ public class ShopService {
     @Autowired
     private ItemService itemService;
 
-    public Iterable<Shop> getAll() {
+    public List<Shop> getAll() {
         return shopRepository.findAll();
-    }
-
-    public Optional<Shop> getById(Long id) {
-        return shopRepository.findById(id);
     }
 
     public Shop save(Shop shop) {
@@ -36,7 +31,7 @@ public class ShopService {
         shopRepository.delete(shop);
     }
 
-    public List<Shop> findById(long id) {
+    public Shop findById(long id) {
         return this.shopRepository.findById(id);
     }
 
@@ -55,28 +50,55 @@ public class ShopService {
         return shopWithFilter;
     }
 
-    public List<Shop> getShopByItemCategory(Item itemToFind) {
+    public void removeItemInShop(Shop shop, int quantityToRemove) {
+        int newQuantity = shop.getQuantity() - quantityToRemove;
+        if (newQuantity > 0) {
+            shop.setQuantity(newQuantity);
+        } else {
+            delete(shop);
+        }
+    }
 
-        List<Shop> allShop = (List<Shop>) getAll();
+    public List<Shop> findAllShopWhereItemNameIsNot(List<Shop> allShop, Item itemToFind) {
         List<Shop> shopWithFilter = new ArrayList<>();
-
+        String itemNameToFind = itemToFind.getName().toLowerCase();
         for (Shop shop : allShop) {
             Item item = shop.getItem();
-            if (item.getCategory().equals(itemToFind.getCategory())) {
+            String itemName = item.getName().toLowerCase();
+            if (!itemName.contains(itemNameToFind)) {
                 shopWithFilter.add(shop);
             }
         }
         return shopWithFilter;
     }
 
-    public List<Shop> getShopByItemNameAndItemCategory(Item itemToFind) {
-
-        List<Shop> allShop = (List<Shop>) getAll();
+    public List<Shop> findAllShopWhereItemCategoryIsNot(List<Shop> allShop, Item itemToFind) {
         List<Shop> shopWithFilter = new ArrayList<>();
 
         for (Shop shop : allShop) {
             Item item = shop.getItem();
-            if (item.getName().toLowerCase().contains(itemToFind.getName().toLowerCase()) && item.getCategory().equals(itemToFind.getCategory())) {
+            if (!item.getCategory().equals(itemToFind.getCategory())) {
+                shopWithFilter.add(shop);
+            }
+        }
+        return shopWithFilter;
+    }
+
+    public List<Shop> findAllShopWhereMaxPriceIsNot(List<Shop> allShop, Long maxPrice) {
+        List<Shop> shopWithFilter = new ArrayList<>();
+
+        for (Shop shop : allShop) {
+            if (shop.getPrice() > maxPrice) {
+                shopWithFilter.add(shop);
+            }
+        }
+        return shopWithFilter;
+    }
+
+    public List<Shop> findAllShopWhereMinPriceIsNot(List<Shop> allShop, Long minPrice) {
+        List<Shop> shopWithFilter = new ArrayList<>();
+        for (Shop shop : allShop) {
+            if (shop.getPrice() < minPrice) {
                 shopWithFilter.add(shop);
             }
         }

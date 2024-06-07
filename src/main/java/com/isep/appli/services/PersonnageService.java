@@ -52,6 +52,11 @@ public class PersonnageService {
         return true;
     }
 
+    public void updateMoney(Personnage personnage, int money){
+        personnage.setMoney(money);
+        personnageRepository.save(personnage);
+    }
+
     public Personnage getPersonnageById(long id) {
         return personnageRepository.findPersonnageById(id);
     }

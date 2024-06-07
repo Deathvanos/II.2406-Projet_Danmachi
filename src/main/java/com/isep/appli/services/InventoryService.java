@@ -49,6 +49,20 @@ public class InventoryService {
         }
     }
 
+    public void addItemForPlayer(Personnage personnage, Item item, int quantityToAdd){
+        Inventory inventory = findByItemId(personnage, item);
+        if(inventory.getId() != null){
+            int currentQuantity = inventory.getQuantity();
+            inventory.setQuantity(currentQuantity + quantityToAdd);
+        } else {
+            inventory = new Inventory();
+            inventory.setItem(item);
+            inventory.setCharacter(personnage);
+            inventory.setQuantity(quantityToAdd);
+        }
+        save(inventory);
+    }
+
     public List<Inventory> findById(long id) {
         return this.inventoryRepository.findById(id);
     }

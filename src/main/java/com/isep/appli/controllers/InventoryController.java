@@ -57,33 +57,31 @@ public class InventoryController {
         }
         Personnage character = (Personnage) session.getAttribute("personnage");
         List<Inventory> playerInventory = inventoryService.getPlayerInventory(character);
-        model.addAttribute("playerInventory", playerInventory);
         model.addAttribute("personnage", character);
         model.addAttribute("item", new Item());
-        model.addAttribute("shop", new Shop());
-        return "/inventory";
+        return "inventory/inventory";
     }
 
-    @PostMapping("/inventory")
-    public String searchItem(@Valid Item item, BindingResult result, Model model, HttpSession session) {
+    @PostMapping("inventory/findItem")
+    public String searchItem(@Valid Item item, Model model, HttpSession session) {
         Personnage character = (Personnage) session.getAttribute("personnage");
-        model.addAttribute("shop", new Shop());
 
         ItemCategory itemCategory = item.getCategory();
-        if (!item.getName().equals("") && itemCategory != null) {
+        String itemName = item.getName();
+        if (!itemName.equals("") && itemCategory != null) {
            List<Inventory> playerInventory = inventoryService.getPlayerInventoryByItemNameAndItemCategory(character, item);
             model.addAttribute("playerInventory", playerInventory);
-        } else if (!item.getName().equals("") && itemCategory == null) {
+        } else if (!itemName.equals("") && itemCategory == null) {
             List<Inventory> playerInventory = inventoryService.getPlayerInventoryByItemName(character, item);
             model.addAttribute("playerInventory", playerInventory);
-        } else if (item.getName().equals("") && itemCategory != null) {
+        } else if (itemName.equals("") && itemCategory != null) {
             List<Inventory> playerInventory = inventoryService.getPlayerInventoryByItemCategory(character, item);
             model.addAttribute("playerInventory", playerInventory);
         } else {
             List<Inventory> playerInventory = inventoryService.getPlayerInventory(character);
             model.addAttribute("playerInventory", playerInventory);
         }
-        return "/inventory";
+        return "inventory/inventoryItem";
     }
 
     @PostMapping("/inventory/sellItem")
@@ -99,10 +97,12 @@ public class InventoryController {
     }
 
     @GetMapping("/inventory/{idInventory}")
-    public ResponseEntity<Item> showSellItem(@PathVariable long idInventory) {
+    public String showSellItem(@PathVariable long idInventory, Model model) {
         Inventory inventory = inventoryService.findById(idInventory).get(0);
+        model.addAttribute("inventoryCell", inventory);
+        model.addAttribute("shop", new Shop());
         Item item = inventory.getItem();
         System.out.println("Item = " + item);
-        return ResponseEntity.ok(item);
+        return "inventory/sellPanel";
     }
 }
