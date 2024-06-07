@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 	
-	public List<Item> findById(long id);
+	public Item findById(long id);
 
 	public List<Item> findByName(String name);
 

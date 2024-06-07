@@ -1,96 +1,108 @@
 package com.isep.appli.services;
 
 
-import com.isep.appli.dbModels.Inventory;
 import com.isep.appli.dbModels.Item;
-import com.isep.appli.models.Shop;
-import com.isep.appli.models.enums.ItemCategory;
-import com.isep.appli.repositories.InventoryRepository;
+import com.isep.appli.dbModels.Shop;
 import com.isep.appli.repositories.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 
 @Service
 public class ShopService {
 
-	@Autowired
-	private ShopRepository shopRepository;
-	@Autowired
-	private ItemService itemService;
-	
-	public Iterable<Shop> getAll() {
-		return shopRepository.findAll();
-	}
-	
-	public Optional<Shop> getById(Long id) {
-		return shopRepository.findById(id);
-	}
+    @Autowired
+    private ShopRepository shopRepository;
+    @Autowired
+    private ItemService itemService;
 
-	public Shop save(Shop shop) {
-		return shopRepository.save(shop);
-	}
-	
-	public void delete(Shop shop) {
-		shopRepository.delete(shop);
-	}
-	
-	public List<Shop> findById(long id) {
-		return this.shopRepository.findById(id);
-	}
+    public List<Shop> getAll() {
+        return shopRepository.findAll();
+    }
 
-	public Map<Item, Shop> getAllShop(){
-		List<Shop> allShopList = (List<Shop>) getAll();
-		Map<Item, Shop> allShop = new HashMap<>();
-		for (Shop shopCell: allShopList ) {
-			Item item = itemService.getById(shopCell.getIdItem()).get();
-			allShop.put(item, shopCell);
-		}
-		return allShop;
-	}
+    public Shop save(Shop shop) {
+        return shopRepository.save(shop);
+    }
 
-	public Map<Item, Shop> getShopByItemName(Long playerId, String itemName){
+    public void delete(Shop shop) {
+        shopRepository.delete(shop);
+    }
 
-		Map<Item, Shop> allShop = getAllShop();
-		Map<Item, Shop> shopWithFilter = new HashMap<>();
+    public Shop findById(long id) {
+        return this.shopRepository.findById(id);
+    }
 
-		for (Item item: allShop.keySet()) {
-			if(item.getName().toLowerCase().contains(itemName.toLowerCase())){
-				shopWithFilter.put(item, allShop.get(item));
-			}
-		}
-		return shopWithFilter;
-	}
 
-	public Map<Item, Shop> getShopByItemCategory(Long playerId, ItemCategory itemCategory){
+    public List<Shop> getShopByItemName(Item itemToFind) {
 
-		Map<Item, Shop> allShop = getAllShop();
-		Map<Item, Shop> shopWithFilter = new HashMap<>();
+        List<Shop> allShop = (List<Shop>) getAll();
+        List<Shop> shopWithFilter = new ArrayList<>();
 
-		for (Item item: allShop.keySet()) {
-			if(item.getCategory().equals(itemCategory)){
-				shopWithFilter.put(item, allShop.get(item));
-			}
-		}
-		return shopWithFilter;
-	}
+        for (Shop shop : allShop) {
+            Item item = shop.getItem();
+            if (item.getName().toLowerCase().contains(itemToFind.getName().toLowerCase())) {
+                shopWithFilter.add(shop);
+            }
+        }
+        return shopWithFilter;
+    }
 
-	public Map<Item, Shop> getShopByItemNameAndItemCategory(Long playerId, String itemName, ItemCategory itemCategory){
+    public void removeItemInShop(Shop shop, int quantityToRemove) {
+        int newQuantity = shop.getQuantity() - quantityToRemove;
+        if (newQuantity > 0) {
+            shop.setQuantity(newQuantity);
+        } else {
+            delete(shop);
+        }
+    }
 
-		Map<Item, Shop> allShop = getAllShop();
-		Map<Item, Shop> shopWithFilter = new HashMap<>();
+    public List<Shop> findAllShopWhereItemNameIsNot(List<Shop> allShop, Item itemToFind) {
+        List<Shop> shopWithFilter = new ArrayList<>();
+        String itemNameToFind = itemToFind.getName().toLowerCase();
+        for (Shop shop : allShop) {
+            Item item = shop.getItem();
+            String itemName = item.getName().toLowerCase();
+            if (!itemName.contains(itemNameToFind)) {
+                shopWithFilter.add(shop);
+            }
+        }
+        return shopWithFilter;
+    }
 
-		for (Item item: allShop.keySet()) {
-			if(item.getName().toLowerCase().contains(itemName.toLowerCase()) && item.getCategory().equals(itemCategory)){
-				shopWithFilter.put(item, allShop.get(item));
-			}
-		}
-		return shopWithFilter;
-	}
+    public List<Shop> findAllShopWhereItemCategoryIsNot(List<Shop> allShop, Item itemToFind) {
+        List<Shop> shopWithFilter = new ArrayList<>();
+
+        for (Shop shop : allShop) {
+            Item item = shop.getItem();
+            if (!item.getCategory().equals(itemToFind.getCategory())) {
+                shopWithFilter.add(shop);
+            }
+        }
+        return shopWithFilter;
+    }
+
+    public List<Shop> findAllShopWhereMaxPriceIsNot(List<Shop> allShop, Long maxPrice) {
+        List<Shop> shopWithFilter = new ArrayList<>();
+
+        for (Shop shop : allShop) {
+            if (shop.getPrice() > maxPrice) {
+                shopWithFilter.add(shop);
+            }
+        }
+        return shopWithFilter;
+    }
+
+    public List<Shop> findAllShopWhereMinPriceIsNot(List<Shop> allShop, Long minPrice) {
+        List<Shop> shopWithFilter = new ArrayList<>();
+        for (Shop shop : allShop) {
+            if (shop.getPrice() < minPrice) {
+                shopWithFilter.add(shop);
+            }
+        }
+        return shopWithFilter;
+    }
 
 }
