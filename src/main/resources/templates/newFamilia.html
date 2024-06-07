@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE-edge">
@@ -9,6 +9,8 @@
   <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
   <script th:src="@{/webjars/cropperjs/1.1.3/cropper.min.js}"></script>
   <link rel="stylesheet" th:href="@{/webjars/cropperjs/1.1.3/cropper.min.css}" />
+
+  <title>Créer une familia</title>
 
 </head>
 <body class="d-flex flex-column">
@@ -42,6 +44,7 @@
   </div>
 </div>
 
+<!--Modal pour crop l'image-->
 <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

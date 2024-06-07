@@ -1,6 +1,5 @@
 package com.isep.appli.controllers;
 
-import com.isep.appli.dbModels.Familia;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.User;
 import com.isep.appli.models.PersonnageDto;

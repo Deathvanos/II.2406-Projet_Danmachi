@@ -103,14 +103,4 @@ public class PersonnageService {
                 personnage.getUser().getUsername()
         ));
     }
-
-    public void changeFamilia(Long personnageId, Familia newFamilia) {
-        Personnage personnage = getPersonnageById(personnageId);
-        if (personnage != null) {
-            personnage.setFamilia(newFamilia);
-            personnageRepository.save(personnage);
-        } else {
-            throw new IllegalArgumentException("Personnage introuvable avec l'ID: " + personnageId);
-        }
-    }
 }

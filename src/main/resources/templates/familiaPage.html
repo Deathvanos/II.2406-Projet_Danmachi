@@ -1,7 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:c="http://www.thymeleaf.org/extras/thymeleaf-extras-java8"
-      lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
@@ -12,7 +10,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-    <title th:text="'Familia de ' + ${leaderFirstName} + ' ' + ${leaderLastName}"></title>
+    <title th:text="'Familia de ' + ${leader.getFirstName()} + ' ' + ${leader.getLastName()}"></title>
 </head>
 <body>
 <header th:insert="~{common/header :: header}"></header>
@@ -27,12 +25,13 @@
                     <div class="row h-100 align-items-center">
                         <div class="col-12 text-center">
                             <h1 class="display-4 fw-light text-black-50">Familia de:</h1>
-                            <h1 class="display-4 fw-light text-black-50" th:text="${leaderFirstName} + ' ' +  ${leaderLastName}"></h1>
+                            <h1 class="display-4 fw-light text-black-50" th:text="${leader.getFirstName()} + ' ' +  ${leader.getLastName()}"></h1>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!--Seul le leader peut supprimer la familia-->
             <div th:classappend="${isLeader} ? 'd-flex justify-content-between' : 'd-flex justify-content-end'">
                 <form method="post" th:action="@{'/familia/delete/' + ${familiaId}}" th:if="${isLeader}">
                     <button type="submit" class="btn btn-outline-danger ml-4 mt-1">Supprimer la familia</button>
@@ -41,6 +40,7 @@
             </div>
 
 
+            <!--Bouton rejoindre pour les personnages sans familia-->
             <div class="d-flex justify-content-center mt-4" th:if="${canJoin}">
                 <form method="post" th:action="@{'/familia/request/' + ${familiaId}}">
                     <button type="submit" class="btn btn-outline-success">Rejoindre</button>
@@ -58,6 +58,7 @@
                 <img th:src="'data:image/png;base64,' + ${familia.embleme_image}" style="width: 250px;" alt="Embleme de la familia">
             </div>
 
+            <!--Liste des membres de la familia-->
             <div class="container my-5 px-3 py-3">
                 <h1>Membres:</h1> <!--Ajouter liens vers leurs pages-->
                 <select id="race-filter" class="form-control my-2">
@@ -105,6 +106,7 @@
                 </table>
             </div>
 
+            <!--Liste des demandes en attente, visibles par le leader seulement-->
             <div class="container my-5 px-3 py-3" th:if="${isLeader}">
                 <h1>Demandes en attente:</h1>
                 <table id="pending-requests-table" class="table table-bordered table-striped text-center" style="width:100%">

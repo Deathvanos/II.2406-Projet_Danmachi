@@ -6,7 +6,6 @@ import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.repositories.FamiliaRepository;
 import com.isep.appli.repositories.JoinRequestRepository;
 import com.isep.appli.repositories.PersonnageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
@@ -16,28 +15,24 @@ import java.util.Map;
 
 @Service
 public class FamiliaService {
-    @Autowired
-    private FamiliaRepository familiaRepository;
+    private final FamiliaRepository familiaRepository;
 
-    @Autowired
-    private PersonnageRepository personnageRepository;
-    @Autowired
-            private JoinRequestRepository joinRequestRepository;
+    private final PersonnageRepository personnageRepository;
+    private final JoinRequestRepository joinRequestRepository;
 
 
-    FamiliaService(FamiliaRepository familiaRepository) {
+    FamiliaService(FamiliaRepository familiaRepository, PersonnageRepository personnageRepository, JoinRequestRepository joinRequestRepository) {
         this.familiaRepository = familiaRepository;
         this.personnageRepository = personnageRepository;
+        this.joinRequestRepository = joinRequestRepository;
     }
 
+    // Récupère toutes les familias
     public Iterable<Familia> getAllFamilias() {
         return familiaRepository.findAll();
     }
 
-    public Familia findFamiliaById(Long id) {
-        return this.familiaRepository.findFamiliaById(id);
-    }
-
+    // Crée une nouvelle familia
     public boolean createFamilia(byte[] compressedImage, Personnage personnage, Familia familia) {
         familia.setLeader_id(personnage.getId());
         familia.setEmbleme_image(Base64.getEncoder().encodeToString(compressedImage));
@@ -47,6 +42,8 @@ public class FamiliaService {
         personnageRepository.save(personnage);
         return true;
     }
+
+    // Récupère toutes les familias avec leurs leaders
     public Map<Familia, Personnage> getAllFamiliasWithLeaders() {
         Iterable<Familia> familias = getAllFamilias();
         Map<Familia, Personnage> familiaWithLeaders = new HashMap<>();
@@ -57,12 +54,13 @@ public class FamiliaService {
         return familiaWithLeaders;
     }
 
-    public boolean joinFamilia(Personnage personnage, Familia familia){
+    // Ajoute un personnage à une familia
+    public void joinFamilia(Personnage personnage, Familia familia){
         personnage.setFamilia(familia);
         personnageRepository.save(personnage);
-        return true;
     }
 
+    // Supprime un personnage d'une familia
     public void removeMember(Long familiaId, Long memberId) {
         Familia familia = familiaRepository.findById(familiaId).orElse(null);
         if (familia != null) {
@@ -82,6 +80,7 @@ public class FamiliaService {
         }
     }
 
+    // Supprime une familia et met à jour les personnages
     public void deleteFamiliaByIdWithMembers(Long familiaId) {
         Familia familia = familiaRepository.findById(familiaId).orElse(null);
         if (familia != null) {
@@ -92,9 +91,7 @@ public class FamiliaService {
                 personnageRepository.save(member);
             }
             List<JoinRequest> joinRequests = joinRequestRepository.findByFamilia(familia);
-            for (JoinRequest joinRequest : joinRequests) {
-                joinRequestRepository.delete(joinRequest);
-            }
+            joinRequestRepository.deleteAll(joinRequests);
             familiaRepository.deleteById(familiaId);
         }
     }

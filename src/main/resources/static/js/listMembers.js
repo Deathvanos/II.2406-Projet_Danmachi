@@ -17,13 +17,6 @@ document.getElementById('race-filter').addEventListener('change', function() {
 
         const shouldBeVisible = (selectedRace === '' || raceCell === selectedRace);
 
-        const rowOffset = getRowIndex(row);
-
         row.style.display = shouldBeVisible ? '' : 'none';
     });
 });
-
-function getRowIndex(row) {
-    const rows = Array.from(row.parentNode.children);
-    return rows.indexOf(row);
-}

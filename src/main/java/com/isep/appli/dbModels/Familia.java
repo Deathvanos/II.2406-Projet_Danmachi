@@ -6,11 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity //Mettre dans la BDD
+@Entity
 public class Familia {
-
-    //@PersistenceContext
-    //private EntityManager entityManager;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -18,7 +15,7 @@ public class Familia {
 
     @Lob
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String description; // PB: Limite de taille de String dans la table, à régler
+    private String description;
 
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
