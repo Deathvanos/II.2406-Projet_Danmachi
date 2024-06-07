@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,4 +92,10 @@ public class PersonnageService {
                 ))
                 .collect(Collectors.toList());
     }
+
+
+    public List<Personnage> getPersonnagesUsers(List<User> userList) {
+        return personnageRepository.findAllByUserIn(userList);
+    }
+
 }

@@ -15,12 +15,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import static com.isep.appli.controllers.UserController.checkIsUser;
 
 @Controller
 public class LoginController {
 
     private final UserService userService;
     private final EmailService emailService;
+    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     LoginController(UserService userService, EmailService emailService) {
         this.userService = userService;
@@ -68,6 +74,9 @@ public class LoginController {
         }
 
         session.setAttribute("user", userSignedIn);
+        // Définir un délai pour déconnecter l'utilisateur automatiquement.
+        scheduler.schedule(() -> userService.logout(user), 30, TimeUnit.MINUTES);
+
 
         if (userSignedIn.getIsAdmin()) {
             return "redirect:/admin/home";
@@ -77,7 +86,11 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        String checkUser = checkIsUser(user, model);
+        if (!checkUser.equals("200")){return checkUser;}
+        userService.logout(user);
         session.invalidate();
         return "redirect:/home";
     }

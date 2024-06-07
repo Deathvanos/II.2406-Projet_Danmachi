@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Donjon</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Donjon</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;">
+
+            <h1>Histoire</h1>
+            <p class="text-justify">
+                Avant que les dieux et les déesses ne descendent dans le monde inférieur, les héros combattaient les monstres avec l'aide des esprits.
+                Une fois que les dieux ont commencé à venir dans le monde inférieur, les dieux leur ont accordé la falna et leur ont donné un statut pour mieux combattre les monstres.
+                Ouranos a été le premier Dieu à accorder une falna à une personne.
+            </p>
+            <hr>
+
+            <h1>Information</h1>
+            <p class="text-justify">
+                Le donjon est apparemment vivant, engendrant des monstres sur les murs et les plafonds et se réparant tout seul.
+                Il a une immense haine des dieux, scellant immédiatement les sorties d'une pièce s'il en détecte une, et engendre une version noire d'un monstre afin de les tuer.
+                Les monstres noirs sont beaucoup plus forts que la normale et affichent une certaine intelligence.
+                Malgré cela, il n'engendre pas d'autre monstre noir après la mort du premier, même si le Dieu en question n'est pas mort.
+                Cela implique que sa capacité à agir est limitée dans une certaine mesure.
+            </p>
+            <p class="text-justify">
+                Le donjon est vaste, les étages devenant de plus en plus grands au fur et à mesure qu'il s'enfonce.
+                Il faut au moins cinq jours pour qu'une famille atteigne le 50e étage.
+                Alors que les étages supérieurs peuvent être en solo ou à deux, à partir des étages intermédiaires, il faut créer une fête ou risquer la mort.
+            </p>
+            <p class="text-justify">
+                Il y a des étages où les monstres n'apparaissent pas du tout qui sont appelés points de sécurité (安全階層).
+                Il y a aussi d'autres zones dans le donjon où les monstres n'apparaissent pas.
+                Presque tous les aventuriers ne savent pas que ces zones existent.
+            </p>
+            <p class="text-justify">
+                Astraea a commenté qu'une partie de la raison pour laquelle les dieux n'utilisent pas leur arcane dans le monde inférieur est que s'ils le faisaient, le donjon romprait sa promesse avant le temps promis.
+                En plus de cela, elle a commenté que si un dieu était mortellement blessé dans le donjon, il serait absorbé par lui au lieu de retourner au paradis.
+                Dionysos a dit qu'actuellement le donjon est à sa limite.
+            </p>
+            <p class="text-justify">
+                Bien que sa profondeur exacte soit indéterminée, le donjon est connu pour avoir au moins 71 étages, car le 71e étage est le plus profond atteint par Zald et Alfia.
+                Il existe une région appelée Sand Land (砂漠の迷園) mais on ne sait pas à quel étage elle se trouve.
+            </p>
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Entré</h1>
+                    <p class="text-justify">
+                        L'entrée du donjon se trouve au premier sous-sol de Babel.
+                        Au centre de la pièce se trouve un trou de dix mètres de long qui mène directement au donjon.
+                        Dans la salle circulaire se trouvent plusieurs colonnes à intervalles égaux et au-dessus se trouve une belle peinture azur du ciel qui ressemble au vrai ciel.
+                        Le long du cercle se trouvent de légers escaliers qui descendent en spirale dans le donjon.
+                    </p>
+                </div>
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/dungeon_entry.png}" width="95%" alt="">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/dungeon_upper_floors.png}" width="95%" alt="">
+                </div>
+                <div class="col-sm-8">
+                    <h1>Etages Supérieurs</h1>
+                    <p class="text-justify">
+                        Les étages supérieurs se composent du 1er au 12e étage.
+                        Ces sols conviennent parfaitement aux aventuriers qui viennent de commencer leur exploration.
+                        Il est recommandé aux aventuriers de niveau 1 d'explorer ici.
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <h1>Etage 1 à 4</h1>
+            <p class="text-justify">
+                Les murs sont de couleur bleu clair et les monstres qui apparaissent sont des Gobelins ou des Kobolds.
+                Il y a aussi un large couloir au 1er étage connu sous le nom de Beginning Road.
+                Les aventuriers débutants de niveau 1 avec un statut de I à H dans leurs capacités de base passent normalement du temps sur ces étages.
+            </p>
+            <hr>
+            <div class="row">
+                <div class="col-sm-4 text-center align-content-center">
+                    <img th:src="@{/images/guest/dungeon_floors_6_7.png}" width="95%" alt="">
+                </div>
+                <div class="col-sm-8">
+                    <h1>Etage 6 à 7</h1>
+                    <p class="text-justify">
+                        Les murs prennent une couleur vert clair et la structure du donjon commence à changer.
+                        Des monstres plus forts tels que War Shadows et Killer Ants apparaissent et l'heure de naissance des monstres est plus rapide.
+                        C'est pourquoi ces étages sont l'endroit où beaucoup d'aventuriers débutants commencent à mourir.
+                        Il est recommandé aux aventuriers de niveau 1 d'avoir au moins le statut G dans leurs capacités de base pour explorer ces étages.
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <h1>Etage 8 à 9</h1>
+            <p class="text-justify">
+                La quantité et la taille des pièces augmentent et la longueur des couloirs entre elles devient plus courte.
+                De plus, le plafond change de hauteur de trois à quatre mètres des étages supérieurs à près de dix mètres au-dessus.
+                La mousse recouvre les murs de couleur brune et le sol en dessous devient une plaine d'herbe courte.
+                La forte lumière de la phosphorescence ci-dessus est similaire à la lumière du soleil.
+                Aucun nouveau monstre n'apparaît, mais les monstres du 1er au 7e étage réapparaissent, mais plus forts.
+                Il est recommandé aux aventuriers de niveau 1 d'avoir au moins le statut E dans leurs capacités de base pour explorer ces étages.
+            </p>
+
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

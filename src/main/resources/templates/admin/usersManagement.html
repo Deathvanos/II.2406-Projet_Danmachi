@@ -7,100 +7,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="/css/common.css"/>
+    <style>
+        body {background-color: #D5E4D9;}
+        footer {background-color: #ffffff;}
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 <header th:insert="~{common/header :: header}"></header>
 
-<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
-    <div class="container h-100">
-        <div class="row h-100 align-items-center">
-            <div class="col-12 text-center">
-                <h1 class="display-2 fw-light">User management</h1>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="container-fluid">
-    <div class="row bodySize">
-        <div class="col-sm-1 borderImage" style="background-image: url(/images/border1.jpg)"></div>
-
-        <div class="col-sm-10 borderImage">
-
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>enabled</th>
-                    <th>firstName</th>
-                    <th>lastName</th>
-                    <th>username</th>
-                    <th>email</th>
-                    <th>Player list</th>
-                    <th>Create account at</th>
-                    <th>Last login</th>
-                    <th>isOnline</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="u : ${usersPages.getContent()}">
-                    <td th:text="${u.id}"></td>
-                    <td th:text="${u.enabled}"></td>
-                    <td th:text="${u.firstName}"></td>
-                    <td th:text="${u.lastName}"></td>
-                    <td><a th:text="${u.username}" th:href="'/admin/users-management/' + ${u.id}"></a></td>
-                    <td th:text="${u.email}"></td>
-                    <td th:if="${u.isAdmin}" th:text="'Admin'"></td>
-                    <td th:unless="${u.isAdmin}">
-                        <a th:href="'#user' + ${u.id} + '-player1'">NamePlayer_1</a> | <a  th:href="'#user' + ${u.id} + '-player2'">NamePlayer_2</a>
-                        <br>
-                        <a  th:href="'#user' + ${u.id} + '-player3'">NamePlayer_3</a> | <a  th:href="'#user' + ${u.id} + '-player4'">NamePlayer_4</a>
-                    </td>
-                    <td>???</td>
-                    <td>???</td>
-                    <td>No</td>
-
-                </tbody>
-            </table>
 
 
 
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" th:classappend="${usersPages.first ? 'disabled' : ''}">
-                        <a class="page-link" th:href="@{/admin/users-management(page=${usersPages.number - 1}, size=${usersPages.size})}" tabindex="-1">Previous</a>
-                    </li>
-                    <li class="page-item" th:each="pageNumber : ${pageNumbers}" th:classappend="${pageNumber==usersPages.number+1 ? 'active' : ''}">
-                        <th:block th:if="${#lists.size(pageNumbers) > 10}">
-                            <a class="page-link" th:if="${pageNumber >= usersPages.number - 2 && pageNumber <= usersPages.number + 4}" th:href="@{/admin/users-management(page=${pageNumber}-1, size=${usersPages.size})}" th:text="${pageNumber}"></a>
-                        </th:block>
-                        <th:block th:unless="${#lists.size(pageNumbers) > 10}">
-                            <a class="page-link" th:href="@{/admin/users-management(page=${pageNumber}-1, size=${usersPages.size})}" th:text="${pageNumber}"></a>
-                        </th:block>
-                    </li>
-                    <li class="page-item" th:classappend="${usersPages.last ? 'disabled' : ''}">
-                        <a class="page-link" th:href="@{/admin/users-management(page=${usersPages.number + 1}, size=${usersPages.size})}">Next</a>
-                    </li>
-                </ul>
+<div class="container col-10 my-5 px-3 py-3">
 
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" th:classappend="${usersPages.getSize() == 5 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/users-management(page=0, size=5)}">5</a></li>
-                    <li class="page-item" th:classappend="${usersPages.getSize() == 10 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/users-management(page=0, size=10)}">10</a></li>
-                    <li class="page-item" th:classappend="${usersPages.getSize() == 20 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/users-management(page=0, size=20)}">20</a></li>
-                    <li class="page-item" th:classappend="${usersPages.getSize() == 50 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/users-management(page=0, size=50)}">50</a></li>
-                </ul>
-            </nav>
+    <h1>Users management</h1>
+    <p class="d-flex justify-content-center">
+        <a class="btn btn-outline-secondary " href="/personnage/all">Liste des personnages vu par les joueurs</a>
+    </p>
+
+    <p class="d-flex justify-content-center">
+        <spa class="text-danger">disable</spa> -
+        <spa class="text-secondary">logout</spa> -
+        <spa class="text-success">login</spa>
+    </p>
 
 
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Pseudo</th>
+            <th>Email</th>
+            <th>Player list</th>
+            <th>Last login</th>
+            <th>Creation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${usersPages.getContent()}" th:class="${!u.enabled} ? 'text-center text-danger' : (${u.isLogin} ? 'text-center text-success' : 'text-center text-secondary')">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.firstName + ' ' + u.lastName}"></td>
+            <td><a th:text="${u.username}" th:href="'/admin/users-management/' + ${u.id}" th:class="${!u.enabled} ? 'btn bg-danger' : (${u.isLogin} ? 'btn bg-success' : 'btn bg-secondary')"></a></td>
+            <td th:text="${u.email}"></td>
+            <td th:if="${u.isAdmin}" th:text="'Admin'"></td>
+            <td th:unless="${u.isAdmin}">
+                <a th:each="personnage : ${usersPersonnages}" th:if="${personnage.user.getId() == u.id}" th:href="'#user' + ${personnage.id}" >
+                    <img class="border m-1" th:src="'data:image/png;base64,' + ${personnage.getImage()}" alt="Profile Image" style="max-width: 50px">
+                </a>
+            </td>
+            <td th:if="${u.getHoursSinceLastLogin < 48}" th:text="'Il y a '+${u.getFormattedDurationSinceLastLogin}"></td>
+            <td th:unless="${u.getHoursSinceLastLogin < 48}" th:text="${#temporals.format(u.lastLoginAt, 'dd-MM-yyyy')}"></td>
+            <td th:text="${#temporals.format(u.createAccountAt, 'dd-MM-yyyy')}"></td>
+        </tbody>
+    </table>
 
-            <div class="text-center" th:text="'Number of Users: ' + ${usersPages.getTotalElements()}"></div>
 
-        </div>
 
-        <div class="col-sm-1 borderImage" style="background-image: url(/images/border2.jpg)"></div>
-    </div>
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${usersPages.first ? 'disabled' : ''}">
+                <a class="page-link" th:href="@{/admin/users-management(page=${usersPages.number - 1}, size=${usersPages.size})}" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item" th:each="pageNumber : ${pageNumbers}" th:classappend="${pageNumber==usersPages.number+1 ? 'active' : ''}">
+                <th:block th:if="${#lists.size(pageNumbers) > 10}">
+                    <a class="page-link" th:if="${pageNumber >= usersPages.number - 2 && pageNumber <= usersPages.number + 4}" th:href="@{/admin/users-management(page=${pageNumber}-1, size=${usersPages.size})}" th:text="${pageNumber}"></a>
+                </th:block>
+                <th:block th:unless="${#lists.size(pageNumbers) > 10}">
+                    <a class="page-link" th:href="@{/admin/users-management(page=${pageNumber}-1, size=${usersPages.size})}" th:text="${pageNumber}"></a>
+                </th:block>
+            </li>
+            <li class="page-item" th:classappend="${usersPages.last ? 'disabled' : ''}">
+                <a class="page-link" th:href="@{/admin/users-management(page=${usersPages.number + 1}, size=${usersPages.size})}">Next</a>
+            </li>
+        </ul>
+
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${usersPages.getSize() == 5 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/users-management(page=0, size=5)}">5</a></li>
+            <li class="page-item" th:classappend="${usersPages.getSize() == 10 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/users-management(page=0, size=10)}">10</a></li>
+            <li class="page-item" th:classappend="${usersPages.getSize() == 20 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/users-management(page=0, size=20)}">20</a></li>
+            <li class="page-item" th:classappend="${usersPages.getSize() == 50 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/users-management(page=0, size=50)}">50</a></li>
+        </ul>
+    </nav>
+
+
+
+    <div class="text-center" th:text="'Number of Users: ' + ${usersPages.getTotalElements()}"></div>
+
 </div>
 
 

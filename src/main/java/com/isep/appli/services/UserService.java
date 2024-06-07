@@ -1,5 +1,6 @@
 package com.isep.appli.services;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,10 +66,18 @@ public class UserService {
 		if (user != null && user.getEnabled() == true) {
 			String hashedPassword = user.getPassword();
 			if (passwordEncoder.matches(password, hashedPassword) || password == hashedPassword) {
+				user.setIsLogin(true);
+				user.setLastLoginAt(LocalDateTime.now());
+				userRepository.save(user);
 				return user;
 			}
 		}
 		return null;
+	}
+
+	public void logout(User user) {
+		user.setIsLogin(false);
+		userRepository.save(user);
 	}
 
 	public void modifyUserInfo(User user, ModifyUserInfoForm newUserInfo) {
@@ -95,6 +104,15 @@ public class UserService {
 	public User getUserById(long userId) {
 		return userRepository.findById(userId).orElse(null);
 	}
+
+	public long getNbUsers() {
+		return this.userRepository.count();
+	}
+
+	public long getNbUserLogins() {return this.userRepository.findAllByIsLoginIsTrue().size();}
+
+
+
 
 
 }

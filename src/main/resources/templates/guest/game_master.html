@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Game Master</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Game Master</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;">
+
+            <h1>Qu'est-ce qu'un maître du jeu ?</h1>
+            <p class="text-justify">
+                Il s'agit d'une personne qui joue le rôle des monstres que vous pouvez croiser dans la nature ou dans le donjon.
+                Bien que plus souvent il s'agit des monstres dans le donjon.
+                Il a aussi pour rôle de décrire l'ensemble des choses qui se passe lorsque vous êtes dans le donjon, on l'appelle aussi MJ.
+            </p>
+            <hr>
+            <h1>Comment devenir MJ et pourquoi ?</h1>
+            <p class="text-justify">
+                Comment ? Il suffit de passer une pseudo formation qui vérifie que vous connaissez l'ensemble des systèmes et des règles du donjon qui seront écrite ci-dessous.
+                Pourquoi ? Cela vous permet de faire vos donjons à n'importe quel moment, de comprendre comment fonctionne le donjon et de vérifier que personne ne triche.
+                Cependant, vous pouvez également faire sans, une simple vérification des staffs sera alors à demander pour voir si le donjon a été réalisé correctement.
+            </p>
+            <hr>
+            <h1>Les étapes préliminaires lorsque vous commencer à faire vôtre travaille de MJ</h1>
+            <p class="text-justify">
+                Avant de commencer à décrire tout ce qu'il va se passer, faire apparaître des monstres il faut faire un travail préliminaire.
+                Noter sur une feuille ou directement ici plusieurs informations, les statistiques de tous les membres, leurs vies et leurs énergies.
+                Vous devez aussi prendre en compte leurs arme et armure.
+                Puis faite votre premier calcul qui sera essentiel, faite la somme des statistiques de tous les aventuriers présents dans le groupe et noter le quelque part.
+                Ce sont les choses à faire avant quoi que ce soit.
+            </p>
+            <hr>
+            <h1>L'apparition des monstres</h1>
+            <p class="text-justify">
+                Vous venez de finir vôtre travaille préliminaire maintenant vous voulez faire apparaître des monstres.
+                Observer dans quel étage vous êtes puis aller dans le bestiaire.
+                Prenez en note les monstres qui peuvent apparaître dans l'étage ainsi que leurs statistiques avant de retourner dans le chanel où se trouve les aventuriers.
+                Une fois cela, vous devez savoir qu'il n'existe pas une infinité de monstre et que vous serez donc limiter.
+                Le temps de respawn des monstres est de 1 à 2 heures.
+            </p>
+            <hr>
+            <h1>Le combat</h1>
+            <p class="text-justify">
+                Dans cette partie vous aller apprendre comment gérer que ce soit le player vs player (pvp) ainsi que le player vs entite (pve).
+                Les aventuriers sont confrontés face à un obstacle vivant, un combat s'engage alors en tour par tour il faut donc déterminer l'ordre du combat.
+                Pour cela faite une liste de l'entité la plus agile présente, puis la seconde, puis la troisième ainsi de suite.
+                Dans le cas ou deux entités on la même agilité ils jouent en même temps.
+                Surtout n'oublier pas de prendre en compte les concepts de combat.
+            </p>
+            <p class="text-justify">Le combat se termine quand l'un des deux n'est plus en état de se battre.</p>
+            <hr>
+
+            <h1>Le Loot</h1>
+            <p class="text-justify">
+                Les aventuriers doivent être récompenser d'avoir tué le mal, il y a deux choses que tout monstres peuvent loot, les pierres et l'xp.
+            </p>
+            <ul class="text-justify">
+                <li>Les pierres : Vous obtenez une pierre violette à chaque monstres mort. </li>
+                <li>
+                    L'xp : Pour compter l'xp gagner par les aventuriers il faut utiliser une formule :
+                    <br><br>({K} x [ Nombre de Monstre ] ) / [Somme des stats des aventuriers ]<br>
+                    <br>Avec K = une constante prédéterminer pour chaque étage que vous pouvez retrouver dans le bestiaire.
+                    <br>Note : L'xp doit être calculé après chaque combat et vous devez arrondir chaque résultat.
+                </li>
+                <li>
+                    Le loot spéciale : Certains monstres peuvent offrir autre chose que des pierres ou de l'xp.
+                    Pour savoir lesquels vous pouvait aller voir dans le bestiaire vous y trouverez les loot qu'il peuvent offrir ainsi que la chance de les obtenir.
+                    Pour chaque 1 obtenue cela fait apparaître le loot.
+                    <br> Dans le même principe que les pierres vous utiliser la commande :
+                    <br><br> !roll [nombre_de_monstre_qui_loot]d[chance de loot]<br>
+                </li>
+            </ul>
+            <p class="text-justify">
+                <span class="font-weight-bold">Attention !</span>
+                Après chaque combat le loot doit être écrit dans le channel dans lequel les aventuriers se trouve.
+                De plus après chaque donjon vous devez notée l'xp gagner par les aventuriers dans xp points de la manière suivante :
+                <br><br>Nom : {XP avant le combat} + {XP gagné } = {XP Total} Energie [énergie actuelle]/[énergie max] {Hp actuelle}/ {Hp max}
+            </p>
+            <p class="text-justify">
+                Si jamais utiliser la formule est trop long et complexe pour vous vous pouvez utiliser le
+                <a href="https://docs.google.com/spreadsheets/d/1Dnfv2guWLILsO5WbGh3qY2SWn89qjAT5kgvQ5netmec/edit#gid=0">calculateur d'xp</a>  :
+            </p>
+            <hr>
+
+            <h1>Exceptions</h1>
+            <ul class="text-justify">
+                <li>Si [somme des statistiques des monstre] - [somme des statistiques des aventuriers ] < 0 alors les aventuriers peuvent passer sans combattre </li>
+                <li>
+                    Les aventuriers peuvent mourir si leurs hp de tous les aventuriers tombent à 0.
+                    Et dans le cas où un aventurier n'est pas loin, on peut autoriser à l'inconscience pour être sauvé.
+                    Cependant si les divinités le remarque ils peuvent très bien appliquer une sanction tel qu'une blessure qui pénalise les aventuriers qui était au porte de la mort.
+                </li>
+                <li>Les règles peuvent être parfois contourné dans le cadre ou l'on considère que l'action en vaut le coup. Si vous le fait sans autorisation d'un staff vous êtes sectionnable</li>
+            </ul>
+
+
+
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

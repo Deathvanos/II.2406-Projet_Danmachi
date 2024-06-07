@@ -1,6 +1,7 @@
 package com.isep.appli.controllers;
 
 import com.isep.appli.dbModels.User;
+import com.isep.appli.services.PersonnageService;
 import com.isep.appli.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -21,10 +21,14 @@ import java.util.stream.IntStream;
 public class AdminController {
 
     private final UserService userService;
+    private final PersonnageService personnageService;
 
 
-    public AdminController(UserService userService) {
+
+
+    public AdminController(UserService userService, PersonnageService personnageService) {
         this.userService = userService;
+        this.personnageService = personnageService;
     }
 
     static public String checkIsAdmin(User userAdmin, Model model) {
@@ -54,6 +58,7 @@ public class AdminController {
         String checkUser = checkIsAdmin(userAdmin, model);
         if (!checkUser.equals("200")){return checkUser;}
 
+
         // limit the maw size
         if (size>50) {return String.format("redirect:/admin/users-management?page=%d&size=50", page);}
         // Recover UserList
@@ -69,6 +74,8 @@ public class AdminController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+
+        model.addAttribute("usersPersonnages", personnageService.getPersonnagesUsers(userPage.stream().toList()));
         return "admin/usersManagement";
     }
 
@@ -85,7 +92,7 @@ public class AdminController {
         if (user == null) {return "errors/error-404";}
         model.addAttribute("userInfo", user);
 
-        return "admin/userInfo";
+        return "admin/userDescription";
     }
 
     /*
