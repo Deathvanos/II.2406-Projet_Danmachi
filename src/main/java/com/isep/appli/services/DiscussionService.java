@@ -67,11 +67,21 @@ public class DiscussionService {
         return destinationPersonnage;
     }
 
+    public Long getDestinationId(Discussion discussion, Personnage personnage) {
+        if (discussion.getConversationType().equals("PRIVATE")) {
+            return getPrivateDestinationId(discussion, personnage);
+        }
+        else {
+            return discussion.getFamiliaId();
+        }
+    }
+
     public FormattedDiscussion formatDiscussion (Discussion discussion, Personnage selectedPersonnage) {
         FormattedDiscussion formattedDiscussion = new FormattedDiscussion(
                 discussion.getId(),
                 discussion.getConversationType(),
                 messageService.displayDestination(getDestinationPersonnage(discussion, selectedPersonnage)),
+                getDestinationId(discussion, selectedPersonnage),
                 getDestinationPersonnage(discussion, selectedPersonnage).getImage(),
                 messageService.formatDate(getLastMessageDate(discussion)),
                 getCanDelete(selectedPersonnage, discussion)

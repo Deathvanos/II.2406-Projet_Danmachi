@@ -95,6 +95,7 @@
                                 <div th:if="${message.isReceived()}" th:text="${message.getContent()}" class="message-content"></div>
                                 <div th:text="${message.getDate()}" class="message-timestamp"></div>
                              </div>
+                             <a th:href="'/reportPage/MESSAGE/' + ${message.getId()}" class="message-report">Signaler le message</a>
                         </div>
 
                         <form id="sent-message-form" th:action="@{/sendMessage}" th:object="${message}" method="POST">
@@ -117,14 +118,15 @@
                                 <div th:if="${discussion.isCanDelete()}">
                                     <a th:href="'delete/' + ${discussion.getId()}" class="btn btn-outline-success chat-button">Supprimer la conversation</a>
                                 </div>
+
+                                <a th:href="'/reportPage/FAMILIA/' + ${discussion.getDestination()}" class="btn btn-outline-success chat-button">Signaler la familia</a>
                             </div>
 
                             <div th:if="${discussion.getConversationType()} == 'PRIVATE'">
                                 <a class="btn btn-outline-success chat-button">Accéder au personnage</a>
                                 <a th:href="'delete/' + ${discussion.getId()}" class="btn btn-outline-success chat-button">Supprimer la conversation</a>
+                                <a th:href="'/reportPage/PERSONNAGE/' + ${discussion.getDestination()}" class="btn btn-outline-success chat-button" th:text="'Signaler ' + ${discussion.getDisplayDestination()}"></a>
                             </div>
-
-                            <a class="btn btn-outline-success chat-button">Signaler</a>
                         </div>
                     </div>
                 </span>

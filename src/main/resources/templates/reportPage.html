@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/css/chatPage.css"/>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Report</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+        <div class="col-sm-8" style="background-color:#D5E4D9">
+
+            <h1 class="display-5" th:text="'Signaler ' + ${objectToReport}"></h1>
+
+            <form id="report-form" th:action="@{/sendReport}" th:object="${report}" method="POST">
+              <div class="form-group">
+                  <label>Expliquez la raison de votre signalement :</label>
+                  <textarea class="form-control"  th:field="*{comment}" placeholder="Ecrivez quelque chose ..." rows = "4" cols = "70" name="comment" form="report-form"></textarea>
+                  <p id="error-empty-message" class="text-danger"></p>
+
+                  <input type="hidden" th:field="*{userFromId}" id="userFromId">
+                  <input type="hidden"  th:field="*{objectReportedType}" id="objectReportedType">
+                  <input type="hidden" th:field="*{objectReportedId}" id="objectReportedId">
+
+                  <button type="submit" class="btn btn-outline-success"></i>Envoyer</button>
+              </div>
+            </form>
+
+        </div>
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+<footer th:insert="~{common/footer :: footer}"></footer>
+<script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
+<script src="/js/chatPage.js"></script>
+</body>
+</html>

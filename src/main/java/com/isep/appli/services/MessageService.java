@@ -19,8 +19,8 @@ public class MessageService {
         this.personnageService = personnageService;
     }
 
-    public Optional<Message> getById(Long id) {
-        return messageRepository.findById(id);
+    public Message getById(Long id) {
+        return messageRepository.findMessageById(id);
     }
 
     public Message save(Message message) {
@@ -28,8 +28,7 @@ public class MessageService {
     }
 
     public void deleteMessageById(long id) {
-        Optional<Message> messageOptional = getById(id);
-        Message message = messageOptional.orElse(null);
+        Message message = getById(id);
         messageRepository.delete(message);
     }
 
