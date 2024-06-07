@@ -94,18 +94,24 @@ public class ShopController {
 
     @PostMapping("/shop/buyItem")
     public String sellItem(@Valid Shop shopCell, HttpSession session) {
-        Personnage character = (Personnage) session.getAttribute("personnage");
+
         Shop shop = shopService.findById(shopCell.getId());
         int itemQuantityToBuy = shopCell.getQuantity();
         Item item = shop.getItem();
+
         shopService.removeItemInShop(shop, itemQuantityToBuy);
-        inventoryService.addItemForPlayer(character, item, itemQuantityToBuy);
+
         Personnage seller = shop.getSeller();
         int currentMoneyForSeller = seller.getMoney();
-        int currentMoneyForCharacter = character.getMoney();
-        int price = Long.valueOf(shopCell.getPrice()).intValue() ;
+        int price = Long.valueOf(shopCell.getPrice()).intValue();
         personnageService.updateMoney(seller, currentMoneyForSeller + price );
+
+        Personnage currentPersonnage = (Personnage) session.getAttribute("personnage");
+        Personnage character = personnageService.getPersonnageById(currentPersonnage.getId());
+        int currentMoneyForCharacter = character.getMoney();
         personnageService.updateMoney(character, currentMoneyForCharacter - price);
+        inventoryService.addItemForPlayer(character, item, itemQuantityToBuy);
+
         return "redirect:/shop";
     }
 
