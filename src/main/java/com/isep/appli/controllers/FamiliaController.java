@@ -3,103 +3,228 @@ package com.isep.appli.controllers;
 import com.isep.appli.dbModels.Familia;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.User;
+import com.isep.appli.dbModels.JoinRequest;
+import com.isep.appli.models.enums.Race;
 import com.isep.appli.services.FamiliaService;
 import com.isep.appli.services.ImageService;
 import com.isep.appli.services.PersonnageService;
+import com.isep.appli.services.JoinRequestService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.isep.appli.controllers.UserController.checkIsUser;
 
 @Controller
+@RequestMapping("familia")
 public class FamiliaController {
 
     @PersistenceContext
     private EntityManager entityManager;
-    @Autowired
-    private ImageService imageService;
+    private final ImageService imageService;
     private final FamiliaService familiaService;
     private final PersonnageService personnageService;
-    public FamiliaController(PersonnageService personnageService, FamiliaService familiaService) {
+    private final PersonnageController personnageController;
+    private final JoinRequestService joinRequestService;
+    public FamiliaController(ImageService imageService, FamiliaService familiaService, PersonnageService personnageService, PersonnageController personnageController, JoinRequestService joinRequestService) {
+        this.imageService = imageService;
         this.familiaService = familiaService;
         this.personnageService = personnageService;
+        this.personnageController = personnageController;
+        this.joinRequestService = joinRequestService;
     }
 
-    @GetMapping("/familiaPage/{familiaId}")
+    // Affiche la page d'une familia spécifique en fonction de son id
+    // Si le personnage est le leader, affiche des paramètres en plus sur la page
+    @GetMapping("/{familiaId}")
     public String familiaPage(@PathVariable Long familiaId, Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        String checkUser = checkIsUser(user, model);
-        if (!checkUser.equals("200")){return checkUser;}
+        if (UserController.checkIsUser(user, model).equals("200")){model.addAttribute("user", user);}
 
-        // Utilisation de l'EntityManager pour récupérer la Familia par son ID
         Familia familia = entityManager.find(Familia.class, familiaId);
         if (familia == null) {
             throw new IllegalArgumentException("Cette familia n'existe pas.");
         }
 
         Personnage leader = personnageService.getPersonnageById(familia.getLeader_id());
-
         if (leader == null) {
             throw new IllegalArgumentException("Le nom du leader n'est pas correct.");
         }
 
+        List<Personnage> members = personnageService.getPersonnagesByFamiliaId(familiaId);
+
+        List<String> distinctRaces = new ArrayList<>();
+        for (Race race : Race.values()) {
+            distinctRaces.add(race.getDisplayName());
+        }
+        model.addAttribute("distinctRaces", distinctRaces);
+
+
+        // Filtrer la liste des membres pour enlever le leader
+        List<Personnage> filteredMembers = members.stream()
+                .filter(member -> !member.getId().equals(leader.getId()))
+                .collect(Collectors.toList());
+
+        List<JoinRequest> pendingRequests = joinRequestService.getPendingRequestsByFamilia(familia);
 
         model.addAttribute("familia", familia);
-        model.addAttribute("leaderFirstName", leader.getFirstName());
-        model.addAttribute("leaderLastName", leader.getLastName());
+        model.addAttribute("leader", leader);
+        model.addAttribute("members", filteredMembers);
+        model.addAttribute("familiaId", familia.getId());
+        model.addAttribute("pendingRequests", pendingRequests);
+
+        // Vérification si le personnage peut rejoindre une familia et s'il a une requête en cours
+        Personnage personnage = personnageController.getSessionPersonnage(session).getBody();
+        if (personnage != null && personnage.getFamilia() == null && personnage.getRace() != Race.GOD) {
+            boolean hasPendingRequest = pendingRequests.stream()
+                    .anyMatch(request -> request.getPersonnage().getId().equals(personnage.getId()));
+            model.addAttribute("canJoin", !hasPendingRequest);
+            model.addAttribute("hasPendingRequest", hasPendingRequest);
+        } else {
+            model.addAttribute("canJoin", false);
+            model.addAttribute("hasPendingRequest", false);
+        }
+
+        boolean isLeader = personnage != null && personnage.getId().equals(leader.getId());
+        model.addAttribute("isLeader", isLeader);
+
         return "familiaPage";
     }
-    @GetMapping("/new_familia")
+
+    //Affiche la page de création d'une nouvelle familia
+    @GetMapping("/new")
     public String createFamiliaPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         String checkUser = checkIsUser(user, model);
         if (!checkUser.equals("200")){return checkUser;}
 
-        model.addAttribute("familia", new Familia());
-        return "newFamilia";
+        Personnage personnage = personnageController.getSessionPersonnage(session).getBody();
+        if (personnage != null){
+            model.addAttribute("familia", new Familia());
+            return "newFamilia";
+        } else {
+            return "redirect:/home";
+        }
+
     }
 
-    @PostMapping("/new_familia")
-    public String createFamilia(@Valid Familia familia, @RequestParam("croppedImageData") String croppedImageData, BindingResult result, Model model, HttpSession session) {
+    //Création d'une nouvelle familia
+    @PostMapping("/new")
+    public String createFamilia(@Valid Familia familia, @RequestParam("croppedImageData") String croppedImageData, Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         String checkUser = checkIsUser(user, model);
         if (!checkUser.equals("200")) { return checkUser; }
 
-        byte[] decodedImageData = Base64.getDecoder().decode(croppedImageData);
-        try {
-            byte[] compressedImageData = imageService.compressImage(new ByteArrayInputStream(decodedImageData));
-            if (familiaService.createFamilia(compressedImageData, user, familia)) {
-                return "redirect:/home"; //Rediriger vers la page de la familia qui vient d'être créée
+        Personnage personnage = personnageController.getSessionPersonnage(session).getBody();
+        if (personnage != null) {
+            byte[] decodedImageData = Base64.getDecoder().decode(croppedImageData);
+            try {
+                byte[] compressedImageData = imageService.compressImage(new ByteArrayInputStream(decodedImageData));
+                if (familiaService.createFamilia(compressedImageData, personnage, familia)) {
+                    return "redirect:/familia/" + familia.getId();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            // Gérer l'erreur d'une manière appropriée, par exemple, en renvoyant une page d'erreur
-            e.printStackTrace();
         }
-        return "home";
+        return "redirect:/home";
     }
 
+    // Affiche la liste des familias existantes
+    // Si le personnage est un dieu il a également accès a un bouton pour en créer une
+    @GetMapping("/list")
+    public String familiaList(Model model, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if (UserController.checkIsUser(user, model).equals("200")){model.addAttribute("user", user);}
 
-    @PostMapping("/familia_list")
-    public String familiaList(){
-        //A compléter
+        Map<Familia, Personnage> familiasWithLeaders = familiaService.getAllFamiliasWithLeaders();
+        model.addAttribute("familiasWithLeaders", familiasWithLeaders);
+
+        Personnage personnage = personnageController.getSessionPersonnage(session).getBody();
+        if (personnage != null && personnage.getFamilia() == null && personnage.getRace()==Race.GOD) {
+            model.addAttribute("canCreate", true);
+        } else {
+            model.addAttribute("canCreate", false);
+        }
+
         return "familiaList";
     }
 
+    // Redirige le personnage vers la page appropriée en fonction de son appartenance a une familia ou non
+    @GetMapping("/redirect")
+    public String redirectBasedOnFamilia(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        String checkUser = checkIsUser(user, model);
+        if (!checkUser.equals("200")) { return checkUser; }
 
+        Personnage personnage = personnageController.getSessionPersonnage(session).getBody();
+        if (personnage != null && personnage.getFamilia() != null) {
+            return "redirect:/familia/" + personnage.getFamilia().getId();
+        } else {
+            return "redirect:/familia/list";
+        }
 
+    }
 
+    // Créer une requête de demande de rejoindre une familia
+    @PostMapping("/request/{familiaId}")
+    public String requestJoinFamilia(@PathVariable Long familiaId, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        String checkUser = checkIsUser(user, model);
+        if (!checkUser.equals("200")) { return checkUser; }
+
+        Familia familia = entityManager.find(Familia.class, familiaId);
+        if (familia == null) {
+            throw new IllegalArgumentException("Cette familia n'existe pas.");
+        }
+
+        Personnage personnage = personnageController.getSessionPersonnage(session).getBody();
+        if (personnage != null && personnage.getFamilia() == null) {
+            joinRequestService.createJoinRequest(personnage, familia);
+            return "redirect:/familia/" + familiaId;
+        }
+        return "redirect:/home";
+    }
+
+    // Accepte une demande de rejoindre une familia
+    @PostMapping("/requests/accept/{requestId}")
+    public String acceptJoinRequest(@PathVariable Long requestId) {
+        joinRequestService.acceptJoinRequest(requestId);
+        JoinRequest joinRequest = joinRequestService.getJoinRequestById(requestId);
+        return "redirect:/familia/" + joinRequest.getFamilia().getId();
+    }
+
+    // Rejette une demande de rejoindre une familia
+    @PostMapping("/requests/reject/{requestId}")
+    public String rejectJoinRequest(@PathVariable Long requestId) {
+        JoinRequest joinRequest = joinRequestService.getJoinRequestById(requestId);
+        joinRequestService.rejectJoinRequest(requestId);
+        return "redirect:/familia/" + joinRequest.getFamilia().getId();
+    }
+
+    // Supprime un membre d'une familia
+    @PostMapping("/removeMember/{familiaId}/{memberId}")
+    public String removeMember(@PathVariable Long familiaId, @PathVariable Long memberId) {
+        familiaService.removeMember(familiaId, memberId);
+        return "redirect:/familia/" + familiaId;
+    }
+
+    // Supprime une familia
+    @PostMapping("/delete/{familiaId}")
+    public String deleteFamilia(@PathVariable Long familiaId) {
+        familiaService.deleteFamiliaByIdWithMembers(familiaId);
+        return "redirect:/familia/list";
+    }
 }

@@ -17,4 +17,6 @@ public interface PersonnageRepository extends JpaRepository<Personnage, Long> {
     Personnage findPersonnageById(long id);
 
     Page<Personnage> findByRace(Race race, Pageable pageable);
+
+    List<Personnage> findByFamiliaId(Long familiaId);
 }

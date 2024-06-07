@@ -6,25 +6,23 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity //Mettre dans la BDD
+@Entity
 public class Familia {
-
-    //@PersistenceContext
-    //private EntityManager entityManager;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
-    private String description; // PB: Limite de taille de String dans la table, à régler
+    @Lob
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String description;
 
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private String embleme_image;
 
     @Column(nullable = false)
-    private Long leader_id; //(le leader est un joueur, et la photo du dieu c'est sa photo de profil)
+    private Long leader_id;
 
 
 }
