@@ -1,10 +1,15 @@
 package com.isep.appli.controllers;
 
+import com.isep.appli.dbModels.Familia;
+import com.isep.appli.dbModels.Message;
+import com.isep.appli.dbModels.Report;
 import com.isep.appli.dbModels.User;
-import com.isep.appli.services.UserService;
+import com.isep.appli.models.FormattedReport;
+import com.isep.appli.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +26,18 @@ import java.util.stream.IntStream;
 public class AdminController {
 
     private final UserService userService;
+    private final ReportService reportService;
+    private final PersonnageService personnageService;
+    private final FamiliaService familiaService;
+    private final MessageService messageService;
 
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, ReportService reportService, PersonnageService personnageService, FamiliaService familiaService, MessageService messageService) {
         this.userService = userService;
+        this.reportService = reportService;
+        this.personnageService = personnageService;
+        this.familiaService = familiaService;
+        this.messageService = messageService;
     }
 
     static public String checkIsAdmin(User userAdmin, Model model) {
@@ -86,6 +99,45 @@ public class AdminController {
         model.addAttribute("userInfo", user);
 
         return "admin/userInfo";
+    }
+
+    @GetMapping("/admin/reportList")
+    public String reportListPageEmpty() {
+        return "redirect:/admin/reportList/0";
+    }
+
+    @GetMapping("/admin/reportList/{reportId}")
+    public String reportListPage(@PathVariable Long reportId,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+        // limit the maw size
+        if (size>50) {return String.format("redirect:/admin/reportList?page=%d&size=50", page);}
+
+        Page<FormattedReport> reportPage = reportService.getAllFormattedReportSortedByDate(PageRequest.of(page, size, Sort.by("date").descending()));
+        model.addAttribute("reportPage", reportPage);
+
+        Report reportSelected = reportService.getById(reportId);
+
+        if (reportSelected != null) {
+            model.addAttribute("reportSelected", reportService.convertToFormattedReport(reportSelected));
+            if (reportSelected.getObjectReportedType().equals("MESSAGE")) {
+                model.addAttribute("messageReported", messageService.getById(reportSelected.getObjectReportedId()));
+            }
+        }
+
+        // Add information for pagination
+        int totalPages = reportPage.getTotalPages();
+        if (page > totalPages) {return String.format("redirect:/admin/reportList?page=%d&size=%d", reportPage.getTotalPages() - 1, size);}
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        return "admin/adminReportPage";
     }
 
     /*
