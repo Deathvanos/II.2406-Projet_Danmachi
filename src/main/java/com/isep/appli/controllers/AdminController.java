@@ -2,6 +2,10 @@ package com.isep.appli.controllers;
 
 import com.isep.appli.dbModels.Report;
 import com.isep.appli.dbModels.User;
+import com.isep.appli.models.FormattedReport;
+import com.isep.appli.services.MessageService;
+import com.isep.appli.services.PersonnageService;
+import com.isep.appli.services.ReportService;
 import com.isep.appli.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
@@ -11,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -23,10 +26,16 @@ import java.util.stream.IntStream;
 public class AdminController {
 
     private final UserService userService;
+    private final PersonnageService personnageService;
+    private final ReportService reportService;
+    private final MessageService messageService;
 
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, PersonnageService personnageService, ReportService reportService, MessageService messageService) {
         this.userService = userService;
+        this.personnageService = personnageService;
+        this.reportService = reportService;
+        this.messageService = messageService;
     }
 
     static public String checkIsAdmin(User userAdmin, Model model) {
