@@ -1,0 +1,885 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Bestiaire</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Bestiaire</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-8 borderImage" style="background-color:#D5E4D9;padding-right:0; padding-left:0;">
+            <div id="accordion">
+
+
+                <div class="card center" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse1" style="color:black;">Etages 1 à 4</a></div>
+                    <div id="collapse1" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <p class="text-justify">(Loots possible dans ces étages : Cuivre , Charbon)</p>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Gobelin.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Gobelin</h4>
+                                        <p class="card-text text-justify">Un monstre humanoïde vert et dodu avec de grands yeux qui est considéré comme le monstre le plus faible du donjon</p>
+                                        <p class="card-text text-justify">Force : [50] Agilité : [110] Dextérité : [90] Magie : [0] Endurance : [80]</p>
+                                        <p class="card-text text-justify">Loot : Crocs de Gobelin (400 valis) 1/40</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Kobold.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Kobold</h4>
+                                        <p class="card-text text-justify">Un monstre à tête de chien</p>
+                                        <p class="card-text text-justify">Force : [60] Agilité : [80] Dextérité : [90] Magie : [0] Endurance : [100]</p>
+                                        <p class="card-text text-justify">Loot : Griffe de Kobold (400 valis) 1/40</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Lezard.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Lézard</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre lézard quadrupède brun avec des ventouses sur ses pieds.
+                                            Attaque en escaladant les murs et en sautant sur les gens, de préférence dans une embuscade
+                                        </p>
+                                        <p class="card-text text-justify">Force : [70] Agilité : [90] Dextérité : [70] Magie : [0] Endurance : [100] </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+                </div>
+
+
+                <div class="card center" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse2" style="color:black;">Etages 5 à 6</a></div>
+                    <div id="collapse2" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <p class="text-justify">(Loots possible dans ces étages : Charbon , Cuivre , Etain)</p>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Ombre_De_Guerre.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ombre De Guerre</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre humanoïde sombre qui a de longs bras avec trois griffes acérées comme des couteaux.
+                                            C'est le monstre le plus fort du 6e étage. Il est connu sous le nom de "tueur débutant" pour avoir tué beaucoup d'aventuriers débutants.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [200] Agilité : [150] Dextérité : [200] Magie : [0] Endurance : [150]</p>
+                                        <p class="card-text text-justify">Equipement : Lames +5 dégâts.</p>
+                                        <p class="card-text text-justify">Loot : Lame de l'ombre de la guerre (800 valis) 1/80.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Tireur_elite.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Tireur D'élite</h4>
+                                        <p class="card-text text-justify">Un monstre grenouille qui a un grand œil. Il attaque en tirant sa longue langue.</p>
+                                        <p class="card-text text-justify">Force : [150] Agilité : [200] Dextérité : [150] Magie : [0] Endurance : [200]</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+                </div>
+
+
+                <div class="card center" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse3" style="color:black;">Etages 7 à 9</a></div>
+                    <div id="collapse3" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <p class="text-justify">(Loots possible dans ces étages : Charbon , Etain , Fer)</p>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Needle_Rabbit.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Needle Rabbit</h4>
+                                        <p class="card-text text-justify">Un monstre lapin qui a une corne sur la tête</p>
+                                        <p class="card-text text-justify">Force : [350] Agilité : [400] Dextérité : [100] Magie : [0] Endurance : [300]</p>
+                                        <p class="card-text text-justify">Equipement : Corne +5 dégâts.</p>
+                                        <p class="card-text text-justify">Loot : Corne de Needle Rabbit (800 valis) 1/80</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Killer_Ant.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Killer Ant</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre fourmi rouge à quatre pattes et deux bras.
+                                            Il a une carapace dure, une grande capacité d'attaque et utilise des phéromones pour attirer ses compagnons en cas de besoin.
+                                            Avec l'Ombre de guerre, elle est connue sous le nom de "tueur de débutants" pour avoir tué de nombreux aventuriers débutants.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [300] Agilité : [350] Dextérité : [150] Magie : [0] Endurance : [250]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Purple_Moth.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Purple Moth</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre miteux qui peut répandre une poudre empoisonnée. La poudre peut causer du poison si elle est recouverte plusieurs fois.
+                                        </p>
+                                        <p class="card-text text-justify">Magie : "Poison" : Afflige des dégâts par tours.</p>
+                                        <p class="card-text text-justify">Force : [150] Agilité : [300] Dextérité : [150] Magie : [350] Endurance : [400]</p>
+                                        <p class="card-text text-justify">Loot : Ailes de Purple Moth (800 valis) 1/80</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Blue_Papilio.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Blue Papilio</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre papillon qui a quatre ailes bleues transparentes.
+                                            C'est un monstre rare.
+                                            En échange de son incapacité à se battre, la poudre sécrétée par ses ailes a la capacité de guérir les autres et sert à fabriquer des potions.
+                                        </p>
+                                        <p class="card-text text-justify">Magie : "Soin" : Soigne les monstres.</p>
+                                        <p class="card-text text-justify">Force : [150] Agilité : [300] Dextérité : [100] Magie : [450] Endurance : [300]</p>
+                                        <p class="card-text text-justify">Loot : Ailes de Blue Papilio (1200 valis) 1/80</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+                </div>
+
+
+                <div class="card center" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse4" style="color:black;">Etages 10 à 12</a></div>
+                    <div id="collapse4" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <p class="text-justify">(Loots possible dans ces étages : Charbon , Fer , Plomb)</p>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Orc.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Orc</h4>
+                                        <p class="card-text text-justify">
+                                            Un énorme monstre à tête de cochon qui peut atteindre trois mètres de haut.
+                                            Il porte une vieille peau à la taille comme une jupe.
+                                            Sa force est telle que certains aventuriers de niveau 2 sont incapables de continuer à se battre après avoir reçu un coup direct.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [840] Agilité : [500] Dextérité : [450] Magie : [0] Endurance : [800]</p>
+                                        <p class="card-text text-justify">Loot : Peau d'orc (1200 valis) 1/80</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Imps.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Imps</h4>
+                                        <p class="card-text text-justify">Un petit monstre démoniaque qui attaque en groupe et utilise des tactiques astucieuses.</p>
+                                        <p class="card-text text-justify">Force : [650] Agilité : [750] Dextérité : [600] Magie : [0] Endurance : [550]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Bad_Bat.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Bad Bat</h4>
+                                        <p class="card-text text-justify">Un monstre chauve-souris sombre qui a des crocs acérés et la capacité de créer des ondes sonores qui perturbent la concentration.</p>
+                                        <p class="card-text text-justify">Magie : "Onde" Permet de diminuer une statistique</p>
+                                        <p class="card-text text-justify">Force : [500] Agilité : [800] Dextérité : [300] Magie : [600] Endurance : [350]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Hard_Armored.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Hard Armored</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre de type tatou à la carapace dure mais à l'intérieur faible.
+                                            Il possède la défense la plus élevée des étages supérieurs.
+                                            Il est donc généralement impossible pour un aventurier de niveau 1 de le vaincre seul au corps à corps.
+                                            Avec le dos argenté, c'est le monstre le plus important des 11e et 12e étages.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [700] Agilité : [500] Dextérité : [300] Magie : [0] Endurance : [900]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Infant_Dragon.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Infant Dragon</h4>
+                                        <p class="card-text text-justify">
+                                            Un petit dragon d'environ 150 centimètres de haut et de plus de quatre mètres de long.
+                                            Il s'agit d'un monstre rare, considéré comme le boss des étages supérieurs où le monstre Rex n'apparaît pas.
+                                            On estime qu'il est de niveau 2.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [50] Agilité : [0] Dextérité : [0] Magie : [100] Endurance : [100]</p>
+                                        <p class="card-text text-justify">Force Caché : Force:600 | Agilité:500 | Dextérité:450 | Magie:800 | Resistence:842 </p>
+                                        <p class="card-text text-justify">Armure : Ecaille de dragon.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Silverback.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Silverback</h4>
+                                        <p class="card-text text-justify">
+                                            Un grand monstre singe recouvert d'une fourrure blanche et d'une fourrure argentée au milieu.
+                                            Ses bras sont très puissants.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [900] Agilité : [950] Dextérité : [700] Magie : [0] Endurance : [500]</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+                </div>
+
+
+                <div class="card center" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse5" style="color:black;">Monster Rex de l'étage 13</a></div>
+                    <div id="collapse5" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Demon_Blanc.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Démon Blanc</h4>
+                                        <p class="card-text text-justify">
+                                            C'est un monstre qui inflige la terreur à tous, aussi bien qu'au aventurier qu'au monstre, la familia Zeus l’a surnommé le Démon Blanc.
+                                            Il ne faut absolument limiter le fait de prendre des coups de la part de ce monstre.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [500] Agilité : [500] Dextérité : [750] Magie : [250] Endurance : [500]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1500] Agilité : [1800] Dextérité : [1250] Magie : [1000] Endurance : [1500]</p>
+                                        <p class="card-text text-justify">Capacité : À chaque fois qu'il touche une cible il gagne 10% en agilité.</p>
+                                        <p class="card-text text-justify">Magie : "Terreur" diminue l'agilité après poussé un crie intimidant</p>
+                                        <p class="card-text text-justify">Skill : Corps à corps</p>
+                                        <p class="card-text text-justify">Loot : Griffe du Démon Blanc</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+                </div>
+
+
+                <div class="card center" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse6" style="color:black;">Etages 13 à 17</a></div>
+                    <div id="collapse6" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Cristal_Mantis.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Cristal Mantis</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre mante dont le corps est fait de cristal.
+                                            Son corps de cristal en fait l'un des monstres les plus difficiles à attaquer aux étages intermédiaires.
+                                            Il est rarement trouvé mais apparaît plus souvent au 15ème étage et est attiré par les cristaux et les beaux minéraux.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [150] Agilité : [100] Dextérité : [100] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [500] Dextérité : [700] Magie : [0] Endurance : [950]</p>
+                                        <p class="card-text text-justify">Armure : Exo Squelette</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Hellhound.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Hellhound</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre canin qui peut tirer des flammes magiques de sa gueule.
+                                            C'est l'un des monstres les plus faibles des Étages du Milieu.
+                                            Ses flammes ont tout de meme causé tant de morts que le port de la laine de salamandre est devenu obligatoire pour la plupart des aventuriers qui explorent le Labyrinthe des cavernes.
+                                            Il y a de fortes chances que même les aventuriers qui ont progressé en niveau soient réduits en cendres s'ils sont touchés directement.
+                                            La laine de salamandre possède également une résistance exceptionnellement élevée à la magie du feu
+                                        </p>
+                                        <p class="card-text text-justify">Force : [50] Agilité : [150] Dextérité : [100] Magie : [150] Endurance : [100]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [600] Dextérité : [400] Magie : [750] Endurance : [500]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Almiraj.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Almiraj</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre-lapin à la fourrure blanche et à la corne. Contrairement à son apparence mignonne, il aime se battre.
+                                            C'est l'un des monstres les plus faibles des étages intermédiaires.
+                                            Les aventuriers de niveau 1 peuvent l'affronter, mais il est classé comme monstre de niveau 2 lorsqu'ils sont en groupe.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [100] Agilité : [200] Dextérité : [150] Magie : [0] Endurance : [100]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [750] Agilité : [600] Dextérité : [900] Magie : [0] Endurance : [600]</p>
+                                        <p class="card-text text-justify">Arme : Dague de pierre</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Dungeon_Worm.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Dungeon Worm</h4>
+                                        <p class="card-text text-justify">Un monstre vermiforme qui n'a que des dents</p>
+                                        <p class="card-text text-justify">Force : [150] Agilité : [100] Dextérité : [100] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [850] Dextérité : [400] Magie : [0] Endurance : [750]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Lamia_Mormos.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Lamia Mormos</h4>
+                                        <p class="card-text text-justify">Un monstre femelle avec des griffes et une longue queue de serpent, ses morsures empoisonne les aventuriers.</p>
+                                        <p class="card-text text-justify">Force : [150] Agilité : [200] Dextérité : [100] Magie : [0] Endurance : [100]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [750] Dextérité : [600] Magie : [0] Endurance : [650]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Minotaure.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Minotaure</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre humanoïde à tête de vache.
+                                            Malgré ses mouvements lents et simples, c'est l'un des monstres les plus puissants des étages du milieu.
+                                            Son hurlement peut provoquer une peur paralysante chez les aventuriers de niveau 1.
+                                            On les trouve à partir de l'étage 15.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [200] Agilité : [100] Dextérité : [100] Magie : [0] Endurance : [150]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [900] Agilité : [500] Dextérité : [600] Magie : [0] Endurance : [800]</p>
+                                        <p class="card-text text-justify">Arme : Epée de pierre</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Ligerfang.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ligerfang</h4>
+                                        <p class="card-text text-justify">Un monstre tigré qui n'est globalement pas inférieur à un Minotaure. Il n'apparaît également que à partir de l'étage 15.</p>
+                                        <p class="card-text text-justify">Force : [150] Agilité : [100] Dextérité : [100] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [850] Agilité : [500] Dextérité : [600] Magie : [0] Endurance : [850]</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+                </div>
+
+
+                <div class="card center" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse7" style="color:black;">Monster Rex de l'étage 17</a></div>
+                    <div id="collapse7" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Goliath.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Goliath</h4>
+                                        <p class="card-text text-justify">
+                                            Il a un grand corps qui atteint sept mètres et une peau grise.
+                                            Il renaît toujours deux semaines après avoir été tué. Il est de niveau 4.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [150] Agilité : [0] Dextérité : [0] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [2400] Agilité : [1800] Dextérité : [1500] Magie : [0] Endurance : [2400]</p>
+                                        <p class="card-text text-justify">Skill : Arme Lourde</p>
+                                        <p class="card-text text-justify">Loot : Peau de Goliath</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+                </div>
+
+
+                <div class="card center" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse8" style="color:black;">Etages 19 à 24</a></div>
+                    <div id="collapse8" class="collapse" data-parent="#accordion"><div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Bugbear.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Bugbear</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre ours plus rapide qu'il n'y paraît.
+                                            Sa force et sa défense sont comparables à celles d'un Minotaure, mais il est plus agile.
+                                            Cela fait que son potentiel de base est élevé parmi les monstres du Grand Labyrinthe des Arbres.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [550] Agilité : [400] Dextérité : [300] Magie : [0] Endurance : [500]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [850] Agilité : [700] Dextérité : [600] Magie : [0] Endurance : [850]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Battle_Boar.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Battle Boar</h4>
+                                        <p class="card-text text-justify">Un sanglier géant pouvant atteindre deux mètres de haut.</p>
+                                        <p class="card-text text-justify">Force : [550] Agilité : [400] Dextérité : [500] Magie : [0] Endurance : [450]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [700] Dextérité : [700] Magie : [0] Endurance : [800]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Lizardman.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Lizardman</h4>
+                                        <p class="card-text text-justify">Monstre lézard humanoïde aux écailles rouges. Il est capable de manier l'épée et utilise des fleurs métalliques comme épée et bouclier.</p>
+                                        <p class="card-text text-justify">Force : [500] Agilité : [550] Dextérité : [550] Magie : [0] Endurance : [350]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [700] Agilité : [800] Dextérité : [700] Magie : [0] Endurance : [800]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Firebird.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Firebird</h4>
+                                        <p class="card-text text-justify">Un monstre rare de type oiseau qui se concentre sur les attaques à distance avec du feu.</p>
+                                        <p class="card-text text-justify">Force : [550] Agilité : [400] Dextérité : [300] Magie : [500] Endurance : [450]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [700] Dextérité : [700] Magie : [1000] Endurance : [800]</p>
+                                        <p class="card-text text-justify">Magie : "Vague de Feu" provoque une vague de feu.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Vouivre.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Vouivre</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre dragon humanoïde de sexe féminin.
+                                            Elle possède une pierre rouge sur le front, connue sous le nom de Larme de la Vouivre.
+                                            Elle est très rare, autant qu'une licorne.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [550] Agilité : [500] Dextérité : [500] Magie : [0] Endurance : [450]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [900] Dextérité : [700] Magie : [0] Endurance : [700]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Mad_Beetle.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Mad Beetle</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre coléoptère de taille moyenne qui marche sur deux pattes.
+                                            Comme le Bugbear, son potentiel de base est élevé parmi les monstres du Grand Labyrinthe des Arbres.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [450] Agilité : [400] Dextérité : [500] Magie : [0] Endurance : [550]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [700] Dextérité : [500] Magie : [0] Endurance : [900]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Mammoth_Fool.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Mammoth Fool</h4>
+                                        <p class="card-text text-justify">
+                                            Le plus grand monstre ordinaire des étages du milieu.
+                                            Il mesure six à sept mètres de haut et possède une fourrure rouge foncé avec de longues défenses incurvées en forme de lance.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [550] Agilité : [400] Dextérité : [500] Magie : [0] Endurance : [550]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [900] Agilité : [700] Dextérité : [700] Magie : [0] Endurance : [900]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Dark_Fungus.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Dark Fungus</h4>
+                                        <p class="card-text text-justify">Un monstre-champignon qui peut répandre des spores empoisonnées.</p>
+                                        <p class="card-text text-justify">Force : [250] Agilité : [200] Dextérité : [200] Magie : [600] Endurance : [450]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [700] Agilité : [700] Dextérité : [700] Magie : [900] Endurance : [800]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Gun_Libellula.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Gun Libellula</h4>
+                                        <p class="card-text text-justify">Un monstre libellule qui se concentre sur les attaques à longue distance en lançant des projectiles à partir de son abdomen.</p>
+                                        <p class="card-text text-justify">Force : [450] Agilité : [500] Dextérité : [400] Magie : [0] Endurance : [450]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [800] Dextérité : [800] Magie : [0] Endurance : [800]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Sword_Stag.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Sword Stag</h4>
+                                        <p class="card-text text-justify">Un monstre cerf</p>
+                                        <p class="card-text text-justify">Force : [550] Agilité : [500] Dextérité : [500] Magie : [0] Endurance : [550]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [800] Dextérité : [800] Magie : [0] Endurance : [800]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Deadly_Hornet.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Deadly Hornet</h4>
+                                        <p class="card-text text-justify">
+                                            Un gros monstre abeille avec un dard assez puissant pour transpercer une armure lourde et tuer un aventurier de niveau 2 en une seule poussée.
+                                            C'est un monstre puissant qui empêche en grande partie les aventuriers de troisième et de deuxièmes rangs d'accéder aux étages inférieurs.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [550] Agilité : [500] Dextérité : [400] Magie : [0] Endurance : [450]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [900] Agilité : [900] Dextérité : [700] Magie : [0] Endurance : [700]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Bloody_Hive.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Bloody Hive</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre rare de sept mètres de long, de type piège, qui vit avec les Deadly Hornet.
+                                            Son corps ressemble à une pomme de pin et est de couleur violet noirâtre.
+                                            Il vit normalement dans des trous par lesquels les Deadly Hornet peuvent passer, mais il se détache du mur si un aventurier passe à proximité.
+                                            Il attaque principalement les ennemis en les rendant incapables de bouger à l'aide d'un liquide jaune rougeâtre.
+                                            Il fait ensuite apparaître des Deadly Hornet à un rythme effréné pour les achever.
+                                            Selon Louise, il s'agit du monstre le plus gênant que l'on puisse rencontrer dans la zone où il se trouve.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [0] Agilité : [400] Dextérité : [0] Magie : [500] Endurance : [450]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [0] Agilité : [700] Dextérité : [800] Magie : [0] Endurance : [800]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Dragon_Vert.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Dragon Vert</h4>
+                                        <p class="card-text text-justify">
+                                            Un dragon qui protège un arbre à trésors.
+                                            Il a un potentiel équivalent à celui d'un aventurier de niveau 4 et est le monstre le plus puissant du Grand Labyrinthe des Arbres.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [0] Agilité : [0] Dextérité : [0] Magie : [0] Endurance : [0]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [2100] Agilité : [1500] Dextérité : [1000] Magie : [2000] Endurance : [2400]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Hobgoblin.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Hobgoblin</h4>
+                                        <p class="card-text text-justify">Une version plus puissante du gobelin qui peut atteindre plus de deux mètres.</p>
+                                        <p class="card-text text-justify">Force : [450] Agilité : [450] Dextérité : [500] Magie : [0] Endurance : [450]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [900] Dextérité : [700] Magie : [0] Endurance : [600]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Moss_Huge.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Moss Huge</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre rare que l'on trouve normalement au 24e étage.
+                                            Il a un corps fait de mousse et, lorsqu'il est attaqué, il crée des copies sans pierres magiques pour l'aider à s'échapper.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [550] Agilité : [400] Dextérité : [500] Magie : [500] Endurance : [450]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [800] Agilité : [700] Dextérité : [700] Magie : [800] Endurance : [800]</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+                </div>
+
+
+                <div class="card center" style="background-color:#D5E4D9;">
+                    <div class="card-header"><a class="card-link" data-toggle="collapse" href="#collapse9" style="color:black;">Etages 25 à 27</a></div>
+                    <div id="collapse9" class="collapse" data-parent="#accordion"><div class="card-body">
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Crabuncle.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Crabuncle</h4>
+                                        <p class="card-text text-justify">
+                                            Monstre en forme de chat à la fourrure émeraude duveteuse.
+                                            Il possède une pierre rouge sur le front, connue sous le nom de cristal mystique d'escarboucle.
+                                            On le trouve rarement, comme la licorne.
+                                            Même parmi les monstres, il possède une grande puissance magique et peut créer des barrières magiques aussi puissantes que celles créées par des mages de haut rang.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [250] Agilité : [200] Dextérité : [200] Magie : [300] Endurance : [250]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1500] Agilité : [1400] Dextérité : [1000] Magie : [1600] Endurance : [1500]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Raider_Fish.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Raider Fish</h4>
+                                        <p class="card-text text-justify">Un monstre de type poisson qui peut atteindre jusqu'à 160 cm de long.</p>
+                                        <p class="card-text text-justify">Force : [250] Agilité : [200] Dextérité : [200] Magie : [0] Endurance : [250]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1600] Agilité : [1400] Dextérité : [1000] Magie : [10] Endurance : [1400]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Harpy.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Harpy</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre qui est une femme à partir de la taille et qui a des ailes de la taille d'un bouclier en guise de bras.
+                                            La moitié inférieure ressemble à un aigle ou à un vautour avec des griffes.
+                                            Il peut lancer des projectiles en forme de plumes pour attaquer
+                                        </p>
+                                        <p class="card-text text-justify">Force : [250] Agilité : [300] Dextérité : [200] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1400] Agilité : [1600] Dextérité : [1400] Magie : [0] Endurance : [1400]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Siren.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Siren</h4>
+                                        <p class="card-text text-justify">Un monstre semblable à une harpie mais qui attaque avec des ondes sonores qu'il peut également utiliser pour l'écholocalisation.</p>
+                                        <p class="card-text text-justify">Force : [250] Agilité : [300] Dextérité : [200] Magie : [300] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1200] Agilité : [1400] Dextérité : [1200] Magie : [1600] Endurance : [1400]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Blue_Crab.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Blue Crab</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre-crabe classé dans la catégorie des monstres métalliques.
+                                            L'une de ses pinces s'est anormalement développée, ce qui en fait une menace au combat, et il est capable d'avancer.
+                                            Sa défense est plus puissante que celle d'un frelon mortel.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [250] Agilité : [200] Dextérité : [200] Magie : [0] Endurance : [300]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1500] Agilité : [1200] Dextérité : [1400] Magie : [0] Endurance : [1600]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Aqua_Serpent.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Aqua Serpent</h4>
+                                        <p class="card-text text-justify">Un monstre à tête de serpent et aux écailles vert clair qui peut atteindre 10 mètres de long.</p>
+                                        <p class="card-text text-justify">Force : [250] Agilité : [300] Dextérité : [200] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1500] Agilité : [1600] Dextérité : [1400] Magie : [0] Endurance : [1300]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Crystal_Turtle.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Crystal Turtle</h4>
+                                        <p class="card-text text-justify">
+                                            Un grand monstre de catégorie dont la carapace est recouverte de cristaux.
+                                            Il est parfois confondu avec la terre, c'est pourquoi les aventuriers attaquent d'abord leur destination pour s'assurer qu'il ne s'agit pas d'un monstre.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [250] Agilité : [200] Dextérité : [200] Magie : [0] Endurance : [300]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1300] Agilité : [1000] Dextérité : [1400] Magie : [0] Endurance : [1700]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Devil_Mosquito.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Devil Mosquito</h4>
+                                        <p class="card-text text-justify">Un monstre qui s'attache aux aventuriers et leur suce le sang.</p>
+                                        <p class="card-text text-justify">Force : [300] Agilité : [300] Dextérité : [200] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1500] Agilité : [1500] Dextérité : [1400] Magie : [0] Endurance : [1100]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Ligth_Quartz.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ligth Quartz</h4>
+                                        <p class="card-text text-justify">
+                                            Monstre de cristal violet de la forme et de la taille d'un bouclier avec un œil jaune au centre.
+                                            Il attaque ses ennemis avec des rayons de lumière.
+                                            S'il n'a plus assez d'énergie pour lancer des rayons, il doit se recharger
+                                        </p>
+                                        <p class="card-text text-justify">Force : [0] Agilité : [300] Dextérité : [200] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [0] Agilité : [1600] Dextérité : [1200] Magie : [1600] Endurance : [1200]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Crystaroth_Urchin.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Crystaroth Urchin</h4>
+                                        <p class="card-text text-justify">
+                                            Monstre bleu en forme de boule sur laquelle poussent des aiguilles acérées.
+                                            Il se dirige vers sa cible à grande vitesse, détruisant son environnement avec ses aiguilles, et mange sa proie avec sa bouche ronde pleine de crocs.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [300] Agilité : [300] Dextérité : [200] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1400] Agilité : [1600] Dextérité : [1400] Magie : [0] Endurance : [1000]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Iguazu.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Iguazu</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre hirondelle cramoisie que l'on qualifie de monstre invisible en raison de sa vitesse stupéfiante, la plus rapide des étages inférieurs.
+                                            Il vit dans la falaise derrière la Grande Chute.
+                                            Comme il se déplace à grande vitesse, il meurt à l'impact, mais les autres Iguazu attaquent jusqu'à ce qu'ils détruisent l'ennemi, quelles que soient les pertes subies.
+                                            C'est le monstre le plus redouté de la Cité des Eaux, à part Amphisbaena, et les aventuriers de haut niveau abandonnent leurs affaires et s'enfuient après l'avoir rencontré.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [350] Agilité : [400] Dextérité : [200] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1800] Agilité : [1800] Dextérité : [1400] Magie : [0] Endurance : [1400]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Mermaid.jpg}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Mermaid</h4>
+                                        <p class="card-text text-justify">
+                                            Monstre rare dont le haut du corps est celui d'une femme d'un blanc bleuté, les yeux entièrement blancs, les cheveux verts et le bas du corps en forme de nageoire.
+                                            Il attaque en charmant les aventuriers par son chant. Sa vitesse et ses mouvements dans l'eau sont inégalés, ce qui le fait ressembler à un oiseau dans l'eau.
+                                            Il est généralement impossible de le tuer une fois qu'il s'échappe dans l'eau, c'est pourquoi c'est un monstre rare et très difficile à trouver.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [250] Agilité : [200] Dextérité : [200] Magie : [300] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1000] Agilité : [1600] Dextérité : [1400] Magie : [1500] Endurance : [1200]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Merman.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Merman</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre humanoïde couvert d'écailles bleues avec des mains palmées qu'il utilise pour manier des armes naturelles.
+                                            C'est l'un des monstres les plus puissants de Water City.
+                                            Il se déplace en groupe, avec un Merman Leader contrôlant chaque groupe.
+                                            Tuer le chef peut désorienter les autres.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [350] Agilité : [300] Dextérité : [200] Magie : [0] Endurance : [250]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1500] Agilité : [1500] Dextérité : [1400] Magie : [0] Endurance : [1400]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Kelpies.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Kelpies</h4>
+                                        <p class="card-text text-justify">
+                                            Un monstre chevalin aux cheveux et à la crinière bleus.
+                                            Ses nageoires lui permettent de traverser l'eau comme s'il était sur terre.
+                                            Il est considéré comme l'un des monstres les plus forts du 27e étage.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [350] Agilité : [300] Dextérité : [300] Magie : [0] Endurance : [300]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1600] Agilité : [1600] Dextérité : [1400] Magie : [0] Endurance : [1500]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Lamia.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Lamia</h4>
+                                        <p class="card-text text-justify">Un monstre femelle avec des griffes et une longue queue de serpent, ça morsure produit un poison très intense responsable de l'abandon d'une expédition mal préparé en général.</p>
+                                        <p class="card-text text-justify">Force : [350] Agilité : [300] Dextérité : [300] Magie : [0] Endurance : [200]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1400] Agilité : [1500] Dextérité : [1400] Magie : [0] Endurance : [1300] </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card mt-2 mb-2">
+                                    <img class="card-img-top" th:src="@{/images/bestiary/Voltimeria.png}"alt="Card image" height="200vh">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Voltimeria</h4>
+                                        <p class="card-text text-justify">
+                                            Monstre-poisson au corps noirâtre et pourpre fait de pierre.
+                                            Il mesure entre un et deux mètres de long, possède huit nageoires et un œil unique sur le front.
+                                            Il est capable de flotter jusqu'à trois mètres dans les airs et de foncer sur ses adversaires à grande vitesse.
+                                            Son corps de pierre lui confère une incroyable endurance et il est assez fort pour détruire des armures lourdes avec ses crocs acérés.
+                                            C'est un monstre rare que l'on ne trouve qu'à un certain endroit du 27e étage, un endroit où l'eau est profonde et où les courants se croisent.
+                                            C'est l'un des monstres les plus puissants de l'étage.
+                                        </p>
+                                        <p class="card-text text-justify">Force : [350] Agilité : [200] Dextérité : [200] Magie : [0] Endurance : [300]</p>
+                                        <p class="card-text text-justify">Force Caché : Force : [1600] Agilité : [1200] Dextérité : [1400] Magie : [0] Endurance : [1600]</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

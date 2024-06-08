@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
-    <title>Divinity</title>
+    <title>Fight</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,7 @@
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12 text-center">
-                <h1 class="display-2 fw-light">Divinity</h1>
+                <h1 class="display-2 fw-light">Fight</h1>
             </div>
         </div>
     </div>
@@ -60,16 +60,127 @@
 
 
             <h1>Autres concepts à comprendre</h1>
-            <ul>
-                <li><a href="<">L'Hyper Agilité</a></li>
-                <li><a href="<">Patience</a></li>
-                <li><a href="<">Attaque Combiné</a></li>
-                <li><a href="<">Replie Stratégique</a></li>
-                <li><a href="<">Armure et Arme</a></li>
-                <li><a href="<">Entrainement</a></li>
-                <li><a href="<">Supporter</a></li>
-                <li><a href="<">Skill de Classe</a></li>
-            </ul>
+
+            <div class="row">
+                <div class="dropdown mx-2 my-1">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">L'Hyper Agilité</button>
+                    <div class="dropdown-menu dropdown-menu-right"><span class="dropdown-item-text" style="width: 50vw;">
+                        Selon votre agilité vous pouvez jouer plusieurs fois durant le même tour.
+                        Pour savoir combien de fois vous pouvez jouer, il vous suffit de prendre votre agilité et de la diviser par l'agilité la plus grande de celle de vos ennemies.
+                        Le nombre obtenu arrondi à l'inférieur représente votre nombre d'attaques pendant votre tour.
+                    </span></div>
+                </div>
+
+                <div class="dropdown mx-2 my-1">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Patience</button>
+                    <div class="dropdown-menu dropdown-menu-right"><span class="dropdown-item-text" style="width: 50vw;">
+                        Si vous ne faites rien durant votre tour de jeu, vous pourrez alors effectuer votre tour quand vous voulez durant le combat.
+                        En patientant, il est possible d’attaquer plusieurs ennemis en faisant seulement un roll.
+                        Il est également possible de créer des mécaniques à l'aide de cette notion , soyez malin :)
+                    </span></div>
+                </div>
+
+                <div class="dropdown mx-2 my-1">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Attaque Combinée</button>
+                    <div class="dropdown-menu dropdown-menu-right"><span class="dropdown-item-text" style="width: 50vw;">
+                        Cette attaque se fait lorsque vous avez combattu souvent avec la même personne.
+                        Si vous attaquez en même temps le même monstre, vos roll s'additionnent alors pour faire une attaque plus puissante.
+                        Cependant vos tours doivent être collées ensemble et ne pas être interrompues par un ennemi.
+                    </span></div>
+                </div>
+
+                <div class="dropdown mx-2 my-1">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Repli Stratégique</button>
+                    <div class="dropdown-menu dropdown-menu-right"><span class="dropdown-item-text" style="width: 50vw;">
+                        Il est possible dans un combat d'essayer de prendre la fuite pendant votre tour.
+                        Cependant il est possible que votre ennemie essaye de vous pourchasser.
+                        Attention à ceux qui veulent jouer au héros, prendre le temps d'aller chercher quelqu'un pour le porter vous prend un tour.
+                    </span></div>
+                </div>
+
+                <div class="dropdown mx-2 my-1">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Arme</button>
+                    <div class="dropdown-menu dropdown-menu-right"><span class="dropdown-item-text" style="width: 50vw;">
+                        Lorsque vous faites une attaque et que celle-ci arrive à atteindre votre ennemi alors vous allez lui infliger un certain nombre de dégâts en fonction de force.
+                        Si vous avez une arme, vos dégâts sont augmentés d'autant indiqués dans votre fiche familia.
+                        Note, il est impossible d'utiliser une arme si vous n'avez le double des dégâts qu'elle produit en dizaine de dextérités.
+                        <br>Exemple : Une arme fait +20 dégâts, il faut donc au minimum 400 en dextérité pour l'utilisé.
+                    </span></div>
+                </div>
+
+                <div class="dropdown mx-2 my-1">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Armure</button>
+                    <div class="dropdown-menu dropdown-menu-right"><span class="dropdown-item-text" style="width: 90vw;">
+                        Une armure vous rajoute des points d'armure, vous pouvez retrouver le montant dans le chanel de votre familia.
+                        Ces points d'armure forment comme une sorte de secondes barres de vie.
+                        Tant que votre armure prend des dégâts, vous n'en prenez pas, mais si votre armure atteint les zéros alors les dégâts vont directement à votre santé.
+                        Étant un peu complexe, voici un exemple :
+                        <br>1) Un aventurier lambda possède 95 points d'armure, il a donc une armure de 95/95.
+                        <br>2) Mais soudainement un groupe de monstres le tabasse et lui font 45 de dégâts.
+                            Pas de problème l'armure est là pour prendre donc elle passe de 95/95 à 50/95.
+                        <br>3) Ce n'est toujours pas le tour de l'aventurier et un second groupe de monstres attaque et lui provoque 60 dégâts, l'armure va donc tomber à zéro et l'aventurier va perdre 10 pv.
+                        <br>4) C'est enfin au tour de l'aventurier, son armure passe de 0/95 à 95/95.
+                            Un aventurier lambda ne peut pas porter une armure dont le numéro est strictement supérieur à 2.
+                            En ce qui concerne les armures des forgerons, le maximum de plaque est égal à 45, peu importe le niveau des plaques. (Ne fonctionne que lors de parade).
+                            Attention tout les deux points d'armure, vous perdez un point d'agilité.
+                    </span></div>
+                </div>
+
+                <div class="dropdown mx-2 my-1">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Entrainement</button>
+                    <div class="dropdown-menu dropdown-menu-right"><span class="dropdown-item-text" style="width: 50vw;">
+                        Les entraînements peuvent désormais rapporter +30 dans une stat défini au préalable. Attention c’est seulement 1 entraînement tous les samedis à l'arène.
+                        (De plus si jamais un staff trouve l’action insuffisante ou absurde il peut annuler celle-ci ou bien ajouter des malus)
+                    </span></div>
+                </div>
+
+                <div class="dropdown mx-2 my-1">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Supporter</button>
+                    <div class="dropdown-menu dropdown-menu-right"><span class="dropdown-item-text" style="width: 50vw;">
+                        Vous pouvez prendre un rôle dans une équipe qui s'appelle de le supporter.
+                        Celui-ci possède un inventaire quasiment infini et peut donc transporter tout équipement utile à une expédition dans le donjon et récupéré.
+                        Cependant ceci ne pourra pas prendre part au combat et ne gagnera par conséquent pas d'expérience.
+                    </span></div>
+                </div>
+
+                <div class="dropdown mx-2 my-1">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Skill de Classe</button>
+                    <div class="dropdown-menu dropdown-menu-right"><span class="dropdown-item-text" style="width: 90vw;">
+                        Voici les différentes skills de classe:
+                        <br><span class="font-weight-bold">Paladin:</span>
+                                Il peut bloquer une attaque destinée à un allié , par tranche de 50 de stats dextérité.
+                                De plus grâce à ses capacités défensives, les attaques qu'il pare auront des dégâts diminués en cas d'échec.
+                        <br><span class="font-weight-bold">Corps à corps:</span>
+                                Il peut attaquer plusieurs fois un et unique monstre durant son tour, par tranche de 250 de stats dextérité.
+                                Attention si une attaque a été bloqué, le combo s'annule.
+                        <br><span class="font-weight-bold">Arme lourde:</span>
+                                Il peut attaquer plusieurs ennemis lors d’un tour à l’aide d’une seule attaque , par tranche de 250 stats de dextérité.
+                                Attention si l'attaque a été bloqué l'attaque ne fera plus de dégâts aux prochaines cibles.
+                        <br><span class="font-weight-bold">Archer:</span>
+                                Il peut ajouter sa dextérité à son roll d'attaque lorsqu’il se concentre au préalable durant un tour à distance.
+                        <br><span class="font-weight-bold">Berserk:</span>
+                                Augmente sa force de +5 à chaque point de vie perdu.
+                        <br><span class="font-weight-bold">Assassin:</span>
+                                Grâce à d'ancienne sournoise technique, l'assassin peut infliger des blessures importantes qui provoquent des saignements.
+                                Ce qui inflige des dégâts à chaque début de tour de la personne qui saigne (dégâts = dextérité / 100).
+                                Les saignements sont cumulables.
+                        <br><span class="font-weight-bold">Samouraï:</span>
+                                Il peut contre-attaquer après un blocage.
+                        <br><span class="font-weight-bold">Ingénieur:</span>
+                                Il peut utiliser des consommables sans perdre un tour.
+                        <br><span class="font-weight-bold">Lancier:</span>
+                                Il peut toucher trois cibles en même temps
+                        <br><span class="font-weight-bold">Escrimeur:</span>
+                                Il peut trancher à l'aide de sa dextérité un point sensible de son adversaire.
+                                Cela ne lui inflige aucun dégât, mais un malus dans une statistique en fonction du point ciblé.
+                                Le malus est égal à la moyenne entre le roll force et la dextérité.
+                                Attention, il est impossible pour un escrimeur de faire descendre une stat en dessous de 30.
+                        <br><span class="font-weight-bold">Mage:</span> Grâce à une certaine connaissance et une maîtrise de la magie, les mages possèdent un point bonus en ce qui concerne la charte magique et deux fois plus de mana comparé aux autres.
+                    </span></div>
+                </div>
+            </div>
+
+
 
             <h1>Commandes donjon</h1>
             <ul>

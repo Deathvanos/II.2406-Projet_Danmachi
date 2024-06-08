@@ -74,22 +74,18 @@
 					</div>
 
 					<h1 class="display-6">Participez à l'aventure !</h1>
-					<a href="/subscription">Inscrivez-vous maintenant sur DanmachiRP.fr.</a>
+					<a href="/subscription">Inscrivez-vous maintenant sur danmachirp.fr.</a>
 					<p class="text-justify">Pour rejoindre un village et entrer dans l’aventure</p>
-					<p class="text-center">
-						<img th:src="@{/images/guest/c0.png}" width="25%" alt="">
-					</p>
+					<div class="card my-4" style="width:15vw; margin: 0 auto;">
+						<div class="card-header text-center">Info</div>
+						<div class="card-body text-center">
+							<span th:text="${nbUser} + ' joueurs'"></span>
+							<br>
+							<span th:text="'dont ' + ${nbUserLogin} + ' connectés'"></span>
+						</div>
+					</div>
 
-					<h1 class="display-6">Classement des Falna</h1>
-					<a href="#">Hebdomadaire</a> / <a href="#">Mensuel</a> / <a href="#">Annuel</a>
-					<p class="text-center">
-						<img th:src="@{/images/guest/c1.png}" width="75%" alt="">
-					</p>
-					<h1 class="display-6">Classement des Équipes</h1>
-					<a href="#">Hebdomadaire</a> / <a href="#">Annuel</a> / <a href="#">Éternel</a>
-					<p class="text-center">
-						<img th:src="@{/images/guest/c2.png}" width="75%" alt="">
-					</p>
+
 
 				</div>
 				<div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
