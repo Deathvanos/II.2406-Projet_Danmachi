@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" href="/css/common.css"/>
+  <link rel="stylesheet" href="/css/chatPage.css"/>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center">
+        <h1 class="display-2 fw-light">Signalement</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row bodySize">
+    <div class="col-sm-2 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+    <div class="col-sm-8" style="background-color:#D5E4D9">
+
+      <h4 style="text-align: center;font-weight: bold;margin: 30px;">Votre signalement a bien été pris en compte.</h4>
+      <p style="text-align: center;margin-bottom: 60px;">Il sera traité par un administrateur</p>
+      <a th:href="${formerPageLink}" class="btn btn-outline-success">Revenir à l'accueil</a>
+
+    </div>
+    <div class="col-sm-2 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+  </div>
+</div>
+<footer th:insert="~{common/footer :: footer}"></footer>
+<script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
+<script src="/js/chatPage.js"></script>
+</body>
+</html>

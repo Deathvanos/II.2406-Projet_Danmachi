@@ -5,8 +5,6 @@ import com.isep.appli.models.FormattedMessage;
 import com.isep.appli.services.DiscussionService;
 import com.isep.appli.services.MessageService;
 import com.isep.appli.services.PersonnageService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -20,9 +18,6 @@ import java.util.Optional;
 
 @Controller
 public class ChatController {
-    @PersistenceContext
-    private EntityManager entityManager;
-
     private final MessageService messageService;
     private final DiscussionService discussionService;
     private final PersonnageService personnageService;
@@ -80,17 +75,24 @@ public class ChatController {
     }
 
     @PostMapping("sendMessage")
-    public String sendMessage(@Valid Message message) {
+    public String sendMessage(@Valid Message message, Model model) {
         message.setDate(new Date());
-
         messageService.save(message);
-        return "redirect:/chatPage";
+
+        Long discussionId = message.getDiscussion();
+        return "redirect:/chatPage/" + discussionId;
     }
 
     @PostMapping("createDiscussion")
     public String createDiscussion(@Valid Discussion discussion) {
         discussion.setConversationType("PRIVATE");
         discussionService.save(discussion);
+        return "redirect:/chatPage";
+    }
+
+    @GetMapping("chatPage/delete/{discussionId}")
+    public String deleteDiscussion(@PathVariable Long discussionId) {
+        discussionService.deleteDiscussionById(discussionId);
         return "redirect:/chatPage";
     }
 }

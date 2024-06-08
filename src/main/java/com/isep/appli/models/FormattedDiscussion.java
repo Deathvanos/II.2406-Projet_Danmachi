@@ -10,6 +10,8 @@ public class FormattedDiscussion {
     private Long id;
     private String conversationType;
     private String displayDestination;
+    private Long destination;
     private String image;
     private String lastMessageDate;
+    private boolean canDelete;
 }

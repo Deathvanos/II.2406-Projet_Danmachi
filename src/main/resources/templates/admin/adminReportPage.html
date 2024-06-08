@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Report List</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/css/chatPage.css"/>
+</head>
+<body>
+
+
+
+<header th:insert="~{common/header :: header}"></header>
+
+<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-2 fw-light">Liste des Signalements</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row bodySize">
+        <div class="col-sm-1 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+
+        <div class="col-sm-10 borderImage" style="padding:0">
+
+            <div>
+                <span class="discussion-list">
+                    <div th:each="report : ${reportPage.getContent()}" class="discussion-item discussion-item-link">
+                        <a th:href="@{/admin/reportList/{reportId}(reportId=${report.getId()}, page=${reportPage.number}, size=${reportPage.size})}" class="link">
+                            <div th:if="${report.getObjectReportedType() == 'PERSONNAGE'}">
+                                <p th:text="${report.getPersonnageReported().getFirstName() + ' ' + report.getPersonnageReported().getLastName()}"></p>
+                            </div>
+                            <div th:if="${report.getObjectReportedType() == 'FAMILIA'}">
+                                <p th:text="${report.getLeaderFamiliaReported().getFirstName() + ' ' + report.getLeaderFamiliaReported().getLastName()}"></p>
+                            </div>
+                            <div th:if="${report.getObjectReportedType() == 'MESSAGE'}">
+                                <p th:text="${report.getSenderMessageReported().getFirstName() + ' ' + report.getSenderMessageReported().getLastName()}"></p>
+                            </div>
+                            <p th:text="'Signalé par ' + ${report.getUserFrom().getFirstName() + ' ' + report.getUserFrom().getLastName()}"></p>
+                            <p th:text="${report.getDate()}" class="message-timestamp"></p>
+                        </a>
+                    </div>
+
+                    <div class="text-center" style="padding: 10px;" th:text="'Nombre de signalements: ' + ${reportPage.getTotalElements()}"></div>
+
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" th:classappend="${reportPage.first ? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=${reportPage.number - 1}, size=${reportPage.size})}" tabindex="-1">Précédent</a>
+                            </li>
+                            <li class="page-item" th:each="pageNumber : ${pageNumbers}" th:classappend="${pageNumber==reportPage.number+1 ? 'active' : ''}">
+                                <th:block th:if="${#lists.size(pageNumbers) > 10}">
+                                    <a class="page-link" th:if="${pageNumber >= reportPage.number - 2 && pageNumber <= reportPage.number + 4}" th:href="@{/admin/reportList/{reportId}(reportId=0, page=${pageNumber}-1, size=${reportPage.size})}" th:text="${pageNumber}"></a>
+                                </th:block>
+                                <th:block th:unless="${#lists.size(pageNumbers) > 10}">
+                                    <a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=${pageNumber}-1, size=${reportPage.size})}" th:text="${pageNumber}"></a>
+                                </th:block>
+                            </li>
+                            <li class="page-item" th:classappend="${reportPage.last ? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=${reportPage.number + 1}, size=${reportPage.size})}">Suivant</a>
+                            </li>
+                        </ul>
+
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" th:classappend="${reportPage.getSize() == 5 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=0, size=5)}">5</a></li>
+                            <li class="page-item" th:classappend="${reportPage.getSize() == 10 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=0, size=10)}">10</a></li>
+                            <li class="page-item" th:classappend="${reportPage.getSize() == 20 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=0, size=20)}">20</a></li>
+                            <li class="page-item" th:classappend="${reportPage.getSize() == 50 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=0, size=50)}">50</a></li>
+                        </ul>
+                    </nav>
+                </span>
+
+
+                <span style="float: left; width: 65%;" class="discussion-field">
+                    <div th:if="${reportPage.getTotalElements() == 0}" class="discussion-info">
+                        Aucun problème n'a encore été signalé.
+                    </div>
+
+                    <div th:if="${reportSelected == null && reportPage.getTotalElements() != 0}" class="discussion-info">
+                        Veuillez sélectionner un signalement.
+                    </div>
+
+                    <div th:if="${reportSelected != null}">
+
+                        <h5>Joueur à l'origine du signalement</h5>
+                        <p th:text="${reportSelected.getUserFrom().getFirstName() + ' ' + reportSelected.getUserFrom().getLastName()}"></p>
+
+                        <h5>Date</h5>
+                        <p th:text="${reportSelected.getDate()}"></p>
+
+                        <h5>Organisme signalé</h5>
+                        <div th:if="${reportSelected.getObjectReportedType() == 'FAMILIA'}">
+                            <p th:text="'Familia de ' + ${reportSelected.getLeaderFamiliaReported().getFirstName() + ' ' + reportSelected.getLeaderFamiliaReported().getLastName()}"></p>
+                        </div>
+                        <div th:if="${reportSelected.getObjectReportedType() == 'PERSONNAGE'}">
+                            <p th:text="${reportSelected.getPersonnageReported().getFirstName() + ' ' + reportSelected.getPersonnageReported().getLastName()}"></p>
+                        </div>
+                        <div th:if="${reportSelected.getObjectReportedType() == 'MESSAGE'}">
+                            <p th:text="'Message de  ' + ${reportSelected.getSenderMessageReported().getFirstName() + ' ' + reportSelected.getSenderMessageReported().getLastName()}"></p>
+                        </div>
+
+                        <h5>Détails</h5>
+                        <p th:text="${reportSelected.getComment()}"></p>
+
+                        <div th:if="${reportSelected.getObjectReportedType() == 'MESSAGE'}">
+                             <h5>Contenu du message</h5>
+                             <p th:text="${messageReported.getContent()}"></p>
+                        </div>
+
+
+                        <div>
+                            <div th:if="${reportSelected.getObjectReportedType() == 'FAMILIA'}">
+                                <a th:href="'/familiaPage/' + ${reportSelected.getFamiliaReported.getId()}" class="btn btn-outline-success chat-button">Accéder à la familia</a>
+                            </div>
+                            <a th:href="'delete/' + ${reportSelected.getId()}" class="btn btn-outline-success chat-button">Supprimer le signalement</a>
+                        </div>
+                    </div>
+                </span>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+        <div class="col-sm-1 borderImage" style="background-image: url(/images/border2.jpg)"></div>
+    </div>
+</div>
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -31,10 +31,6 @@
             </div>
 
             <div th:if="${personnage != null}">
-                <div th:if="${discussions.size() == 0}" class="discussion-info">
-                    Vous n’avez aucune conversation en cours.
-                </div>
-
                 <span class="discussion-list">
 
                     <div class="discussion-item">
@@ -81,6 +77,9 @@
                 </span>
 
                 <span style="float: left; width: 65%;" class="discussion-field">
+                    <div th:if="${discussions.size() == 0}" class="discussion-info">
+                        Vous n’avez aucune conversation en cours.
+                    </div>
 
                     <div th:if="${discussion == null && discussions.size() != 0}" class="discussion-info">
                         Veuillez sélectionner une discussion.
@@ -96,11 +95,13 @@
                                 <div th:if="${message.isReceived()}" th:text="${message.getContent()}" class="message-content"></div>
                                 <div th:text="${message.getDate()}" class="message-timestamp"></div>
                              </div>
+                             <a th:href="'/reportPage/MESSAGE/' + ${message.getId()}" class="message-report">Signaler le message</a>
                         </div>
 
-                        <form th:action="@{/sendMessage}" th:object="${message}" method="POST">
+                        <form id="sent-message-form" th:action="@{/sendMessage}" th:object="${message}" method="POST">
                           <div class="form-group">
                               <input class="form-control"  type="text"  th:field="*{content}" placeholder="Ecrivez un message ..."id="content" name="content">
+                              <p id="error-empty-message" class="text-danger"></p>
 
                               <input type="hidden" th:field="*{discussion}" id="discussion">
                               <input type="hidden"  th:field="*{senderId}" id="senderId">
@@ -109,6 +110,23 @@
                               <button type="submit" class="btn btn-outline-success message-send-button"></i>Envoyer</button>
                           </div>
                         </form>
+
+                        <div>
+                            <div th:if="${discussion.getConversationType()} == 'FAMILIA'">
+                                <a th:href="'/familiaPage/' + ${personnage.getFamilia().getId()}" class="btn btn-outline-success chat-button">Accéder à la familia</a>
+
+                                <div th:if="${discussion.isCanDelete()}">
+                                    <a th:href="'delete/' + ${discussion.getId()}" class="btn btn-outline-success chat-button">Supprimer la conversation</a>
+                                </div>
+
+                                <a th:href="'/reportPage/FAMILIA/' + ${discussion.getDestination()}" class="btn btn-outline-success chat-button">Signaler la familia</a>
+                            </div>
+
+                            <div th:if="${discussion.getConversationType()} == 'PRIVATE'">
+                                <a th:href="'delete/' + ${discussion.getId()}" class="btn btn-outline-success chat-button">Supprimer la conversation</a>
+                                <a th:href="'/reportPage/PERSONNAGE/' + ${discussion.getDestination()}" class="btn btn-outline-success chat-button" th:text="'Signaler ' + ${discussion.getDisplayDestination()}"></a>
+                            </div>
+                        </div>
                     </div>
                 </span>
             </div>
@@ -119,5 +137,6 @@
 </div>
 <footer th:insert="~{common/footer :: footer}"></footer>
 <script> th:src="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"</script>
+<script src="/js/chatPage.js"></script>
 </body>
 </html>

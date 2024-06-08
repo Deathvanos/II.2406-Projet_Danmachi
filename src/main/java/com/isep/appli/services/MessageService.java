@@ -19,12 +19,17 @@ public class MessageService {
         this.personnageService = personnageService;
     }
 
-    public Optional<Message> getById(Long id) {
-        return messageRepository.findById(id);
+    public Message getById(Long id) {
+        return messageRepository.findMessageById(id);
     }
 
     public Message save(Message message) {
         return messageRepository.save(message);
+    }
+
+    public void deleteMessageById(long id) {
+        Message message = getById(id);
+        messageRepository.delete(message);
     }
 
     public String displayDestination(Personnage personnage) {
