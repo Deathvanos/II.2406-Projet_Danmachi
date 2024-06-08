@@ -1,13 +1,13 @@
 package com.isep.appli.controllers;
 
+import com.isep.appli.dbModels.Familia;
+import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.Report;
 import com.isep.appli.dbModels.User;
 import com.isep.appli.models.FormattedReport;
-import com.isep.appli.services.MessageService;
-import com.isep.appli.services.PersonnageService;
-import com.isep.appli.services.ReportService;
-import com.isep.appli.services.UserService;
+import com.isep.appli.services.*;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -15,8 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -29,13 +31,15 @@ public class AdminController {
     private final PersonnageService personnageService;
     private final ReportService reportService;
     private final MessageService messageService;
+    private final FamiliaService familiaService;
 
 
-    public AdminController(UserService userService, PersonnageService personnageService, ReportService reportService, MessageService messageService) {
+    public AdminController(UserService userService, PersonnageService personnageService, ReportService reportService, MessageService messageService, FamiliaService familiaService) {
         this.userService = userService;
         this.personnageService = personnageService;
         this.reportService = reportService;
         this.messageService = messageService;
+        this.familiaService = familiaService;
     }
 
     static public String checkIsAdmin(User userAdmin, Model model) {
@@ -87,7 +91,7 @@ public class AdminController {
 
 
     @GetMapping("/admin/users-management/{id}")
-    public String infoUserPage(@PathVariable long id, Model model, HttpSession session) {
+    public String userDesciptionPage(@PathVariable long id, Model model, HttpSession session) {
         // Check admin connexion
         User userAdmin = (User) session.getAttribute("user");
         String checkUser = checkIsAdmin(userAdmin, model);
@@ -98,8 +102,99 @@ public class AdminController {
         if (user == null) {return "errors/error-404";}
         model.addAttribute("userInfo", user);
 
+        List<User> userList = new ArrayList<>();
+        userList.add(userService.getUserById(id));
+        model.addAttribute("userPersonnages", personnageService.getPersonnagesUsers(userList));
+
         return "admin/userDescription";
     }
+
+    @PostMapping("/admin/deleteUser/{id}")
+    public String deleteUser(@PathVariable long id, Model model, HttpSession session) {
+        List<User> userList = new ArrayList<>();
+        userList.add(userService.getUserById(id));
+        for (Personnage p: personnageService.getPersonnagesUsers(userList)) {
+            System.out.println(p);
+            deletePlayer(p.getId());
+        }
+        // destroy user
+        userService.deleteUser(id);
+        return "redirect:/admin/users-management";
+    }
+    @PostMapping("/admin/updateUser/{id}")
+    public String updateUser(@PathVariable long id, @Valid User user,Model model, HttpSession session) {
+        userService.updateUser(id, user);
+        return "redirect:/admin/users-management/"+id;
+    }
+
+
+    @GetMapping("/admin/players-management/{id}")
+    public String infoPlayerPage(@PathVariable long id, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        // find the personnage id
+        Personnage personnage = personnageService.getPersonnageById(id);
+        if (personnage == null) {return "errors/error-404";}
+        model.addAttribute("playerInfo", personnage);
+        model.addAttribute("familia", new Familia());
+
+        return "admin/playerDescription";
+    }
+
+    private void deletePlayer(long idPlayer) {
+        //!!!!!!!!!!!!!!!!!!!!!!
+        // destroy items players
+        //!!!!!!!!!!!!!!!!!!!!!!
+
+        // remove familia players user
+        Familia familia = personnageService.getPersonnageById(idPlayer).getFamilia();
+        if (familia != null && familia.getLeader_id()==idPlayer) {
+            familiaService.deleteFamiliaByIdWithMembers(familia.getId());
+        }
+        // destroy players user
+        personnageService.deletePersonnageById(idPlayer);
+    }
+
+    @PostMapping("/admin/deletePlayer/{idUser}/{idPlayer}")
+    public String deletePlayerPage(@PathVariable long idUser, @PathVariable long idPlayer, Model model, HttpSession session) {
+        deletePlayer(idPlayer);
+        return "redirect:/admin/users-management/"+idUser;
+    }
+
+    @PostMapping("/admin/updatePlayer/{idUser}/{idPlayer}")
+    public String updatePlayer(@PathVariable long idUser, @PathVariable long idPlayer, @Valid Personnage player,Model model, HttpSession session) {
+        personnageService.updatePlayer(idPlayer, player);
+        return "redirect:/admin/players-management/"+idPlayer;
+    }
+
+    @PostMapping("admin/delete/{idPlayer}/{familiaId}")
+    public String deleteFamilia(@PathVariable Long idPlayer, @PathVariable Long familiaId, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        familiaService.deleteFamiliaByIdWithMembers(familiaId);
+        return "redirect:/admin/players-management/"+idPlayer;
+    }
+
+
+    @GetMapping("/admin/items-management")
+    public String itemsManagementPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+        return "admin/itemsManagement";
+    }
+
+
+    /* ************************************************************************************************************** */
+    /* *********************************************** LISA PART **************************************************** */
+    /* ************************************************************************************************************** */
 
     @GetMapping("/admin/reportList")
     public String reportListPageEmpty(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
@@ -140,28 +235,7 @@ public class AdminController {
         return "admin/adminReportPage";
     }
 
-    /*
-    table pas claire entre PersonnaService et Personnage Service et create player ne fonctionne plus
-    model : separer en deux model pour bdd et enumeration ?
-    library, ne rien prendre sur le web, tout installer en local (subscription page)
 
-
-
-    @GetMapping("/admin/players-management/{id}")
-    public String infoPlayerPage(@PathVariable long id, Model model, HttpSession session) {
-        // Check admin connexion
-        User userAdmin = (User) session.getAttribute("user");
-        String checkUser = checkIsAdmin(userAdmin, model);
-        if (!checkUser.equals("200")){return checkUser;}
-
-        // find the user id
-        User user = userService.getUserById(id);
-        if (user == null) {return "errors/error-404";}
-        model.addAttribute("userInfo", user);
-
-        return "admin/playerInfo";
-    }
-*/
 
 }
 

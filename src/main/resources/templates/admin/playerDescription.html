@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>User Info</title>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <style>
+        body {background-color: #D5E4D9;}
+        footer {background-color: #ffffff;}
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+
+
+
+<form id="deleteFamiliaForm" method="post" action="#" th:action="'/admin/delete/'+${playerInfo.id}+'/'+${playerInfo.familia.id}" th:if="${playerInfo.familia!=null && playerInfo.id==playerInfo.familia.leader_id}"></form>
+
+<div class="container col-7 my-5 px-3 py-3">
+
+    <h1 th:text="'Player description : '+${playerInfo.id}" th:class="${!playerInfo.user.enabled} ? 'text-center text-danger' : (${playerInfo.user.isLogin} ? 'text-center text-success' : 'text-center text-secondary')"></h1>
+
+    <p class="d-flex justify-content-center">
+        (<span class="text-danger">disable</span> -
+        <span class="text-secondary">logout</span> -
+        <span class="text-success">login</span>)
+    </p>
+    <form action="#" th:action="'/admin/updatePlayer/'+${playerInfo.user.id}+'/'+${playerInfo.id}" th:object="${playerInfo}" method="POST" class="text-center mb-4 pb-2">
+
+        <img class="border m-1" th:src="'data:image/png;base64,' + ${playerInfo.getImage()}" alt="Profile Image" style="max-width: 200px">
+
+        <div class="row border text-center mt-3 py-2">
+            <div class="col border-right">
+                <p>
+                    <label for="firstName">First name:</label>
+                    <input id="firstName" type="text" th:value="${playerInfo.firstName}" th:placeholder="${playerInfo.firstName}" required th:field="*{firstName}">
+                </p>
+                <p>
+                    <label for="lastName">Last name:</label>
+                    <input id="lastName" type="text" th:value="${playerInfo.lastName}" th:placeholder="${playerInfo.lastName}" required th:field="*{lastName}">
+                </p>
+                <p>
+                    <a class="btn btn-success" th:href="@{/admin/users-management/{id}(id=${playerInfo.user.id})}">Fiche User</a>
+                </p>
+
+                <div th:if="${playerInfo.familia != null}">
+                    <label for="familiaT">Familia id:</label>
+                    <input id="familiaT" type="number" th:value="${playerInfo.familia.id}" placeholder="0 pour exclure" th:field="*{familia.id}" min="0">
+                    <a class="btn btn-success" th:href="'/familia/'+${playerInfo.familia.id}">Fiche Familia (user view)</a>
+                    <a class="btn btn-danger" href="#" th:if="${playerInfo.id==playerInfo.familia.leader_id}" onclick="if(confirm('Êtes-vous sûr de vouloir continuer ?')) { document.getElementById('deleteFamiliaForm').submit();} return false;">Delete Familia</a>
+                </div>
+                <div th:unless="${playerInfo.familia != null}">
+                    <label for="familiaF">Familia id:</label>
+                    <input id="familiaF" type="number" th:value="0" th:placeholder="0" th:field="*{familia.id}" min="0">
+                </div>
+            </div>
+            <div class="col">
+                <p>
+                    <label for="race">Race:</label>
+                    <input id="race" type="text" th:value="${playerInfo.getRace()}" th:placeholder="${playerInfo.getRace()}" required th:field="*{race}">
+                </p>
+                <p>
+                    <label for="level">Level:</label>
+                    <input id="level" type="number" th:value="${playerInfo.level}" th:placeholder="${playerInfo.level}" required th:field="*{level}" min="0">
+                </p>
+                <p>
+                    <label for="money">Money:</label>
+                    <input id="money" type="number" th:value="${playerInfo.money}" th:placeholder="${playerInfo.money}" required th:field="*{money}" min="0">
+                </p>
+            </div>
+        </div>
+        <div class="row border-bottom bi-border-width text-center mb-4 py-2">
+            <div class="col border-right">
+                <label for="description">Description:</label><br>
+                <textarea id="description" type="text" th:value="${playerInfo.description}" th:placeholder="${playerInfo.description}" th:field="*{description}" alt="" style="width: 100%; height: 10em;"></textarea>
+            </div>
+            <div class="col">
+                <label for="story">Story:</label><br>
+                <textarea  id="story" type="text" th:value="${playerInfo.story}" th:placeholder="${playerInfo.story}" th:field="*{story}" alt="" style="width: 100%; height: 10em;"></textarea>
+            </div>
+        </div>
+
+
+        <div>
+            <button type="submit" class="btn btn-warning" onclick="return confirm('Êtes-vous sûr de vouloir continuer ?')">Modifier</button>
+            <button type="reset" class="btn btn-info">Reset</button>
+        </div>
+
+    </form>
+
+    <!-- items list -->
+    <p>List items</p>
+
+    <form id="deleteUserForm" th:action="'/admin/deletePlayer/'+${playerInfo.user.id}+'/'+${playerInfo.id}" method="post" style="display: none;"></form>
+    <div class="text-center">
+        <a class="btn btn-success" th:href="'#userMessages' + ${playerInfo.user.id}">Messages management</a>
+        <a class="btn btn-info" th:href="@{/admin/users-management/{id}(id=${playerInfo.user.id})}">Retour</a>
+        <a class="btn btn-danger" href="#" onclick="if(confirm('Êtes-vous sûr de vouloir continuer ?')) { document.getElementById('deleteUserForm').submit(); } return false;">Delete User</a>
+    </div>
+
+</div>
+
+
+
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

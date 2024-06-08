@@ -1,32 +1,34 @@
 package com.isep.appli.services;
 
-import com.isep.appli.dbModels.Familia;
 import com.isep.appli.dbModels.JoinRequest;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.User;
 import com.isep.appli.models.PersonnageDto;
+import com.isep.appli.repositories.FamiliaRepository;
 import com.isep.appli.repositories.PersonnageRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Pageable;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class PersonnageService {
     private final ImageService imageService;
     private final PersonnageRepository personnageRepository;
+    private final FamiliaRepository familiaRepository;
     private final JoinRequestService joinRequestService;
     private final int baseLevel = 1;
     private final int baseMoney = 15000;
 
-    PersonnageService(PersonnageRepository personnageRepository, ImageService imageService, JoinRequestService joinRequestService) {
+    PersonnageService(PersonnageRepository personnageRepository, ImageService imageService, FamiliaRepository familiaRepository, JoinRequestService joinRequestService) {
         this.personnageRepository = personnageRepository;
         this.imageService = imageService;
+        this.familiaRepository = familiaRepository;
         this.joinRequestService = joinRequestService;
     }
 
@@ -114,6 +116,27 @@ public class PersonnageService {
 
     public List<Personnage> getPersonnagesUsers(List<User> userList) {
         return personnageRepository.findAllByUserIn(userList);
+    }
+
+    public void updatePlayer(Long id, Personnage playerNew) {
+        Personnage playerOld = personnageRepository.findById(id).orElse(null);
+        assert playerOld != null;
+        if (playerNew.getFamilia().getId() != null) {
+            if (playerNew.getFamilia().getId() == 0) {
+                playerOld.setFamilia(null);
+            }
+            else if (familiaRepository.existsById(playerNew.getFamilia().getId())){
+                playerOld.setFamilia(familiaRepository.findFamiliaById(playerNew.getFamilia().getId()));
+            }
+        }
+        playerOld.setFirstName(playerNew.getFirstName());
+        playerOld.setLastName(playerNew.getLastName());
+        playerOld.setRace(playerNew.getRace());
+        playerOld.setLevel(playerNew.getLevel());
+        playerOld.setMoney(playerNew.getMoney());
+        playerOld.setDescription(playerNew.getDescription());
+        playerOld.setStory(playerNew.getStory());
+        personnageRepository.save(playerOld);
     }
 
 }

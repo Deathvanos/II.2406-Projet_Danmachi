@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <style>
+        body {background-color: #D5E4D9;}
+        footer {background-color: #ffffff;}
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+
+
+
+
+<div class="container col-10 my-5 px-3 py-3">
+
+    <h1>Items management</h1>
+
+
+</div>
+
+
+
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

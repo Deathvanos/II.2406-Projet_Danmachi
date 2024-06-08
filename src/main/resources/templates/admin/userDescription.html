@@ -7,59 +7,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="/css/common.css"/>
+    <style>
+        body {background-color: #D5E4D9;}
+        footer {background-color: #ffffff;}
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 <header th:insert="~{common/header :: header}"></header>
 
-<div class="masthead" style="background-image: url(/images/background_header3.jpg)">
-    <div class="container h-100">
-        <div class="row h-100 align-items-center">
-            <div class="col-12 text-center">
-                <h1 class="display-2 fw-light">User Info - NOT WORKING</h1>
+
+
+
+<div class="container col-7 my-5 px-3 py-3">
+
+    <h1 th:text="'Users description : '+${userInfo.id}" th:class="${!userInfo.enabled} ? 'text-center text-danger' : (${userInfo.isLogin} ? 'text-center text-success' : 'text-center text-secondary')"></h1>
+
+    <p class="d-flex justify-content-center">
+        (<span class="text-danger">disable</span> -
+        <span class="text-secondary">logout</span> -
+        <span class="text-success">login</span>)
+    </p>
+
+    <form action="#" th:action="@{/admin/updateUser/{id}(id=${userInfo.id})}" th:object="${userInfo}" method="POST">
+    <div class="row border text-center mb-4 py-2">
+        <div class="col border-right">
+            <p>
+                <label for="username">User name:</label>
+                <input id="username" type="text" th:value="${userInfo.username}" th:placeholder="${userInfo.username}" required th:field="*{username}">
+            </p>
+            <p>
+                <label for="firstName">First name:</label>
+                <input id="firstName" type="text" th:value="${userInfo.firstName}" th:placeholder="${userInfo.firstName}" required th:field="*{firstName}">
+            </p>
+            <p>
+                <label for="lastName">Last name:</label>
+                <input id="lastName" type="text" th:value="${userInfo.lastName}" th:placeholder="${userInfo.lastName}" required th:field="*{lastName}">
+            </p>
+            <div>
+                <label for="email">Email:</label>
+                <input id="email" type="email" th:value="${userInfo.email}" th:placeholder="${userInfo.email}" required th:field="*{email}">
+            </div>
+        </div>
+        <div class="col">
+            <p th:text="'Create at: '+${#temporals.format(userInfo.createAccountAt, 'yyyy-MM-dd')}"></p>
+            <p th:text="'Last login at: '+${#temporals.format(userInfo.lastLoginAt, 'yyyy-MM-dd')}"></p>
+            <p th:if="${user.id!=userInfo.id}">
+                <label for="isEnabled">Is enabled:</label>
+                <input id="isEnabled" type="checkbox" th:field="*{enabled}" />
+            </p>
+            <div>
+                <button type="submit" class="btn btn-warning" onclick="return confirm('Êtes-vous sûr de vouloir continuer ?')">Modifier</button>
+                <button type="reset" class="btn btn-info">Reset</button>
             </div>
         </div>
     </div>
-</div>
+    </form>
 
 
-<div class="container-fluid">
-    <div class="row bodySize">
-        <div class="col-sm-1 borderImage" style="background-image: url(/images/border1.jpg)"></div>
+    <table class="table table-bordered table-striped" th:if="${!userInfo.isAdmin}">
+        <thead class="thead-dark">
+        <tr>
+            <th th:each="i : ${#numbers.sequence(1, 4)}" th:text="'Personnage ' + ${i}">Personnage</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center">
+            <td th:each="personnage, iterStat : ${userPersonnages}" th:if="${iterStat.index < userPersonnages.size()}">
+                <p th:text="'Name' +${personnage.firstName} + ' ' + ${personnage.lastName}"></p>
+                <a th:href="@{/admin/players-management/{id}(id=${personnage.id})}">
+                    <img class="border m-1" th:src="'data:image/png;base64,' + ${personnage.getImage()}" alt="Profile Image" style="max-width: 50px">
+                </a>
+                <p th:text="'Race: '+${personnage.race}"></p>
+                <p th:text="'Level: ' +${personnage.level}"></p>
+                <p th:text="'Money: '+${personnage.money}+'£'"></p>
 
-        <div class="col-sm-10 borderImage">
+                <p th:if="${personnage.familia != null}"><a class="btn btn-info" th:href="'/familia/'+${personnage.familia.id}" th:text="'Familia: '+${personnage.familia.id}"></a></p>
 
-            id: <p th:text="${userInfo.id}"></p>
-            enabled: <p th:text="${userInfo.enabled}"></p>
-            username: <p th:text="${userInfo.username}"></p>
-            firstName: <input type="text" th:value="${userInfo.firstName}" th:placeholder="${userInfo.firstName}" required><br>
-            lastName: <input type="text" th:value="${userInfo.lastName}" th:placeholder="${userInfo.lastName}" required><br>
-            email: <input type="email" th:value="${userInfo.email}" th:placeholder="${userInfo.email}" required><br>
-            isOnline: <p>No</p>
+                <p th:unless="${personnage.familia != null}">Pas de Familia</p>
+                <a class="btn btn-success" th:href="@{/admin/players-management/{id}(id=${personnage.id})}">Fiche Player</a>
+            </td>
+            <td th:each="i : ${#numbers.sequence(userPersonnages.size(), 4)}" th:if="${i>userPersonnages.size()}">
+                <p th:text="'No personnage '+${i}"></p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 
-            <p th:if="${userInfo.isAdmin}" th:text="'Admin'"></p>
-            <p th:unless="${userInfo.isAdmin}">
-                <a th:href="'#user' + ${userInfo.id} + '-player1'">NamePlayer_1</a>
-                <a class="btn btn-danger" th:href="'#user' + ${userInfo.id} + '-player1'"><i class="bi bi-trash-fill"></i>Delete Player 1</a>
-                <br><a th:href="'#user' + ${userInfo.id} + '-player2'">NamePlayer_2</a>
-                <a class="btn btn-danger" th:href="'#user' + ${userInfo.id} + '-player2'"><i class="bi bi-trash-fill"></i>Delete Player 2</a>
-                <br><a th:href="'#user' + ${userInfo.id} + '-player3'">NamePlayer_3</a>
-                <a class="btn btn-danger" th:href="'#user' + ${userInfo.id} + '-player3'"><i class="bi bi-trash-fill"></i>Delete Player 3</a>
-                <br><a th:href="'#user' + ${userInfo.id} + '-player4'">NamePlayer_4</a>
-                <a class="btn btn-danger" th:href="'#user' + ${userInfo.id} + '-player4'"><i class="bi bi-trash-fill"></i>Delete Player 4</a>
-            </p>
-            Create At: <p>???</p>
-            Last login: <p>???</p>
-            messages file: <a th:href="'#userMessages' + ${userInfo.id}">All user message</a><br><br>
+    <form id="deleteUserForm" th:action="'/admin/deleteUser/'+${userInfo.id}" method="post" style="display: none;"></form>
+    <div class="text-center">
+        <a class="btn btn-success" th:href="'#userMessages' + ${userInfo.id}">Messages management</a>
+        <a class="btn btn-info" href="/admin/users-management">Retour</a>
+        <a class="btn btn-danger" href="#" onclick="if(confirm('Êtes-vous sûr de vouloir continuer ?')) { document.getElementById('deleteUserForm').submit(); } return false;">Delete User</a>
 
-            <a class="btn btn-danger" th:href="'#reactor-user-' + ${userInfo.id}"><i class="bi bi-trash-fill"></i>Delete User</a>
-            <a class="btn btn-warning" th:href="'#delete-user-' + ${userInfo.id}"><i class="bi bi-trash-fill"></i>Modifier</a>
-            <a class="btn btn-info" href="/admin/users-management"><i class="bi bi-trash-fill"></i>Retour</a>
-
-        </div>
-
-        <div class="col-sm-1 borderImage" style="background-image: url(/images/border2.jpg)"></div>
     </div>
+
 </div>
 
 
