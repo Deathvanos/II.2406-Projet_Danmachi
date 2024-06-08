@@ -6,6 +6,8 @@ import com.isep.appli.dbModels.Message;
 import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.models.FormattedDiscussion;
 import com.isep.appli.repositories.DiscussionRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import java.util.Optional;
 
 @Service
 public class DiscussionService {
+    @PersistenceContext
+    private EntityManager entityManager;
     private final DiscussionRepository discussionRepository;
     private final MessageService messageService;
     private final PersonnageService personnageService;
@@ -62,7 +66,8 @@ public class DiscussionService {
             destinationPersonnage = personnageService.getPersonnageById(getPrivateDestinationId(discussion, personnage));
         }
         else {
-            destinationPersonnage = personnageService.getPersonnageById(familiaService.findFamiliaById(discussion.getFamiliaId()).getLeader_id());
+            Familia familia = entityManager.find(Familia.class, discussion.getFamiliaId());
+            destinationPersonnage = personnageService.getPersonnageById(familia.getLeader_id());
         }
         return destinationPersonnage;
     }
@@ -125,7 +130,7 @@ public class DiscussionService {
 
     public boolean getCanDelete(Personnage personnage, Discussion discussion) {
         if (discussion.getConversationType().equals("FAMILIA")) {
-            Familia familia = familiaService.findFamiliaById(discussion.getFamiliaId());
+            Familia familia = entityManager.find(Familia.class, discussion.getFamiliaId());
             return familia.getLeader_id() == personnage.getId();
         }
         return true;

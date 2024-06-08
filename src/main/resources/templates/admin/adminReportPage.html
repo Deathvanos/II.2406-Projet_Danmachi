@@ -11,6 +11,8 @@
 </head>
 <body>
 
+
+
 <header th:insert="~{common/header :: header}"></header>
 
 <div class="masthead" style="background-image: url(/images/background_header3.jpg)">
@@ -35,7 +37,7 @@
             <div>
                 <span class="discussion-list">
                     <div th:each="report : ${reportPage.getContent()}" class="discussion-item discussion-item-link">
-                        <a th:href="${report.getId()}" class="link">
+                        <a th:href="@{/admin/reportList/{reportId}(reportId=${report.getId()}, page=${reportPage.number}, size=${reportPage.size})}" class="link">
                             <div th:if="${report.getObjectReportedType() == 'PERSONNAGE'}">
                                 <p th:text="${report.getPersonnageReported().getFirstName() + ' ' + report.getPersonnageReported().getLastName()}"></p>
                             </div>
@@ -55,26 +57,26 @@
                     <nav>
                         <ul class="pagination justify-content-center">
                             <li class="page-item" th:classappend="${reportPage.first ? 'disabled' : ''}">
-                                <a class="page-link" th:href="@{/admin/reportList(page=${reportPage.number - 1}, size=${reportPage.size})}" tabindex="-1">Précédent</a>
+                                <a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=${reportPage.number - 1}, size=${reportPage.size})}" tabindex="-1">Précédent</a>
                             </li>
                             <li class="page-item" th:each="pageNumber : ${pageNumbers}" th:classappend="${pageNumber==reportPage.number+1 ? 'active' : ''}">
                                 <th:block th:if="${#lists.size(pageNumbers) > 10}">
-                                    <a class="page-link" th:if="${pageNumber >= reportPage.number - 2 && pageNumber <= reportPage.number + 4}" th:href="@{/admin/reportList(page=${pageNumber}-1, size=${reportPage.size})}" th:text="${pageNumber}"></a>
+                                    <a class="page-link" th:if="${pageNumber >= reportPage.number - 2 && pageNumber <= reportPage.number + 4}" th:href="@{/admin/reportList/{reportId}(reportId=0, page=${pageNumber}-1, size=${reportPage.size})}" th:text="${pageNumber}"></a>
                                 </th:block>
                                 <th:block th:unless="${#lists.size(pageNumbers) > 10}">
-                                    <a class="page-link" th:href="@{/admin/reportList(page=${pageNumber}-1, size=${reportPage.size})}" th:text="${pageNumber}"></a>
+                                    <a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=${pageNumber}-1, size=${reportPage.size})}" th:text="${pageNumber}"></a>
                                 </th:block>
                             </li>
                             <li class="page-item" th:classappend="${reportPage.last ? 'disabled' : ''}">
-                                <a class="page-link" th:href="@{/admin/reportList(page=${reportPage.number + 1}, size=${reportPage.size})}">Suivant</a>
+                                <a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=${reportPage.number + 1}, size=${reportPage.size})}">Suivant</a>
                             </li>
                         </ul>
 
                         <ul class="pagination justify-content-center">
-                            <li class="page-item" th:classappend="${reportPage.getSize() == 5 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList(page=0, size=5)}">5</a></li>
-                            <li class="page-item" th:classappend="${reportPage.getSize() == 10 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList(page=0, size=10)}">10</a></li>
-                            <li class="page-item" th:classappend="${reportPage.getSize() == 20 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList(page=0, size=20)}">20</a></li>
-                            <li class="page-item" th:classappend="${reportPage.getSize() == 50 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList(page=0, size=50)}">50</a></li>
+                            <li class="page-item" th:classappend="${reportPage.getSize() == 5 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=0, size=5)}">5</a></li>
+                            <li class="page-item" th:classappend="${reportPage.getSize() == 10 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=0, size=10)}">10</a></li>
+                            <li class="page-item" th:classappend="${reportPage.getSize() == 20 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=0, size=20)}">20</a></li>
+                            <li class="page-item" th:classappend="${reportPage.getSize() == 50 ? 'active' : ''}"><a class="page-link" th:href="@{/admin/reportList/{reportId}(reportId=0, page=0, size=50)}">50</a></li>
                         </ul>
                     </nav>
                 </span>
@@ -112,7 +114,7 @@
                         <p th:text="${reportSelected.getComment()}"></p>
 
                         <div th:if="${reportSelected.getObjectReportedType() == 'MESSAGE'}">
-                             <h2>Contenu du message</h2>
+                             <h5>Contenu du message</h5>
                              <p th:text="${messageReported.getContent()}"></p>
                         </div>
 
@@ -121,10 +123,7 @@
                             <div th:if="${reportSelected.getObjectReportedType() == 'FAMILIA'}">
                                 <a th:href="'/familiaPage/' + ${reportSelected.getFamiliaReported.getId()}" class="btn btn-outline-success chat-button">Accéder à la familia</a>
                             </div>
-                            <div th:if="${reportSelected.getObjectReportedType() == 'PERSONNAGE' || reportSelected.getObjectReportedType() == 'MESSAGE'}">
-                                <a class="btn btn-outline-success chat-button">Accéder au personnage</a>
-                            </div>
-                            <a class="btn btn-outline-success chat-button">Supprimer le signalement</a>
+                            <a th:href="'delete/' + ${reportSelected.getId()}" class="btn btn-outline-success chat-button">Supprimer le signalement</a>
                         </div>
                     </div>
                 </span>

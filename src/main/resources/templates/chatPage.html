@@ -123,7 +123,6 @@
                             </div>
 
                             <div th:if="${discussion.getConversationType()} == 'PRIVATE'">
-                                <a class="btn btn-outline-success chat-button">Accéder au personnage</a>
                                 <a th:href="'delete/' + ${discussion.getId()}" class="btn btn-outline-success chat-button">Supprimer la conversation</a>
                                 <a th:href="'/reportPage/PERSONNAGE/' + ${discussion.getDestination()}" class="btn btn-outline-success chat-button" th:text="'Signaler ' + ${discussion.getDisplayDestination()}"></a>
                             </div>

@@ -1,7 +1,5 @@
 package com.isep.appli.controllers;
 
-import com.isep.appli.dbModels.Familia;
-import com.isep.appli.dbModels.Message;
 import com.isep.appli.dbModels.Report;
 import com.isep.appli.dbModels.User;
 import com.isep.appli.models.FormattedReport;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -102,18 +99,18 @@ public class AdminController {
     }
 
     @GetMapping("/admin/reportList")
-    public String reportListPageEmpty() {
-        return "redirect:/admin/reportList/0";
+    public String reportListPageEmpty(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return "redirect:/admin/reportList/0?page=0&size=10";
     }
 
     @GetMapping("/admin/reportList/{reportId}")
-    public String reportListPage(@PathVariable Long reportId,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model, HttpSession session) {
+    public String reportListPage(@PathVariable Long reportId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model, HttpSession session) {
         // Check admin connexion
         User userAdmin = (User) session.getAttribute("user");
         String checkUser = checkIsAdmin(userAdmin, model);
         if (!checkUser.equals("200")){return checkUser;}
         // limit the maw size
-        if (size>50) {return String.format("redirect:/admin/reportList?page=%d&size=50", page);}
+        if (size>50) {return String.format("redirect:/admin/reportList/0?page=%d&size=50", page);}
 
         Page<FormattedReport> reportPage = reportService.getAllFormattedReportSortedByDate(PageRequest.of(page, size, Sort.by("date").descending()));
         model.addAttribute("reportPage", reportPage);

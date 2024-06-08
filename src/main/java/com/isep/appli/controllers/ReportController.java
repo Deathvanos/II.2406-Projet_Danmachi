@@ -7,9 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @Controller
@@ -38,18 +36,25 @@ public class ReportController {
         return "reportPage";
     }
 
-    @GetMapping("/reportSuccessPage")
+    @GetMapping("/reportPage/reportSuccessPage")
     public String reportSuccessPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
-        model.addAttribute("formerPageLink", '#');
+        model.addAttribute("formerPageLink", "/home");
         return "reportSuccessPage";
     }
+
 
     @PostMapping("sendReport")
     public String sendMessage(@Valid Report report, Model model) {
         report.setDate(new Date());
         reportService.save(report);
-        return "redirect:/reportSuccessPage";
+        return "redirect:reportPage/reportSuccessPage";
+    }
+
+    @GetMapping("admin/reportList/delete/{reportId}")
+    public String deleteReport(@PathVariable Long reportId) {
+        reportService.deleteReportById(reportId);
+        return "redirect:/admin/reportList";
     }
 }
