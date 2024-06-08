@@ -1,26 +1,16 @@
-function showItemSell(inventoryCell, quantity){
+document.addEventListener('DOMContentLoaded', (event) => {
+    findItem();
+});
+
+function showItemSell(inventoryCell){
     const divToShow = document.getElementById("sellItemPanel");
     divToShow.style.visibility = 'visible';
     const inventoryId = inventoryCell.id
-    console.log("inventory Id = " + inventoryId);
         $.ajax({
             type: 'GET',
             url: '/inventory/' + inventoryId,
             success: function(response) {
-                console.log(response);
-
-                const item = response;
-
-                console.log('Item = ' + item);
-                console.log("Item Name = " + item.name);
-                console.log("Item Image = " + item.urlImage);
-                console.log("Item Id = " + item.id);
-                console.log("Quantity = " + quantity);
-
-                $('#item-name').text(item.name);
-                $('#item-image').text(item.urlImage);
-                $('#quantity').attr('max', quantity);
-                $('#idItem').attr('value', item.id);
+                $('#sellItemPanel').html(response);
             },
             error: function(xhr, status, error) {
                 console.error('Error: ', error);
@@ -28,7 +18,28 @@ function showItemSell(inventoryCell, quantity){
         });
 }
 
+function findItem(){
+    var str = $("#formToFindItem").serialize();
+    $.ajax({
+        type: 'POST',
+        url: 'inventory/findItem',
+        data: str,
+        success: function(response) {
+            $('#inventoryList').html(response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error: ', error);
+        }
+    });
+}
+
 function cancel(){
     const divToHide = document.getElementById("sellItemPanel");
     divToHide.style.visibility = 'hidden';
 }
+
+$(document).ready(function () {
+    $('#findItemButton').click(function () {
+        findItem();
+    });
+});

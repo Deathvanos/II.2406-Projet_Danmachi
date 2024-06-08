@@ -6,33 +6,30 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "inventory")
-public class Inventory implements Serializable {
+@Table(name = "shop")
+public class Shop implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "item_id", nullable = false)
 	@JsonBackReference
 	private Item item;
-
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "character_id", nullable = false)
+	@JoinColumn(name = "seller_id", nullable = false)
 	@JsonBackReference
-	private Personnage character;
-
+	private Personnage seller;
 	private int quantity;
+	private Long price;
 
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", idItem=" + item + "idPlayer=" + character + "quantity=" + quantity
+		return "Item [id=" + id + ", idItem=" + item + "idPlayer=" + seller + "quantity=" + quantity + "price="+ price
 				+ "]";
 	}
 }

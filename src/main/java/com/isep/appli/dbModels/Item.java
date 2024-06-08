@@ -7,17 +7,18 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "item")
 public class Item implements Serializable {
-	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+
 	private String name;
 
 	@Lob
@@ -33,6 +34,10 @@ public class Item implements Serializable {
 	private String useDescription;
 	private Instant createdAt;
 	private Instant updatedAt;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Inventory> inventories;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Shop> shops;
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", name=" + name + "urlImage=" + urlImage + "description=" + description + "canUse=" + canUse +

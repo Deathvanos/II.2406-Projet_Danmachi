@@ -4,6 +4,7 @@ import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.User;
 import com.isep.appli.models.PersonnageDto;
 import com.isep.appli.models.enums.Race;
+import com.isep.appli.services.FamiliaService;
 import com.isep.appli.services.PersonnageService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -27,6 +28,8 @@ import java.util.List;
 public class PersonnageController {
     @Autowired
     private PersonnageService personnageService;
+    @Autowired
+    private FamiliaService familiaService;
 
     @PostMapping("/save-personnage")
     public String savePersonnageToUser(@Valid Personnage personnage,
@@ -70,8 +73,12 @@ public class PersonnageController {
     @DeleteMapping("/personnage/{id}")
     public ResponseEntity<String> deletePersonnageById(@PathVariable long id) {
         try {
+            Personnage personnage = personnageService.getPersonnageById(id);
+            if (personnage.getRace() == Race.GOD && personnage.getFamilia() != null) {
+                familiaService.deleteFamiliaByIdWithMembers(personnage.getFamilia().getId());
+            }
             personnageService.deletePersonnageById(id);
-            return ResponseEntity.ok("Personnage bien suprimer");
+            return ResponseEntity.ok("Personnage bien suprimé");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting personnage");
         }

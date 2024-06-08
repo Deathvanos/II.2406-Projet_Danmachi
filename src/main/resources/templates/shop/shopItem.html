@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container text-center d-flex flex-row flex-wrap p-10 h-100" >
+
+    <th:block th:each="shop : ${allShop}">
+        <th:block th:if="${session.personnage.money > shop.getPrice()}">
+            <div class="card my-3 w-25 h-25" th:id="${shop.getId()}" th:onclick="showItemBuy(this, [[${shop.getQuantity()}]] )" >
+                <div class="card-body" style="background-color:#D9D9D9;">
+                    <img th:unless="${shop.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${shop.getItem().getUrlImage()}" class="mx-auto d-block">
+                </div>
+                <div class="card-footer text-left" style="background-color:#FFFFFF; font-family: Inter;">
+                    <a th:text="${shop.getQuantity() + ' x ' + shop.getItem().getName()}"></a>
+                    <br>
+                    <span th:text="${shop.getPrice() + ' x valis'}"></span>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+        </th:block>
+        <th:block th:unless="${session.personnage.money > shop.getPrice()}">
+            <div class="card my-3 w-25 h-25" th:id="${shop.getId()}" th:onclick="cantBuyAlert()" >
+                <div class="card-body" style="background-color:#D9D9D9;">
+                    <img th:unless="${shop.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${shop.getItem().getUrlImage()}" class="mx-auto d-block">
+                </div>
+                <div class="card-footer text-left" style="background-color:#FFFFFF; font-family: Inter;">
+                    <a th:text="${shop.getQuantity() + ' x ' + shop.getItem().getName()}"></a>
+                    <br>
+                    <span class="text-danger" th:text="${shop.getPrice() + ' x valis'}"></span>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+        </th:block>
+
+    </th:block>
+
+    <th:block th:if="${allShop.isEmpty()}">
+        <div class="container my-4 col-8">
+            <h1 class="text-white font-weight-bold">
+                Aucun Item Trouver...
+            </h1>
+        </div>
+    </th:block>
+
+</div>
+</body>
+</html>

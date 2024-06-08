@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container h-50 w-50 bg-info" style="z-index : 10;">
+    <div class="row h-100" th:with="inventoryCell = ${inventoryCell}">
+        <div class="col-sm-4 d-flex flex-column align-content-start" style="background-color:#67819A; font-family: Inter;">
+            <h1 id="item-name" th:text="${inventoryCell.getItem().getName()}"></h1>
+            <img id="item-image" th:unless="${inventoryCell.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${inventoryCell.getItem().getUrlImage()}">
+        </div>
+        <div class="col-sm-8 d-flex flex-column h-100" style="background-color:#D5E4D9;">
+            <form action="#" th:action="@{/inventory/sellItem}" th:object="${shop}" method="POST">
+                <div class="form-group d-flex flex-column">
+                    <label>
+                        <h2>Quantité : </h2>
+                        <input class="form-control mt-3" type="number" th:name="quantity" th:id="quantity" value="1" min="1" th:max="${inventoryCell.getQuantity()}">
+                    </label>
+                    <label>
+                        <h2>
+                            Prix Unitaire :
+                        </h2>
+                        <input class="form-control mt-3" type="number" th:name="price" th:id="price" th:value="1000" min="100">
+                    </label>
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-light btn-outline-danger mt-3 w-100" th:onclick="cancel()">Cancel</button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-light btn-outline-success mt-3 w-100" >Sell</button>
+                        </div>
+                    </div>
+                    <input type="number" class="invisible" name="itemId" id="itemId" th:value="${inventoryCell.getItem().getId()}">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container-fluid row vh-100 bg-dark" style="position: absolute;  opacity: 0.5;" ></div>
+</body>
+</html>

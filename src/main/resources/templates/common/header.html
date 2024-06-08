@@ -31,7 +31,7 @@
                         <a class="dropdown-item" href="/excelia">Excelia</a>
                         <a class="dropdown-item" href="/reputation">Réputation</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/fight">Comment se battre</a>
+                        <a class="dropdown-item disabled" href="#">Comment se battre</a>
                         <a class="dropdown-item disabled" href="#">Donjon</a>
                         <a class="dropdown-item disabled" href="#">Maître du Jeu</a>
                         <a class="dropdown-item disabled" href="#">Bestiaire</a>
@@ -47,15 +47,8 @@
                     <a class="nav-link" href="/personnage/all">Personnages</a>
                 </li>
 
-                <!-- Ajouter lien vers page de liste des familles -->
-                <!--Ajoutaer bouton créer familia si le perso n'est pas dans une familia-->
-                <!--
-                <li th:if="${user != null && personnage != null && personnage.getFamilia() == null}" class="nav-item active">
-                    <a class="nav-link" href="/newFamilia">Créer une familia</a>
-                </li>
-                -->
-                <li th:if="${user != null && !session.user.isAdmin }" class="nav-item active">
-                    <a class="nav-link" href="/new_familia">Créer une familia</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/familia/list">Familias</a>
                 </li>
 
 
