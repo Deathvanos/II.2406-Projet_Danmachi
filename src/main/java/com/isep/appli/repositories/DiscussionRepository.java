@@ -13,5 +13,6 @@ public interface DiscussionRepository extends JpaRepository<Discussion, Long> {
     List<Discussion> findByFirstPersonnageId(Long personnage);
     List<Discussion> findBySecondPersonnageId(Long personnage);
     List<Discussion> findByFamiliaId(Long familia);
+    List<Discussion> findByFirstPersonnageIdAndSecondPersonnageId(Long firstPersonnageId, Long secondPersonnageId);
 
 }

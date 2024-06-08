@@ -34,32 +34,9 @@
                 <span class="discussion-list">
 
                     <div class="discussion-item">
-                        <span th:text="${personnage.getFirstName()}" class="discussion-small-title destination-name"></span>
+                        <span style="font-weight: normal;" th:text="${personnage.getFirstName()}" class="discussion-small-title destination-name"></span>
                         <span th:text="${' '}" class="discussion-small-title destination-name"></span>
-                        <span th:text="${personnage.getLastName()}" class="discussion-small-title destination-name"></span>
-                    </div>
-
-                    <div class="discussion-item">
-                        <p class="create-discussion-label">Commencer une nouvelle conversation privée : </p>
-                        <form th:action="@{/createDiscussion}" th:object="${newDiscussion}" method="POST">
-                          <div class="form-group" style="margin-bottom:0">
-                              <div class="form-group-inline">
-                                  <label class="create-discussion-form-item" for="secondPersonnageId">Personnage (id)</label>
-                              </div>
-                              <div class="form-group-inline">
-                                  <input
-                                          class="form-control create-discussion-form-item create-discussion-form-input"
-                                          type="text"
-                                          th:field="*{secondPersonnageId}"
-                                          id="secondPersonnageId"
-                                          name="secondPersonnageId">
-                                  <input type="hidden" th:field="*{firstPersonnageId}" id="firstPersonnageId" name="firstPersonnageId">
-                              </div>
-                              <div class="form-group-inline">
-                                  <button type="submit" class="btn btn-outline-success create-discussion-form-item"></i>></button>
-                              </div>
-                          </div>
-                        </form>
+                        <span style="font-weight: normal;" th:text="${personnage.getLastName()}" class="discussion-small-title destination-name"></span>
                     </div>
 
                     <div th:each="discussion : ${discussions}" class="discussion-item discussion-item-link">

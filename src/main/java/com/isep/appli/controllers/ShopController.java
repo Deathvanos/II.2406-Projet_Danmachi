@@ -1,26 +1,18 @@
 package com.isep.appli.controllers;
 
-import com.isep.appli.dbModels.Inventory;
-import com.isep.appli.dbModels.Item;
-import com.isep.appli.dbModels.Personnage;
-import com.isep.appli.dbModels.Shop;
+import com.isep.appli.dbModels.*;
 import com.isep.appli.models.enums.ItemCategory;
-import com.isep.appli.services.InventoryService;
-import com.isep.appli.services.PersonnageService;
-import com.isep.appli.services.ItemService;
-import com.isep.appli.services.ShopService;
+import com.isep.appli.services.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,6 +26,8 @@ public class ShopController {
     private InventoryService inventoryService;
     @Autowired
     private PersonnageService personnageService;
+    @Autowired
+    private DiscussionService discussionService;
 
 
     /*******************************************************************************/
@@ -124,6 +118,22 @@ public class ShopController {
             shop.setQuantity(maxYouCanBuy);
         }
         model.addAttribute("shopCell", shop);
+
+        boolean privateDiscussionCreated;
+        if (discussionService.isprivateDiscusionCreated(personnage.getId(), shop.getSeller().getId())) {
+            privateDiscussionCreated = true;
+            model.addAttribute("privateDiscussionId", discussionService.getDiscussionIdByFirstPersonnageIdAndSecondPersonnageId(personnage.getId(), shop.getSeller().getId()));
+        }
+        else {
+            privateDiscussionCreated = false;
+            Discussion newDiscussion = new Discussion();
+            newDiscussion.setFirstPersonnageId(personnage.getId());
+            newDiscussion.setSecondPersonnageId(shop.getSeller().getId());
+            newDiscussion.setConversationType("PRIVATE");
+            model.addAttribute("newDiscussion", newDiscussion);
+        }
+        model.addAttribute("privateDiscussionCreated", privateDiscussionCreated);
+
         return "shop/buyPanel";
     }
 }

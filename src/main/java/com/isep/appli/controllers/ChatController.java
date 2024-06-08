@@ -65,10 +65,6 @@ public class ChatController {
                 message.setDestinationId(destination);
                 model.addAttribute("message", message);
             }
-
-            Discussion newDiscussion = new Discussion();
-            newDiscussion.setFirstPersonnageId(personnage.getId());
-            model.addAttribute("newDiscussion", newDiscussion);
         }
 
         return "chatPage";
@@ -85,9 +81,8 @@ public class ChatController {
 
     @PostMapping("createDiscussion")
     public String createDiscussion(@Valid Discussion discussion) {
-        discussion.setConversationType("PRIVATE");
         discussionService.save(discussion);
-        return "redirect:/chatPage";
+        return "redirect:/chatPage/" + discussion.getId();
     }
 
     @GetMapping("chatPage/delete/{discussionId}")

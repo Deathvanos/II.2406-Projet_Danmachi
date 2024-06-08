@@ -81,6 +81,26 @@ public class DiscussionService {
         }
     }
 
+    public boolean isFamiliaDiscusionCreated(Long familiaId) {
+        List<Discussion> familiaDiscussions = discussionRepository.findByFamiliaId(familiaId);
+        return familiaDiscussions.size() != 0;
+    }
+
+    public Long getDiscussionIdByFamiliaId(Long familiaId) {
+        List<Discussion> familiaDiscussions = discussionRepository.findByFamiliaId(familiaId);
+        return familiaDiscussions.get(0).getId();
+    }
+
+    public boolean isprivateDiscusionCreated(Long firstPersonnageId, Long secondPersonnageId) {
+        List<Discussion> privateDiscussions = discussionRepository.findByFirstPersonnageIdAndSecondPersonnageId(firstPersonnageId, secondPersonnageId);
+        return privateDiscussions.size() != 0;
+    }
+
+    public Long getDiscussionIdByFirstPersonnageIdAndSecondPersonnageId(Long firstPersonnageId, Long secondPersonnageId) {
+        List<Discussion> privateDiscussions = discussionRepository.findByFirstPersonnageIdAndSecondPersonnageId(firstPersonnageId, secondPersonnageId);
+        return privateDiscussions.get(0).getId();
+    }
+
     public FormattedDiscussion formatDiscussion (Discussion discussion, Personnage selectedPersonnage) {
         FormattedDiscussion formattedDiscussion = new FormattedDiscussion(
                 discussion.getId(),

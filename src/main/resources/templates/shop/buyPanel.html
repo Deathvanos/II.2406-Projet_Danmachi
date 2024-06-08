@@ -36,6 +36,20 @@
                     <input type="number" class="invisible" th:field="*{id}" id="idItem" th:value="${shopCell.getId()}" readonly>
                 </div>
             </form>
+
+            <div th:if="${privateDiscussionCreated}">
+                <a th:href="'/chatPage/' + ${privateDiscussionId}" class="btn btn-outline-success"></i>Accéder à la discussion privée</a>
+            </div>
+
+            <div th:if="${!privateDiscussionCreated}">
+                <form th:action="@{/createDiscussion}" th:object="${newDiscussion}" method="POST">
+                    <input type="hidden" th:field="*{firstPersonnageId}" id="firstPersonnageId" name="firstPersonnageId">
+                    <input type="hidden" th:field="*{secondPersonnageId}" id="secondPersonnageId" name="secondPersonnageId">
+                    <input type="hidden" th:field="*{conversationType}" id="conversationType" name="conversationType">
+                    <button type="submit" class="btn btn-outline-success"></i>Créer une discussion privée</button>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>

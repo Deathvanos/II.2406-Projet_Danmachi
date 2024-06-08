@@ -1,14 +1,8 @@
 package com.isep.appli.controllers;
 
-import com.isep.appli.dbModels.Familia;
-import com.isep.appli.dbModels.Personnage;
-import com.isep.appli.dbModels.User;
-import com.isep.appli.dbModels.JoinRequest;
+import com.isep.appli.dbModels.*;
 import com.isep.appli.models.enums.Race;
-import com.isep.appli.services.FamiliaService;
-import com.isep.appli.services.ImageService;
-import com.isep.appli.services.PersonnageService;
-import com.isep.appli.services.JoinRequestService;
+import com.isep.appli.services.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpSession;
@@ -38,12 +32,14 @@ public class FamiliaController {
     private final PersonnageService personnageService;
     private final PersonnageController personnageController;
     private final JoinRequestService joinRequestService;
-    public FamiliaController(ImageService imageService, FamiliaService familiaService, PersonnageService personnageService, PersonnageController personnageController, JoinRequestService joinRequestService) {
+    private final DiscussionService discussionService;
+    public FamiliaController(ImageService imageService, FamiliaService familiaService, PersonnageService personnageService, PersonnageController personnageController, JoinRequestService joinRequestService, DiscussionService discussionService) {
         this.imageService = imageService;
         this.familiaService = familiaService;
         this.personnageService = personnageService;
         this.personnageController = personnageController;
         this.joinRequestService = joinRequestService;
+        this.discussionService = discussionService;
     }
 
     // Affiche la page d'une familia spécifique en fonction de son id
@@ -99,6 +95,20 @@ public class FamiliaController {
 
         boolean isLeader = personnage != null && personnage.getId().equals(leader.getId());
         model.addAttribute("isLeader", isLeader);
+
+        boolean familiaDiscussionCreated;
+        if (discussionService.isFamiliaDiscusionCreated(familiaId)) {
+            familiaDiscussionCreated = true;
+            model.addAttribute("familiaDiscussionId", discussionService.getDiscussionIdByFamiliaId(familiaId));
+        }
+        else {
+            familiaDiscussionCreated = false;
+            Discussion newDiscussion = new Discussion();
+            newDiscussion.setFamiliaId(familiaId);
+            newDiscussion.setConversationType("FAMILIA");
+            model.addAttribute("newDiscussion", newDiscussion);
+        }
+        model.addAttribute("familiaDiscussionCreated", familiaDiscussionCreated);
 
         return "familiaPage";
     }
