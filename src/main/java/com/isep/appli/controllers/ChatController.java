@@ -35,6 +35,9 @@ public class ChatController {
 
     @GetMapping("/chatPage/{discussionId}")
     public String chatPage(@PathVariable Long discussionId, Model model, HttpSession session) {
+        if(session.getAttribute("user") == null){
+            return "errors/error-401";
+        }
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
         Personnage personnage = (Personnage) session.getAttribute("personnage");
@@ -86,7 +89,10 @@ public class ChatController {
     }
 
     @GetMapping("chatPage/delete/{discussionId}")
-    public String deleteDiscussion(@PathVariable Long discussionId) {
+    public String deleteDiscussion(@PathVariable Long discussionId, HttpSession session) {
+        if(session.getAttribute("user") == null){
+            return "errors/error-401";
+        }
         discussionService.deleteDiscussionById(discussionId);
         return "redirect:/chatPage";
     }

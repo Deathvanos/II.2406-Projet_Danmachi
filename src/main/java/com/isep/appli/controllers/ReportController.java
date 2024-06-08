@@ -22,6 +22,10 @@ public class ReportController {
 
     @GetMapping("/reportPage/{typeObjectToReport}/{objectId}")
     public String reportPage(@PathVariable String typeObjectToReport, @PathVariable Long objectId, Model model, HttpSession session) {
+        if(session.getAttribute("user") == null){
+            return "errors/error-401";
+        }
+
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
 
@@ -38,6 +42,9 @@ public class ReportController {
 
     @GetMapping("/reportPage/reportSuccessPage")
     public String reportSuccessPage(Model model, HttpSession session) {
+        if(session.getAttribute("user") == null){
+            return "errors/error-401";
+        }
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
         model.addAttribute("formerPageLink", "/home");
@@ -53,7 +60,10 @@ public class ReportController {
     }
 
     @GetMapping("admin/reportList/delete/{reportId}")
-    public String deleteReport(@PathVariable Long reportId) {
+    public String deleteReport(@PathVariable Long reportId, HttpSession session) {
+        if(session.getAttribute("user") == null){
+            return "errors/error-401";
+        }
         reportService.deleteReportById(reportId);
         return "redirect:/admin/reportList";
     }
