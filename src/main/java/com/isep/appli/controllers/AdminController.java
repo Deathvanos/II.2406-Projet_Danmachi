@@ -2,8 +2,7 @@ package com.isep.appli.controllers;
 
 import com.isep.appli.dbModels.Report;
 import com.isep.appli.dbModels.User;
-import com.isep.appli.models.FormattedReport;
-import com.isep.appli.services.*;
+import com.isep.appli.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -23,18 +23,10 @@ import java.util.stream.IntStream;
 public class AdminController {
 
     private final UserService userService;
-    private final ReportService reportService;
-    private final PersonnageService personnageService;
-    private final FamiliaService familiaService;
-    private final MessageService messageService;
 
 
-    public AdminController(UserService userService, ReportService reportService, PersonnageService personnageService, FamiliaService familiaService, MessageService messageService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.reportService = reportService;
-        this.personnageService = personnageService;
-        this.familiaService = familiaService;
-        this.messageService = messageService;
     }
 
     static public String checkIsAdmin(User userAdmin, Model model) {
@@ -79,6 +71,8 @@ public class AdminController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+
+        model.addAttribute("usersPersonnages", personnageService.getPersonnagesUsers(userPage.stream().toList()));
         return "admin/usersManagement";
     }
 
@@ -95,7 +89,7 @@ public class AdminController {
         if (user == null) {return "errors/error-404";}
         model.addAttribute("userInfo", user);
 
-        return "admin/userInfo";
+        return "admin/userDescription";
     }
 
     @GetMapping("/admin/reportList")

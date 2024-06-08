@@ -1,10 +1,14 @@
 package com.isep.appli.dbModels;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Getter
 @Setter
@@ -34,13 +38,38 @@ public class User implements Serializable {
 
 	@Column(columnDefinition="tinyint(1) default 0")
 	private Boolean isAdmin;
-	
+
+    @Column(columnDefinition="tinyint(1) default 0")
+	private Boolean isLogin;
+
+	@CreationTimestamp
+	@Column(updatable = false)
+	private LocalDateTime createAccountAt;
+
+	@UpdateTimestamp
+	@Column()
+	private LocalDateTime lastLoginAt;
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username + ", email=" + email
 				+ ", password=" + password + ", isAdmin=" + isAdmin + ", enabled=" + enabled
 				+ "]";
 	}
-	
-	
+
+	public long getHoursSinceLastLogin() {
+		Duration duration = Duration.between(lastLoginAt, LocalDateTime.now());
+		return duration.toHours();
+	}
+
+	public String getFormattedDurationSinceLastLogin() {
+		Duration duration = Duration.between(lastLoginAt, LocalDateTime.now());
+		long totalMinutes = duration.toMinutes();
+		long hours = totalMinutes / 60;
+		long minutes = totalMinutes % 60;
+		return String.format("%02dh%02d", hours, minutes);
+	}
+
+
+
 }
