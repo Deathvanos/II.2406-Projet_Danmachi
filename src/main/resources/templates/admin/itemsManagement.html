@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/webjars/cropperjs/1.1.3/cropper.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/cropperjs/1.1.3/cropper.min.css}" />
+    <script src="/js/itemsManagement.js"></script>
     <link rel="stylesheet" href="/css/common.css"/>
     <style>
         body {background-color: #D5E4D9;}
@@ -13,7 +18,7 @@
         .container {
             background-color: #ffffff;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
     </style>
@@ -24,19 +29,157 @@
 
 
 
-<div class="container col-10 my-5 px-3 py-3">
+<div class="container col-11 my-5 px-3 py-3">
+    <h1> Items management
+        <button type="button" class="btn btn-success" href="#" data-toggle="modal" data-target="#modalNewItem">New Item</button>
+    </h1>
 
-    <h1>Items management</h1>
+    <div class="row text-center">
+        <div th:each="item : ${itemsList}" class="col-3">
+            <div class="card bg-info border text-white">
+                <div class="card-header">
+                    <h4 th:text="${item.name}" data-toggle="popover" data-placement="top"
+                        th:data-content="'Creation: '+${#temporals.format(item.createdAt, 'dd-MM-yyyy')} +'<br>Modification: '+${#temporals.format(item.updatedAt, 'dd-MM-yyyy')}"></h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <img class="border" th:src="'data:image/png;base64,' + ${item.getUrlImage()}" alt="Profile Image" data-toggle="popover" data-placement="bottom" style="width: 100%"
+                                 th:data-content="'Description:<br>'+${item.description}+'<br><br>Effect:<br>'+${item.useDescription}">
+                        </div>
+                        <div class="col-7" data-toggle="popover" data-placement="bottom"
+                             th:data-content="${item.getShops().size()}+' en vente<br>'+${item.getInventories().size()}+' possesseurs<br>'+${item.nbTotalElement()}+' au total'">
+                            <span class="d-block" th:text="${item.category}"></span>
+                            <span class="d-block" th:if="${item.canUse}">Disposable</span>
+                            <span class="d-block" th:unless="${item.canUse}">Unbreakable</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form th:id="'deleteItemForm'+${item.id}" th:action="'/admin/deleteItem/'+${item.id}" method="post" style="display: none;"></form>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-warning" href="#" data-toggle="modal" th:data-target="'#modalUpdateItem'+${item.id}">Modifier</button>
+                    <a class="btn btn-danger" href="#" th:onclick="'submitModifItemForm(' + ${item.id} + '); return false;'">Supprimer</a>
+                </div>
+            </div>
+
+            <!-- Modal Update Item -->
+            <div class="modal fade" th:id="'modalUpdateItem'+${item.id}" role="dialog">
+                <form class="modal-dialog" th:id="'updateItem'+${item.id}" th:action="'/admin/updateItem/'+${item.id}" th:object="${updateItem}"  method="POST" action="#">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Item</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <label class="d-block">Name:
+                                <input type="text"  th:placeholder="${item.name}" th:field="*{name}" required>
+                            </label>
+                            <label class="d-block">Category:
+                                <select th:field="*{category}">
+                                    <option th:each="itemType : ${ItemCategory}" th:value="${itemType}" th:text="${itemType}"></option>
+                                </select>
+                            </label>
+                            <label class="d-block">Consommable:
+                                <input type="checkbox" th:field="*{canUse}"/>
+                            </label>
+                            <div class="row text-center mb-4 py-2">
+                                <label class="col border-right">Description:<br>
+                                    <textarea type="text" th:placeholder="${item.description}" th:field="*{description}" style="width: 100%; height: 10em;" required></textarea>
+                                </label>
+                                <label class="col">Story:<br>
+                                    <textarea type="text" th:placeholder="${item.useDescription}" th:field="*{useDescription}" style="width:100%; height:10em;" required></textarea>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer row">
+                            <button type="reset" class="btn btn-warning col">Reset</button>
+                            <button type="submit" class="btn btn-success col">Modifier</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
 
 
+<!-- Modal New Item -->
+<div class="modal fade" id="modalNewItem" role="dialog">
+    <form class="modal-dialog" id="newItem" th:action="'/admin/newItem'" th:object="${newItem}"  method="POST" action="#">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">New Item</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label class="d-block">Name:
+                    <input type="text" placeholder="Some name" th:field="*{name}" required>
+                </label>
+                <label class="d-block">Category:
+                    <select th:field="*{category}">
+                        <option th:each="itemType : ${ItemCategory}" th:value="${itemType}" th:text="${itemType}"></option>
+                    </select>
+                </label>
+                <label class="d-block">Consommable:
+                    <input type="checkbox" th:field="*{canUse}"/>
+                </label>
+                <div class="form-group">
+                    <label for="image-input">Logo :</label>
+                    <input class="form-control-file" type="file" id="image-input" name="file" accept="image/*" required>
+                    <input type="hidden" id="croppedImageData" name="croppedImageData" required>
+                </div>
+                <div class="row text-center mb-4 py-2">
+                    <label class="col border-right">Description:<br>
+                        <textarea type="text" placeholder="Some description" th:field="*{description}" style="width: 100%; height: 10em;" required></textarea>
+                    </label>
+                    <label class="col">Story:<br>
+                        <textarea type="text" placeholder="Some effects" th:field="*{useDescription}" style="width:100%; height:10em;" required></textarea>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer row">
+                <button type="reset" class="btn btn-warning col">Reset</button>
+                <button type="submit" class="btn btn-success col">Create</button>
+            </div>
+        </div>
+
+    </form>
 </div>
 
 
 
 
+<!--Modal pour crop l'image-->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Crop Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <img id="image" src="#" alt="Your image" class="img-fluid" style="max-width: 80%; max-height: 400px;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cropButton" type="button" class="btn btn-outline-success">Crop Image</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({trigger: "hover",html: true});
+    });
+</script>
 <footer th:insert="~{common/footer :: footer}"></footer>
-<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

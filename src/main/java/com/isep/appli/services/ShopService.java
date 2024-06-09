@@ -2,6 +2,7 @@ package com.isep.appli.services;
 
 
 import com.isep.appli.dbModels.Item;
+import com.isep.appli.dbModels.Personnage;
 import com.isep.appli.dbModels.Shop;
 import com.isep.appli.repositories.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,4 +106,7 @@ public class ShopService {
         return shopWithFilter;
     }
 
+    public List<Shop> getPlayerShop(Personnage seller) {
+        return shopRepository.findBySeller(seller);
+    }
 }

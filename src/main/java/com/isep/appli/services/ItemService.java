@@ -4,16 +4,12 @@ import com.isep.appli.dbModels.Item;
 import com.isep.appli.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.List;
-import java.util.Objects;
 
 
 @Service
@@ -55,5 +51,22 @@ public class ItemService {
 
     public List<Item> findByName(String name) {
         return this.itemRepository.findByName(name);
+    }
+
+    public List<Item> findAllItems() {return this.itemRepository.findAll();}
+
+    public void delete(long id) {
+        itemRepository.deleteById(id);
+    }
+
+    public void updateItem(Long id, Item newItem) {
+        Item itemOld = itemRepository.findById(id).orElse(null);
+        assert itemOld != null;
+        itemOld.setName(newItem.getName());
+        itemOld.setCategory(newItem.getCategory());
+        itemOld.setCanUse(newItem.isCanUse());
+        itemOld.setDescription(newItem.getDescription());
+        itemOld.setUseDescription(newItem.getUseDescription());
+        itemRepository.save(itemOld);
     }
 }
