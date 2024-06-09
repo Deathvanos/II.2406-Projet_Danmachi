@@ -24,5 +24,13 @@ public class Familia {
     @Column(nullable = false)
     private Long leader_id;
 
-
+    @Override
+    public String toString() {
+        return "Familia{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                //", embleme_image='" + embleme_image + '\'' +
+                ", leader_id=" + leader_id +
+                '}';
+    }
 }

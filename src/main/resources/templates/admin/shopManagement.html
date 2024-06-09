@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+    <script src="/js/itemsManagement.js"></script>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <style>
+        body {background-color: #D5E4D9;}
+        footer {background-color: #ffffff;}
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+    </style>
+    <script>
+        function submitDeleteShopForm(shopId) {
+            if(confirm('Êtes-vous sûr de vouloir supprimer la vente ?')) {
+                document.getElementById('deleteShopForm' + shopId).submit();
+            }
+        }
+    </script>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+
+
+
+
+<div class="container col-11 my-5 px-3 py-3">
+    <h1> Shop management
+        <button type="button" class="btn btn-success" href="#" data-toggle="modal" data-target="#modalNewShop">New Shop</button>
+    </h1>
+
+    <div class="row text-center">
+        <div th:each="shop : ${shopList}" class="col-3">
+            <div class="card bg-info border text-white">
+                <div class="card-header">
+                    <h4 th:text="${shop.item.name}+' ('+${shop.quantity}+')'" data-toggle="popover" data-placement="top"
+                        th:data-content="'<br>Prix total: '+${shop.price}"></h4>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <img class="border" th:src="'data:image/png;base64,' + ${shop.item.getUrlImage()}" alt="Profile Image" data-toggle="popover" data-placement="bottom" style="width: 100%"
+                                 th:data-content="'Description:<br>'+${shop.item.description}+'<br><br>Effect:<br>'+${shop.item.useDescription}">
+                        </div>
+                        <div class="col-7" data-toggle="popover" data-placement="bottom"
+                             th:data-content="'Vendeur: '+${shop.seller.getFirstName()}+' '+${shop.seller.getLastName()}">
+                            <span class="d-block" th:text="${shop.item.category}"></span>
+                            <span class="d-block" th:if="${shop.item.canUse}">Disposable</span>
+                            <span class="d-block" th:unless="${shop.item.canUse}">Unbreakable</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form th:id="'deleteShopForm'+${shop.id}" th:action="'/admin/deleteShop/'+${shop.id}" method="post" style="display: none;"></form>
+                <div class="card-footer">
+                    <a class="btn btn-danger" href="#" th:onclick="'submitDeleteShopForm(' + ${shop.id} + '); return false;'">Annuler</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- Modal New Item -->
+<div class="modal fade" id="modalNewShop" role="dialog">
+    <form class="modal-dialog" id="newShop" th:action="'/admin/newShop'" th:object="${newShop}"  method="POST" action="#">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">New Item</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label>Item:
+                    <select name="idItem" th:field="*{item}">
+                        <option th:each="item : ${itemsList}" th:value="${item.id}" th:text="${item.name}"></option>
+                    </select>
+                </label>
+                <label>Item:
+                    <select name="idItem" th:field="*{seller}">
+                        <option th:each="player : ${playerList}" th:value="${player.id}" th:text="${player.firstName}+' '+${player.lastName}"></option>
+                    </select>
+                </label>
+                <label>Nombre:<input type="number" th:field="*{quantity}" min="1" ></label>
+                <label>Prix total:<input type="number" th:field="*{price}" min="1"></label>
+
+
+            </div>
+            <div class="modal-footer row">
+                <button type="reset" class="btn btn-warning col">Reset</button>
+                <button type="submit" class="btn btn-success col">Create</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({trigger: "hover",html: true});
+    });
+</script>
+<footer th:insert="~{common/footer :: footer}"></footer>
+</body>
+</html>

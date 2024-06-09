@@ -32,7 +32,11 @@ public class Inventory implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", idItem=" + item + "idPlayer=" + character + "quantity=" + quantity
-				+ "]";
+		return "Inventory{" +
+				"id=" + id +
+				", item=" + (item != null ? item.getId() : "null") +
+				", character=" + (character != null ? character.getId() : "null") +
+				", quantity=" + quantity +
+				'}';
 	}
 }

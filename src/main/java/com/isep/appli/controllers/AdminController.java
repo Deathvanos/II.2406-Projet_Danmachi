@@ -1,22 +1,23 @@
 package com.isep.appli.controllers;
 
-import com.isep.appli.dbModels.Report;
-import com.isep.appli.dbModels.User;
+import com.isep.appli.dbModels.*;
 import com.isep.appli.models.FormattedReport;
-import com.isep.appli.services.MessageService;
-import com.isep.appli.services.PersonnageService;
-import com.isep.appli.services.ReportService;
-import com.isep.appli.services.UserService;
+import com.isep.appli.models.enums.ItemCategory;
+import com.isep.appli.models.enums.Race;
+import com.isep.appli.services.*;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -29,13 +30,24 @@ public class AdminController {
     private final PersonnageService personnageService;
     private final ReportService reportService;
     private final MessageService messageService;
+    private final FamiliaService familiaService;
+    private final ItemService itemService;
+    private final ImageService imageService;
+    private final InventoryService inventoryService;
+    private final ShopService shopService;
 
 
-    public AdminController(UserService userService, PersonnageService personnageService, ReportService reportService, MessageService messageService) {
+
+    public AdminController(UserService userService, PersonnageService personnageService, ReportService reportService, MessageService messageService, FamiliaService familiaService, ItemService itemService, ImageService imageService, InventoryService inventoryService, ShopService shopService) {
         this.userService = userService;
         this.personnageService = personnageService;
         this.reportService = reportService;
         this.messageService = messageService;
+        this.familiaService = familiaService;
+        this.itemService = itemService;
+        this.imageService = imageService;
+        this.inventoryService = inventoryService;
+        this.shopService = shopService;
     }
 
     static public String checkIsAdmin(User userAdmin, Model model) {
@@ -87,7 +99,7 @@ public class AdminController {
 
 
     @GetMapping("/admin/users-management/{id}")
-    public String infoUserPage(@PathVariable long id, Model model, HttpSession session) {
+    public String userDesciptionPage(@PathVariable long id, Model model, HttpSession session) {
         // Check admin connexion
         User userAdmin = (User) session.getAttribute("user");
         String checkUser = checkIsAdmin(userAdmin, model);
@@ -98,8 +110,245 @@ public class AdminController {
         if (user == null) {return "errors/error-404";}
         model.addAttribute("userInfo", user);
 
+        List<User> userList = new ArrayList<>();
+        userList.add(userService.getUserById(id));
+        model.addAttribute("userPersonnages", personnageService.getPersonnagesUsers(userList));
+
         return "admin/userDescription";
     }
+
+    @PostMapping("/admin/deleteUser/{id}")
+    public String deleteUser(@PathVariable long id, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        List<User> userList = new ArrayList<>();
+        userList.add(userService.getUserById(id));
+        for (Personnage p: personnageService.getPersonnagesUsers(userList)) {
+            System.out.println(p);
+            deletePlayer(p.getId());
+        }
+        // destroy user
+        userService.deleteUser(id);
+        return "redirect:/admin/users-management";
+    }
+
+    @PostMapping("/admin/updateUser/{id}")
+    public String updateUser(@PathVariable long id, @Valid User user,Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        userService.updateUser(id, user);
+        return "redirect:/admin/users-management/"+id;
+    }
+
+
+    @GetMapping("/admin/players-management/{id}")
+    public String infoPlayerPage(@PathVariable long id, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        // find the personnage id
+        Personnage personnage = personnageService.getPersonnageById(id);
+        if (personnage == null) {return "errors/error-404";}
+        model.addAttribute("playerInfo", personnage);
+        model.addAttribute("familia", new Familia());
+        model.addAttribute("raceCategory", Race.values());
+        model.addAttribute("familiaList", familiaService.getAllFamilias());
+        model.addAttribute("inventory", inventoryService.getPlayerInventory(personnage));
+        model.addAttribute("itemsList", itemService.getAll());
+
+        return "admin/playerDescription";
+    }
+
+    private void deletePlayer(long idPlayer) {
+        Personnage player = personnageService.getPersonnageById(idPlayer);
+        // remove from shop
+        for (Shop shop: shopService.getPlayerShop(player)) {
+            shopService.delete(shop);
+        }
+        // remove from inventory
+        for (Inventory inventory: inventoryService.getPlayerInventory(player)) {
+            inventoryService.delete(inventory);
+        }
+        // remove familia players user
+        Familia familia = player.getFamilia();
+        if (familia != null && familia.getLeader_id()==idPlayer) {
+            familiaService.deleteFamiliaByIdWithMembers(familia.getId());
+        }
+        // destroy players user
+        personnageService.deletePersonnageById(idPlayer);
+    }
+
+    @PostMapping("/admin/deletePlayer/{idUser}/{idPlayer}")
+    public String deletePlayerPage(@PathVariable long idUser, @PathVariable long idPlayer, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        deletePlayer(idPlayer);
+        return "redirect:/admin/users-management/"+idUser;
+    }
+
+    @PostMapping("/admin/updatePlayer/{idUser}/{idPlayer}")
+    public String updatePlayer(@PathVariable long idUser, @PathVariable long idPlayer, @Valid Personnage player,Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        personnageService.updatePlayer(idPlayer, player);
+        return "redirect:/admin/players-management/"+idPlayer;
+    }
+
+    @PostMapping("admin/delete/{idPlayer}/{familiaId}")
+    public String deleteFamilia(@PathVariable Long idPlayer, @PathVariable Long familiaId, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        familiaService.deleteFamiliaByIdWithMembers(familiaId);
+        return "redirect:/admin/players-management/"+idPlayer;
+    }
+
+
+
+
+    @PostMapping("admin/addItemUser/{idUser}/{idPlayer}")
+    public String addItemUser(@PathVariable Long idUser, @PathVariable Long idPlayer, @RequestParam("idItem") Long idItem, @RequestParam("nbItem") int nbItem, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        inventoryService.addItemForPlayer(personnageService.getPersonnageById(idPlayer), itemService.findById(idItem), nbItem);
+
+        return "redirect:/admin/players-management/"+idPlayer;
+    }
+
+    @PostMapping("admin/deleteItemUser/{idPlayer}/{idItem}")
+    public String deleteItemUser(@PathVariable Long idPlayer, @PathVariable Long idItem,  Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        Inventory inventory = inventoryService.findByItemId(personnageService.getPersonnageById(idPlayer), itemService.findById(idItem));
+        inventoryService.removeItemInInventory(inventory, inventory.getQuantity());
+
+        return "redirect:/admin/players-management/"+idPlayer;
+    }
+
+
+    @GetMapping("/admin/items-management")
+    public String itemsManagementPage(Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        model.addAttribute("itemsList", itemService.findAllItems());
+        model.addAttribute("ItemCategory", ItemCategory.values());
+        model.addAttribute("newItem", new Item());
+        model.addAttribute("updateItem", new Item());
+
+        return "admin/itemsManagement";
+    }
+
+    @PostMapping("/admin/newItem")
+    public String newItem(@Valid Item newItem, @RequestParam("croppedImageData") String croppedImageData, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        byte[] decodedImageData = Base64.getDecoder().decode(croppedImageData);
+        itemService.save(newItem, new ByteArrayInputStream(decodedImageData));
+
+        return "redirect:/admin/items-management";
+    }
+
+    @PostMapping("/admin/updateItem/{id}")
+    public String updateItem(@PathVariable long id,@Valid Item updateItem, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        itemService.updateItem(id, updateItem);
+
+        return "redirect:/admin/items-management";
+    }
+
+
+    @PostMapping("/admin/deleteItem/{id}")
+    public String deleteItem(@PathVariable long id, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        itemService.delete(id);
+
+        return "redirect:/admin/items-management";
+    }
+
+
+    @GetMapping("/admin/shop-management")
+    public String shopManagementPage(Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        model.addAttribute("shopList", shopService.getAll());
+        model.addAttribute("itemsList", itemService.findAllItems());
+        model.addAttribute("playerList", personnageService.getAllPersonnages());
+        Shop newShop = new Shop();
+        newShop.setPrice(1000L);
+        newShop.setQuantity(1);
+        model.addAttribute("newShop", newShop);
+
+
+        return "admin/shopManagement";
+    }
+
+    @PostMapping("/admin/deleteShop/{id}")
+    public String deleteShop(@PathVariable long id, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        shopService.delete(shopService.findById(id));
+
+        return "redirect:/admin/shop-management";
+    }
+
+    @PostMapping("/admin/newShop")
+    public String newShop(@Valid Shop newShop, Model model, HttpSession session) {
+        // Check admin connexion
+        User userAdmin = (User) session.getAttribute("user");
+        String checkUser = checkIsAdmin(userAdmin, model);
+        if (!checkUser.equals("200")){return checkUser;}
+
+        shopService.save(newShop);
+
+        return "redirect:/admin/shop-management";
+    }
+
+
+    /* ************************************************************************************************************** */
+    /* *********************************************** LISA PART **************************************************** */
+    /* ************************************************************************************************************** */
 
     @GetMapping("/admin/reportList")
     public String reportListPageEmpty(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
@@ -140,28 +389,7 @@ public class AdminController {
         return "admin/adminReportPage";
     }
 
-    /*
-    table pas claire entre PersonnaService et Personnage Service et create player ne fonctionne plus
-    model : separer en deux model pour bdd et enumeration ?
-    library, ne rien prendre sur le web, tout installer en local (subscription page)
 
-
-
-    @GetMapping("/admin/players-management/{id}")
-    public String infoPlayerPage(@PathVariable long id, Model model, HttpSession session) {
-        // Check admin connexion
-        User userAdmin = (User) session.getAttribute("user");
-        String checkUser = checkIsAdmin(userAdmin, model);
-        if (!checkUser.equals("200")){return checkUser;}
-
-        // find the user id
-        User user = userService.getUserById(id);
-        if (user == null) {return "errors/error-404";}
-        model.addAttribute("userInfo", user);
-
-        return "admin/playerInfo";
-    }
-*/
 
 }
 
@@ -199,4 +427,22 @@ INSERT INTO USER values(36, 'fictif36@yahoo.fr', 1, 'testFirst36', 0, 'testLast3
 INSERT INTO USER values(37, 'fictif37@yahoo.fr', 1, 'testFirst37', 0, 'testLast37', 'root', 'fictif37');
 INSERT INTO USER values(38, 'fictif38@yahoo.fr', 1, 'testFirst38', 0, 'testLast38', 'root', 'fictif38');
 INSERT INTO USER values(39, 'fictif39@yahoo.fr', 1, 'testFirst39', 0, 'testLast39', 'root', 'fictif39');
+
+
+INSERT INTO `item` (`id`, `can_use`, `category`, `created_at`, `description`, `name`, `updated_at`, `url_image`, `use_description`) VALUES
+(1, b'0', 'EQUIPEMENT', '2024-05-27 15:24:53.000000', 'Une faux forger dans un acier impeccable', 'Soul Eater', NULL, NULL, NULL),
+(2, b'1', 'CONSOMMABLE', '2024-05-27 15:24:53.000000', 'Elixir', 'Elixir', NULL, NULL, 'Elixir'),
+(3, b'1', 'ARTEFACT', '2024-05-27 15:24:53.000000', 'le seul et unique anneau', 'Anneau', NULL, NULL, 'le porteur devient invisible');
+
+
+INSERT INTO `inventory` (`id`, `quantity`, `character_id`, `item_id`) VALUES
+(1, 1, 252, 1),
+(2, 6, 252, 2),
+(3, 2, 253, 2);
+
+INSERT INTO `shop` (`id`, `price`, `quantity`, `item_id`, `seller_id`) VALUES
+(3, 1000000000000000, 1, 2, 452),
+(8, 10000, 2, 2, 452),
+(9, 9999, 1, 3, 452);
+
 */

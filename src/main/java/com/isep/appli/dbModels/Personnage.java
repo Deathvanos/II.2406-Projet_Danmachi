@@ -52,4 +52,21 @@ public class Personnage implements Serializable {
 
     @Column(columnDefinition = "text")
     private String story;
+
+    @Override
+    public String toString() {
+        return "Personnage{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                //", image='" + image + '\'' +
+                ", level=" + level +
+                ", race=" + race +
+                ", money=" + money +
+                ", user=" + user +
+                ", familia=" + familia +
+                ", description='" + description + '\'' +
+                ", story='" + story + '\'' +
+                '}';
+    }
 }

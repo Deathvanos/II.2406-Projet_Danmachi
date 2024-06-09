@@ -50,11 +50,22 @@ public class User implements Serializable {
 	@Column()
 	private LocalDateTime lastLoginAt;
 
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username + ", email=" + email
-				+ ", password=" + password + ", isAdmin=" + isAdmin + ", enabled=" + enabled
-				+ "]";
+		return "User{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", username='" + username + '\'' +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", enabled=" + enabled +
+				", isAdmin=" + isAdmin +
+				", isLogin=" + isLogin +
+				", createAccountAt=" + createAccountAt +
+				", lastLoginAt=" + lastLoginAt +
+				'}';
 	}
 
 	public long getHoursSinceLastLogin() {

@@ -50,6 +50,18 @@
                 <li th:if="${user != null && !session.user.isAdmin }" class="nav-item active">
                     <a class="nav-link" href="/familia/list">Familias</a>
                 </li>
+                <li th:if="${session.user != null && session.user.isAdmin}" class="nav-item active">
+                    <a class="nav-link" href="/admin/users-management">Users management</a>
+                </li>
+                <li th:if="${session.user != null && session.user.isAdmin}" class="nav-item active">
+                    <a class="nav-link" href="/admin/items-management">Items management</a>
+                </li>
+                <li th:if="${session.user != null && session.user.isAdmin}" class="nav-item active">
+                    <a class="nav-link" href="/admin/shop-management">Shop management</a>
+                </li>
+                <li th:if="${session.user != null && session.user.isAdmin}" class="nav-item active">
+                    <a class="nav-link" href="/admin/reportList">Manage reports</a>
+                </li>
 
 
 

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>User Info</title>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <style>
+        body {background-color: #D5E4D9;}
+        footer {background-color: #ffffff;}
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+    </style>
+    <script>
+        function submitDeleteItemUserForm(itemId) {
+            if(confirm('Êtes-vous sûr de vouloir supprimer l\'item ?')) {
+                document.getElementById('deleteItemUserForm' + itemId).submit();
+            }
+        }
+    </script>
+</head>
+<body>
+<header th:insert="~{common/header :: header}"></header>
+
+
+
+<form id="deleteFamiliaForm" method="post" action="#" th:action="'/admin/delete/'+${playerInfo.id}+'/'+${playerInfo.familia.id}" th:if="${playerInfo.familia!=null && playerInfo.id==playerInfo.familia.leader_id}"></form>
+
+<div class="container col-8 my-5 px-3 py-3">
+
+    <h1 th:text="'Player description : '+${playerInfo.id}" th:class="${!playerInfo.user.enabled} ? 'text-center text-danger' : (${playerInfo.user.isLogin} ? 'text-center text-success' : 'text-center text-secondary')"></h1>
+
+    <p class="d-flex justify-content-center">
+        (<span class="text-danger">disable</span> -
+        <span class="text-secondary">logout</span> -
+        <span class="text-success">login</span>)
+    </p>
+    <form action="#" th:action="'/admin/updatePlayer/'+${playerInfo.user.id}+'/'+${playerInfo.id}" th:object="${playerInfo}" method="POST" class="text-center mb-4 pb-2">
+
+        <img class="border m-1" th:src="'data:image/png;base64,' + ${playerInfo.getImage()}" alt="Profile Image" style="max-width: 200px">
+
+        <div class="row border text-center mt-3 py-2">
+            <div class="col border-right">
+                <p>
+                    <label for="firstName">First name:</label>
+                    <input id="firstName" type="text" th:value="${playerInfo.firstName}" th:placeholder="${playerInfo.firstName}" required th:field="*{firstName}">
+                </p>
+                <p>
+                    <label for="lastName">Last name:</label>
+                    <input id="lastName" type="text" th:value="${playerInfo.lastName}" th:placeholder="${playerInfo.lastName}" required th:field="*{lastName}">
+                </p>
+                <p>
+                    <a class="btn btn-success" th:href="@{/admin/users-management/{id}(id=${playerInfo.user.id})}">Fiche User</a>
+                </p>
+                <div>
+                    <label for="familia">Race:</label>
+                    <select id="familia" th:field="*{familia.id}">
+                        <option value="0" th:text="---"></option>
+                        <option th:each="familia : ${familiaList}" th:value="${familia.id}" th:text="${familia.description}"></option>
+                    </select>
+                    <a class="btn btn-success" href="#" th:if="${playerInfo.familia.id != null}" th:href="'/familia/'+${playerInfo.familia.id}">Fiche Familia (user view)</a>
+                    <a class="btn btn-danger" href="#" th:if="${playerInfo.familia != null && playerInfo.id==playerInfo.familia.leader_id}" onclick="if(confirm('Êtes-vous sûr de vouloir continuer ?')) { document.getElementById('deleteFamiliaForm').submit();} return false;">Delete Familia</a>
+                </div>
+            </div>
+            <div class="col">
+                <p>
+                    <label for="race">Race:</label>
+                    <select id="race" th:field="*{race}">
+                        <option th:each="raceType : ${raceCategory}" th:value="${raceType}" th:text="${raceType}"></option>
+                    </select>
+                </p>
+                <p>
+                    <label for="level">Level:</label>
+                    <input id="level" type="number" th:value="${playerInfo.level}" th:placeholder="${playerInfo.level}" required th:field="*{level}" min="0">
+                </p>
+                <p>
+                    <label for="money">Money:</label>
+                    <input id="money" type="number" th:value="${playerInfo.money}" th:placeholder="${playerInfo.money}" required th:field="*{money}" min="0">
+                </p>
+            </div>
+        </div>
+        <div class="row border-bottom bi-border-width text-center mb-4 py-2">
+            <div class="col border-right">
+                <label for="description">Description:</label><br>
+                <textarea id="description" type="text" th:value="${playerInfo.description}" th:placeholder="${playerInfo.description}" th:field="*{description}" alt="" style="width: 100%; height: 10em;"></textarea>
+            </div>
+            <div class="col">
+                <label for="story">Story:</label><br>
+                <textarea  id="story" type="text" th:value="${playerInfo.story}" th:placeholder="${playerInfo.story}" th:field="*{story}" alt="" style="width: 100%; height: 10em;"></textarea>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-warning" onclick="return confirm('Êtes-vous sûr de vouloir continuer ?')">Modifier</button>
+            <button type="reset" class="btn btn-info">Reset</button>
+        </div>
+
+    </form>
+
+
+
+
+
+    <div class="mb-4">
+        <h1> Items list</h1>
+
+        <form id="addItemUserForm" th:action="'/admin/addItemUser/'+${playerInfo.user.id}+'/'+${playerInfo.id}" method="post">
+            <label>Item:<select name="idItem"><option th:each="item : ${itemsList}" th:value="${item.id}" th:text="${item.name}"></option></select></label>
+            <label>Nombre:<input type="number" name="nbItem" min="1" value="1"></label>
+            <button type="submit" class="btn btn-success" href="#">Give Item</button>
+        </form>
+
+
+        <div class="row text-center">
+            <div th:each="pack : ${inventory}" class="col-3">
+                <div class="card bg-info border text-white">
+                    <div class="card-header">
+                        <h4 th:text="${pack.item.name}"></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <img class="border" th:src="'data:image/png;base64,' + ${pack.item.getUrlImage()}" alt="Profile Image" data-toggle="popover" data-placement="bottom" style="width: 100%"
+                                     th:data-content="'Description:<br>'+${pack.item.description}+'<br><br>Effect:<br>'+${pack.item.useDescription}">
+                            </div>
+                            <div class="col-8" data-toggle="popover" data-placement="bottom"
+                                 th:data-content="'Nombre: '+${pack.quantity}+'<br>Item en vente: '+ ${pack.item.itemInShop(playerInfo.id)}">
+                                <span class="d-block" th:text="${pack.item.category}"></span>
+                                <span class="d-block" th:if="${pack.item.canUse}">Disposable</span>
+                                <span class="d-block" th:unless="${pack.item.canUse}">Unbreakable</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form th:id="'deleteItemUserForm'+${pack.item.id}" th:action="'/admin/deleteItemUser/'+${playerInfo.id}+'/'+${pack.item.id}" method="post" style="display: none;"></form>
+                    <div class="card-footer">
+                        <a class="btn btn-danger" href="#" th:onclick="'submitDeleteItemUserForm(' + ${pack.item.id} + '); return false;'">Enveler</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <form id="deleteUserForm" th:action="'/admin/deletePlayer/'+${playerInfo.user.id}+'/'+${playerInfo.id}" method="post" style="display: none;"></form>
+    <div class="text-center">
+        <a class="btn btn-success" th:href="'#userMessages' + ${playerInfo.user.id}">Messages management</a>
+        <a class="btn btn-info" th:href="@{/admin/users-management/{id}(id=${playerInfo.user.id})}">Retour</a>
+        <a class="btn btn-danger" href="#" onclick="if(confirm('Êtes-vous sûr de vouloir continuer ?')) { document.getElementById('deleteUserForm').submit(); } return false;">Delete User</a>
+    </div>
+
+</div>
+
+
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({trigger: "hover",html: true});
+    });
+
+</script>
+
+
+<footer th:insert="~{common/footer :: footer}"></footer>
+</body>
+</html>

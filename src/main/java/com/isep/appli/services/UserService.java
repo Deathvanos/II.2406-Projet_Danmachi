@@ -3,6 +3,7 @@ package com.isep.appli.services;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import com.isep.appli.models.ModifyUserInfoForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,6 +113,20 @@ public class UserService {
 	public long getNbUserLogins() {return this.userRepository.findAllByIsLoginIsTrue().size();}
 
 
+	public void deleteUser(Long id) {this.userRepository.deleteById(id);}
+	public void updateUser(Long id, User userNew) {
+		User userOld = userRepository.findById(id).orElse(null);
+		if (!userRepository.existsByUsernameAndIdNot(userNew.getUsername(), id)
+				&& !userRepository.existsByEmailAndIdNot(userNew.getEmail(), id)){
+            assert userOld != null;
+            userOld.setUsername(userNew.getUsername());
+			userOld.setFirstName(userNew.getFirstName());
+			userOld.setLastName(userNew.getLastName());
+			userOld.setEmail(userNew.getEmail());
+			userOld.setEnabled(userNew.getEnabled());
+			userRepository.save(userOld);
+		}
+	}
 
 
 

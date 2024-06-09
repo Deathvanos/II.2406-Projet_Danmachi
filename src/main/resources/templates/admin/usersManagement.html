@@ -27,16 +27,12 @@
 <div class="container col-10 my-5 px-3 py-3">
 
     <h1>Users management</h1>
-    <p class="d-flex justify-content-center">
-        <a class="btn btn-outline-secondary " href="/personnage/all">Liste des personnages vu par les joueurs</a>
-    </p>
 
     <p class="d-flex justify-content-center">
         <spa class="text-danger">disable</spa> -
         <spa class="text-secondary">logout</spa> -
         <spa class="text-success">login</spa>
     </p>
-
 
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
@@ -58,7 +54,7 @@
             <td th:text="${u.email}"></td>
             <td th:if="${u.isAdmin}" th:text="'Admin'"></td>
             <td th:unless="${u.isAdmin}">
-                <a th:each="personnage : ${usersPersonnages}" th:if="${personnage.user.getId() == u.id}" th:href="'#user' + ${personnage.id}" >
+                <a th:each="personnage : ${usersPersonnages}" th:if="${personnage.user.getId() == u.id}" th:href="@{/admin/players-management/{id}(id=${personnage.id})}">
                     <img class="border m-1" th:src="'data:image/png;base64,' + ${personnage.getImage()}" alt="Profile Image" style="max-width: 50px">
                 </a>
             </td>
@@ -101,13 +97,6 @@
     <div class="text-center" th:text="'Number of Users: ' + ${usersPages.getTotalElements()}"></div>
 
 </div>
-
-
-
-
-
-
-
 
 
 

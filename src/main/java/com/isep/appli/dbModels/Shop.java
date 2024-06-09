@@ -29,7 +29,12 @@ public class Shop implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", idItem=" + item + "idPlayer=" + seller + "quantity=" + quantity + "price="+ price
-				+ "]";
+		return "Shop{" +
+				"id=" + id +
+				", item=" + (item != null ? item.getId() : "null") +
+				", seller=" + (seller != null ? seller.getId() : "null") +
+				", quantity=" + quantity +
+				", price=" + price +
+				'}';
 	}
 }
