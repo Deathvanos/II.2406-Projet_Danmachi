@@ -10,7 +10,7 @@
         <div class="col-sm-4 d-flex flex-column align-content-start" style="background-color:#67819A; font-family: Inter;">
             <h1 id="item-name" th:text="${shopCell.getItem().getName()}"></h1>
             <span th:text="${'Vendu par :' + shopCell.getSeller().getFirstName() + ' ' + shopCell.getSeller().getLastName() }"></span>
-            <img id="item-image" th:unless="${shopCell.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${inventoryCell.getItem().getUrlImage()}">
+            <img id="item-image" th:unless="${shopCell.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${shopCell.getItem().getUrlImage()}">
         </div>
         <div class="col-sm-8 d-flex flex-column h-100" style="background-color:#D5E4D9;">
             <form action="#" th:action="@{/shop/buyItem}" th:object="${shopCell}" method="POST">
