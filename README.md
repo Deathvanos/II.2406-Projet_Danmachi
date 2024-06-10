@@ -1,31 +1,47 @@
-# Open with github "Projet_Danmachi" project in IntelliJ
+HOW TO INSTALL 
 
-1. Open IntelliJ
-2. File -> New -> Project from version controle
-3. Select github [your name] -> Projet_Danmachi and choose your work directory (work directory and github project must be the same name)
+ 
 
-if neccessary :
-5. Setup the SDK to java 17 (go to src/main/java/com/isep/appli/ProjetDanmachiApplication.java)
-6. Build maven project : Press Ctrl + Shift + 0 + A and tap "Add Maven projects"
-7. Reaload Moven Projects : recreate
-8. Maven build scripts found : load Maven Project
+Ceci est un guide du débutant pour prendre en main le projet et le faire fonctionner sur votre ordinateur. Vous pouvez, bien sûr, utiliser d’autres logiciels que ceux proposés ci-dessous, mais ce sont eux que nous vous recommandons. 
 
-.idea folder will be created (in gitignore)  
-Projet_Danmachi.iml file will be created (in gitignore)  
-target folder will be created (in gitignore)  
-You must create your table "danmachi" in phpMyAdmin from xampp and start the serveur  
+Nous avons choisi IntelliJ comment environnement de développement (IDE) Java. Il est performant, puissant et est efficace en termes de gestion de projet avec Git et GitHub. Et concernant la base de données, nous avons fait le choix d’un serveur MySQL avec Xampp. Nous utilisant aussi la version 17 de java. 
 
-# Comment merger ma branch sur le master ?
-1. Aller dans IntelliJ -> onglet (du bas) Git
-2. Se mettre sur la branch Local.master ()
+Une fois votre IDE et votre serveur installés, commencez par démarrer votre serveur Xampp et créez une base de données « danmachi » pour que notre application puisse interagir avec. (Clic sur le bouton Admin en bleu pour aller sur phpMyAdmin) 
 
+Une image contenant texte, capture d’écran, logiciel, Icône d’ordinateur
 
-# Comment merger ma branche sur le master ?
-0. Ne pas oublier de commit et push sa branche sur github
-1. Aller dans IntelliJ -> onglet (du bas) Git
-2. Se mettre sur la branche Local.master (clic droit ->check out)
-3. Clic sur ma branche et clic sur " merge "maBranche" into master
-4. Fetch (flèche bleue vers le bas)
-5. Optionnel : on peut supprimer sa branche si on ne compte plus travailler dessus
-6. Toujours en étant dans la branche Local.master : clic droit sur Local.master et "push"
+Description générée automatiquementUne image contenant texte, logiciel, Icône d’ordinateur, Page web
 
+Description générée automatiquement 
+
+Vous pouvez maintenant ouvrir IntelliJ et créer un nouveau projet (File -> New -> Project From Version Control) et ouvrir avec Git : https://github.com/Deathvanos/Projet_Danmachi.git 
+
+Une image contenant texte, capture d’écran, logiciel, Logiciel multimédia
+
+Description générée automatiquementUne image contenant texte, capture d’écran, logiciel, Logiciel multimédia
+
+Description générée automatiquement 
+
+Si nécessaire, configurez le SDK en java 17 et/ou construire le projet avec Maven. Puis lancer l’application en cliquant sur la flèche verte. 
+
+FormeUne image contenant texte, capture d’écran, Police
+
+Description générée automatiquement 
+
+L’application se lance et vous n’avez plus qu’à vous rendre sur votre navigateur web préféré et aller sur http://localhost:8080/. 
+
+HOW TO USER 
+
+ 
+
+En arrivant sur la page d’accueil de notre application Danmachi, nous vous recommandons de créer deux comptes afin de découvrir l’ensemble des fonctionnalités du site. Un utilisateur normal et un administrateur. Pour cela, inscrivez-vous deux fois (consultez votre boite mail avec inscription). 
+
+Pour mettre en place un administrateur, retournez sur phpMyAdmin et allez dans la table « user » de la base de données « danmachi ». Remplacer la valeur 0 par 1 à votre utilisateur « admin ». 
+
+Une image contenant texte, logiciel, Icône d’ordinateur, nombre
+
+Description générée automatiquement 
+
+Vous pouvez maintenant retourner dans l’application Danmachi. Nous vous conseillons de commencer par vous connecter avec l’administrateur pour créer des objets dans « Items management » puis d’alimenter le magasin dans « Shop management ».  
+
+Connectez vous ensuite avec votre compte utilisateur normal pour « jouer ». 
