@@ -5,7 +5,7 @@
         <th:block th:if="${session.personnage.money > shop.getPrice()}">
             <div class="card my-3 w-25 h-25" th:id="${shop.getId()}" th:onclick="showItemBuy(this, [[${shop.getQuantity()}]] )" >
                 <div class="card-body" style="background-color:#D9D9D9;">
-                    <img th:unless="${shop.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${shop.getItem().getUrlImage()}" class="mx-auto d-block">
+                    <img th:unless="${shop.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${shop.getItem().getUrlImage()}" class="mx-auto d-block" style="width: 80%">
                 </div>
                 <div class="card-footer text-left" style="background-color:#FFFFFF; font-family: Inter;">
                     <a th:text="${shop.getQuantity() + ' x ' + shop.getItem().getName()}"></a>
@@ -18,7 +18,7 @@
         <th:block th:unless="${session.personnage.money > shop.getPrice()}">
             <div class="card my-3 w-25 h-25" th:id="${shop.getId()}" th:onclick="cantBuyAlert()" >
                 <div class="card-body" style="background-color:#D9D9D9;">
-                    <img th:unless="${shop.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${shop.getItem().getUrlImage()}" class="mx-auto d-block">
+                    <img th:unless="${shop.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${shop.getItem().getUrlImage()}" class="mx-auto d-block" style="width: 80%">
                 </div>
                 <div class="card-footer text-left" style="background-color:#FFFFFF; font-family: Inter;">
                     <a th:text="${shop.getQuantity() + ' x ' + shop.getItem().getName()}"></a>
