@@ -10,7 +10,7 @@
     <th:block th:each="inventoryCell : ${playerInventory}">
         <div class="card my-3 w-25 h-25" th:id="${inventoryCell.getId()}" th:onclick="showItemSell(this, [[${inventoryCell.getQuantity()}]] )" >
             <div class="card-body" style="background-color:#D9D9D9;">
-                <img th:unless="${inventoryCell.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${inventoryCell.getItem().getUrlImage()}" class="mx-auto d-block">
+                <img th:unless="${inventoryCell.getItem().getUrlImage() == null}" th:src="'data:image/png;base64,' + ${inventoryCell.getItem().getUrlImage()}" class="mx-auto d-block" style="width: 80%">
             </div>
             <div class="card-footer text-left" th:text="${inventoryCell.getQuantity() + ' x ' + inventoryCell.getItem().getName()}" style="background-color:#FFFFFF; font-family: Inter;"></div>
         </div>
