@@ -1,3 +1,6 @@
+L'objectif du projet et de développer un site internet de jeu en ligne de rôle play sur l'univers de Danmachi (un anime japonais). Il permet de mettre en relation des joueurs au sein de guildes et ils peuvent aussi jouer à des mini-jeux pour ensuite acheter/ vendre des objets. L'application possède différents types d'objets : des objets présents dans l'inventaire des joueurs ou dans la boutique, des sorts, des skills. Chaque joueur est membre d'une guilde et possède un métier. Il existe aussi un wiki à disposition des joueurs pour en savoir plus sur l'univers du jeu.
+  
+  
 # HOW TO INSTALL 
 
 Ceci est un guide du débutant pour prendre en main le projet et le faire fonctionner sur votre ordinateur. Vous pouvez, bien sûr, utiliser d’autres logiciels que ceux proposés ci-dessous, mais ce sont eux que nous vous recommandons. 
