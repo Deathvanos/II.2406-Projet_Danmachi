@@ -9,8 +9,6 @@ Une fois votre IDE et votre serveur installés, commencez par démarrer votre se
 Vous pouvez maintenant ouvrir IntelliJ et créer un nouveau projet (File -> New -> Project From Version Control) et ouvrir avec Git : https://github.com/Deathvanos/Projet_Danmachi.git 
 
 Si nécessaire, configurez le SDK en java 17 et/ou construire le projet avec Maven. Puis lancer l’application en cliquant sur la flèche verte. 
-
-FormeUne image contenant texte, capture d’écran, Police
  
 L’application se lance et vous n’avez plus qu’à vous rendre sur votre navigateur web préféré et aller sur http://localhost:8080/. 
 
