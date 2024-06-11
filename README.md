@@ -30,7 +30,7 @@ Description générée automatiquement
 
 L’application se lance et vous n’avez plus qu’à vous rendre sur votre navigateur web préféré et aller sur http://localhost:8080/. 
 
-HOW TO USER 
+HOW TO USE
 
  
 
